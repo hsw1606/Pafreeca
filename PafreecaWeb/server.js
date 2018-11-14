@@ -13,7 +13,7 @@ var client = mysql.createConnection({
     host: '127.0.0.1',
     port: 3306,
     user: 'root',
-    password: 'zxsw6714',
+    password: '13109388',
     database: 'webdb'
 })
 
@@ -23,9 +23,9 @@ client.query('select * from account', [
         console.log(data);
 })
 
-client.query('insert into account value(1234,1234,1234,1234,0)', function (error, data) {
+/*client.query('insert into account value(1334,1234,1234,1234,0)', function (error, data) {
     console.log('done')
-})
+})*/
 
 app.get('/', (request, response) => {
 
