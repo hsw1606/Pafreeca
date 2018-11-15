@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> 회사소개 </title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script src="js/jquery-3.1.1.js"></script>
+
+
+	<!--네비게이션 구성-->
+    <script>
+        $(document).ready(function () {
+            $('.outer-menu-item').hover(function () {
+                $(this).find('.inner-menu').show();
+            }, function () {
+                $(this).find('.inner-menu').hide();
+            });
+        });
+    </script>
+    
+	<!--열고 닫는 창 -->
+     <script type="text/javascript"> 
+		$(document).ready(function(){
+			$(".flip").click(function(){
+				$(".panel").slideToggle("slow");
+			});
+		});
+	</script>
+
+	<!--프레임 애니메이션 -->
+	<script>
+		window.onload = function() {
+			var count=0;
+			var image=document.getElementById('frame-image');
+			var frames=['images/1.png','images/2.png','images/3.png','images/4.png','images/5.png','images/6.png','images/7.png','images/8.png','images/9.png','images/10.png','images/11.png','images/12.png','images/13.png','images/14.png','images/15.png','images/16.png'];
+			setInterval(function(){
+				image.src=frames[count%frames.length];
+				count=count+1;
+				}, 1000/20);
+			};
+	</script>
+
+
+
+
+</head>
+<body class="main-body">
+
+<div id="wrapper"> <!-- 전체적으로 감싸는 부분 -->
+<!--헤더시작-->
+	<header class="main-header">
+		<h1 class="logo_1">  더 놀라운 세상! <br> Pafreeca </h1>
+	</header>
+
+	<!--네비게이션-->
+		<nav class="sub-navigation">
+		<div class="sub-navi">
+			<a href="index.html"> <h1 class="sub-logo_2">  Pafreeca </h1> </a>
+		</div>
+		<div class="sub-navi-search">
+            <form>
+                <input type="text" class="input-search" />
+                <input type="submit" class="sub-input-search-submit" value="검  색" />
+            </form>
+		</div>
+        <div class="sub-navi-in">
+            <ul class="outer-menu">
+               	<li class="outer-menu-item">
+                   	<span class="sub-menu-title"> 카테고리 </span>
+                   	<ul class="inner-menu">
+                       	<li class="inner-menu-item"><a href="game.html" class="import">게임</a></li>
+                        <li class="inner-menu-item"><a href="#">일상</a></li>
+                        <li class="inner-menu-item"><a href="#">먹방</a></li>
+                        <li class="inner-menu-item"><a href="#">유머</a></li>
+                        <li class="inner-menu-item"><a href="#">썰</a></li>
+                        <li class="inner-menu-item"><a href="#">리뷰</a></li>
+                        <li class="inner-menu-item"><a href="#">음악</a></li>
+                        <li class="inner-menu-item"><a href="#">기타</a></li>
+                   	</ul>
+               	</li>
+               	<li class="outer-menu-item">
+                    <span class="sub-menu-title"> More Sharing </span>
+                    <ul class="inner-menu">
+	               		<li class="inner-menu-item"><a href="#"> 로그인 </a></li>
+               			<li class="inner-menu-item"><a href="log.html" class="import"> 회원가입 </a></li>
+                   		<li class="inner-menu-item"><a href="best.html" class="import"> Best Hot</a></li>
+                   	</ul>
+               	</li>
+           	</ul>
+       	</div>
+       	<div class="clear">
+       	</div>
+    </nav>
+	<!--콘텐츠부분-->
+	<section class="main-section">
+		<article>
+			<div class="intro-title">
+				<h1 class="intro-main-title"> "믿고 추천하는 Service!" </h1>
+				<p class="intro-sub-title"> 영상을 사랑하는 사람들이 모여 만든 Pafreeca! <br>
+				재미있는 영상과 BJ를 소개해주는 서비스 제공!
+				</p>
+			</div>
+		</article>
+		<article>
+			<div class="history">
+				<div class="panel">
+				<h3> 연혁 </h3>
+					<div class="history-main">
+						<h1> 2013 </h1>
+						<h2> 4월 </h2>
+						<p> 회사설립 </p>
+						<div class="clear"> </div>
+						<h2> 10월 </h2>
+						<p> 어플출시 </p>
+						<div class="clear"> </div>
+
+						<h1> 2014 </h1>
+						<h2> 5월 </h2>
+						<p> 글로벌 투자 유치 </p>
+						<div class="clear"> </div>
+						<h2> 9월 </h2>
+						<p> 특허권 획득 </p>
+						<div class="clear"> </div>
+						<h2> 12월 </h2>
+						<p> 크리스마스 이벤트 발표 </p>
+						<div class="clear"> </div>
+
+						<h1> 2015 </h1>
+						<h2> 2월 </h2>
+						<p> 자본 67억원 달성 </p>
+						<div class="clear"> </div>
+						<h2> 8월 </h2>
+						<p> PC웹 리뉴얼 </p>
+						<div class="clear"> </div>
+
+						<h1> 2016 </h1>
+						<h2> 8월 </h2>
+						<p> 100만 고객 달성 </p>
+						<div class="clear"> </div>
+					</div>
+				</div>
+			</div>
+			<input type="submit" value="접 기" class="flip">
+		</article>
+		<article>
+			<div class="animation">
+				<h3>  더 놀라운 세상! <br> Pafreeca </h3>
+				<img id="frame-image" width="300"/>
+				<h1> 폭발적인 신뢰도 증가! 다양화되는 서비스 제공! </h1>
+			</div>
+		</article>
+		<article>
+			<div class="contact">
+				<h3> 회사 상세정보 </h3>
+				<div>
+					<h1> 전화번호 </h1>
+					<h2> 010-0303-4141 </h2>
+					<h1> 이메일 </h1>
+					<h2> asdfvg@asdfg.com </h2>
+					<h1> 제휴 문의 </h1>
+					<h2> 010-3411-2323 </h2>
+					<h1> 주소 </h1>
+					<h2> 서울특별시 노원구 공릉동 </h2>
+				</div>
+			</div>
+			<div class="contact-location">
+				<a href="#"> <img src="images/location2.png" width="700" height="400"> </a>
+			</div>
+			<div class="clear">
+			</div>
+		</article>
+		<article>
+			<div class="end-intro">
+				<hr color="orange">
+				<h1> 영상을 사랑하는 모두와 함께하는 <br>
+				Video Service </h1>
+				<hr color="orange">
+			</div>
+		</article>
+
+	</section>
+
+	<footer class="main-footer">
+		<div class="footer_first_div">
+			<h3 class="footer_logo_1"> 더 놀라운 세상! <br> Pafreeca </h3>
+		</div>
+		<div class="footer_first_div">
+			<ul class="footer_ul">
+				<li> <a href="introduce.html"> <font class="important">회사소개</font> </a> </li>
+				<li> <a href="#"> 이용약관 </a> </li>
+				<li> <a href="#"> 사업 연계 </a> </li>
+				<li> <a href="#"> 광고 협약 </a> </li>
+			</ul>
+		</div>
+		<div class="footer_first_div">
+			<ul class="footer_ul">
+				<li> <a href="#"> QnA </a> </li>
+				<li> <a href="#"> 투자 정보 </a> </li>
+				<li> <a href="#"> 공지사항 </a> </li>
+				<li> <a href="#"> 개인정보 이용 약관 </a> </li>
+			</ul>
+		</div>
+		<div class="footer_last_div">
+			<div class="inner_div">
+		 		<h3> 공유하기 </h3>
+		 	</div>
+		 	<div class="inner_div">
+		 		<a href="https://www.facebook.com"> <img src="images/facebook_logo.png"> </a>
+		 	</div>
+		 	<div class="inner_div">
+		 		<a href="https://twitter.com/"> <img src="images/twiter_logo.png"> </a>
+		 	</div>
+		 	<div class="inner_div">
+		 		<a href="https://www.instagram.com/"> <img src="images/instagram_logo.jpg"> </a>
+		 	</div>
+
+		 	<div class="clear">
+		 	</div>
+		</div>
+
+		<div class="clear">
+		</div>
+		<hr>
+		<div class="video_location">
+		 <font color="#565656"> 카테고리별 추천영상 : </font> 
+		 <a href="#"> 게임 </a>  |
+		 <a href="#"> 일상 </a> |
+		 <a href="#"> 먹방 </a> |
+		 <a href="#"> 유머 </a> |
+		 <a href="#"> 썰 </a> |
+		 <a href="#"> 리뷰 </a> |
+		 <a href="#"> 음악 </a> |
+		 <a href="#"> 기타 </a>
+		</div>
+		<hr>
+
+		<div class="ending">
+			㈜ Pafreeca 대표이사: 홍길동 | 사업자 등록번호: 123-12-123123 | 서울특별시 공릉로 1길 23, 71층 <br> © 2018 Pafreeca Co., Ltd. All rights reserved.
+		</div>
+		
+	</footer>
+</div>
+
+</body>
+</html>
