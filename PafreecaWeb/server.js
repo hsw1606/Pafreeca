@@ -1,4 +1,17 @@
 ﻿const express = require("express")
+var bodyParser = require('body-parser');
+var items = [{
+    nickname: '우유',
+    email: '2000',
+    pass: '1234',
+    repass: '1234',
+    birth: '1234',
+    male: 'off',
+    female: 'off'
+}];
+
+
+
 const app = express()
 
 const fs = require("fs")
@@ -8,6 +21,8 @@ const mysql = require('mysql')
 
 
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: false }));
+
 
 var client = mysql.createConnection({
     host: '127.0.0.1',
@@ -68,6 +83,39 @@ app.get('/', (request, response) => {
         response.send((table))
     })   
 })
+
+app.get('/log.html', (request, response) => {
+    response.send('log get checked')
+})
+
+app.post('/log.html', (request, response) => {
+    // 변수를 선언합니다.
+    var a_nickname = request.body.nickname;
+    var a_email = request.body.email;
+    var a_pass = request.body.pass;
+    var repass = request.body.repass;
+    var male = request.body.male;
+
+    var a_sex = 0;
+    if (male == 'on') {
+        a_sex = 1;
+    } else {
+        a_sex = 0;
+    }
+
+    // 응답합니다.
+    response.send({
+        message: '데이터를 추가했습니다.',
+        data: a_nickname
+    });
+
+    client.query('insert into account value(?,?,?,?,?)', [a_nickname, a_email, a_pass, repass, a_sex], function (error, data) {
+        console.log('Insert done')
+    })
+
+
+});
+
 
 
 app.listen(52273, () => {
