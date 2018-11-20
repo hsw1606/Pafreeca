@@ -1,28 +1,100 @@
-﻿const express = require("express")
-var bodyParser = require('body-parser');
-var items = [{
-    nickname: '우유',
-    email: '2000',
-    pass: '1234',
-    repass: '1234',
-    birth: '1234',
-    male: 'off',
-    female: 'off'
-}];
+﻿/*  
+ *  Youtube API Key Value
+ *  AIzaSyBMZEIuMtExrnqrTPbdBgz2raund-aHD84
+ *  
+ *  Twitch API Client ID
+ *  nmwpmgck2yp0h03c7uy7ma0v45pkck
+ *  */
 
 
+/* 
+// Youtube API로 동영상 검색하기
+var youtubeNode = require('youtube-node')
+var youtube = new youtubeNode();
+var word = '강아지'; // 검색어 지정
+var limit = 10;  // 출력 갯수
+youtube.setKey('AIzaSyBMZEIuMtExrnqrTPbdBgz2raund-aHD84'); // API 키 입력
+//// 검색 옵션 시작
+youtube.addParam('order', 'rating'); // 평점 순으로 정렬
+youtube.addParam('type', 'video');   // 타입 지정
+youtube.addParam('videoLicense', 'creativeCommon'); // 크리에이티브 커먼즈 아이템만 불러옴
+//// 검색 옵션 끝
+youtube.search(word, limit, function (err, result) { // 검색 실행
+    if (err) { console.log(err); return; } // 에러일 경우 에러공지하고 빠져나감
+    console.log(JSON.stringify(result, null, 2)); // 받아온 전체 리스트 출력
+    var items = result["items"]; // 결과 중 items 항목만 가져옴
+    for (var i in items) {
+        var it = items[i];
+        var title = it["snippet"]["title"];
+        var video_id = it["id"]["videoId"];
+        var url = "https://www.youtube.com/watch?v=" + video_id;
+        console.log("제목 : " + title);
+        console.log("URL : " + url);
+        console.log("-----------");
+    }
+});
+*/
 
+
+/*
+//Twitch 클라이언트에서 트위치 top clip 요청하기
+<html>
+    <head>
+        <title>Clips Carousel</title>
+    </head>
+    <body>
+        <div id="clips-display"></div>
+    </body>
+</html>
+var httpRequest = new XMLHttpRequest();
+httpRequest.addEventListener('load', clipsLoaded);
+httpRequest.open('GET', 'https://api.twitch.tv/kraken/clips/top?limit=10&channel=moonmoon_ow');
+httpRequest.setRequestHeader('Client-ID', 'uo6dggojyb8d6soh92zknwmi5ej1q2');
+httpRequest.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+httpRequest.send();
+function clipsLoaded() {
+    var clipsDisplay = document.getElementById('clips-display'),
+        clipList = JSON.parse(httpRequest.responseText);
+    clipList.clips.forEach(function (clip, index, array) {
+        clipItem = document.createElement('div');
+        clipItem.innerHTML = clip.embed_html;
+        clipsDisplay.appendChild(clipItem);
+    });
+}
+*/
+
+
+/*
+//Twitch API로 클립 검색하기
+var twitch = require('twitch-api-v5')
+twitch.clientID = 'nmwpmgck2yp0h03c7uy7ma0v45pkck'
+twitch.clips.top({ period: 'day', trending: true, language: 'ko' }, (err, res) => {
+    if (err) {
+        console.log(err)
+    } else {
+        console.log(res)
+    }
+})
+*/
+
+const express = require("express")
 const app = express()
-
-const fs = require("fs")
-
-
 const mysql = require('mysql')
+const bodyParser = require('body-parser');
 
+
+var items = [{
+    nickname: '',
+    email: '',
+    pass: '',
+    repass: '',
+    birth: '',
+    male: '',
+    female: ''
+}];
 
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }));
-
 
 var client = mysql.createConnection({
     host: '127.0.0.1',
@@ -34,54 +106,12 @@ var client = mysql.createConnection({
 
 client.connect();
 client.query('select * from account', [
-    ], function (errer, data) {
+], function (error, data) {
+    if (error) {
+        console.log(error)
+    } else {
         console.log(data);
-})
-
-/*client.query('insert into account value(1334,1234,1234,1234,0)', function (error, data) {
-    console.log('done')
-})*/
-
-app.get('/', (request, response) => {
-
-    // 파일 읽기
-    fs.readFile("data/USvideos.csv", 'utf8', function (err, data) {
-
-        //Table 생성
-        var allRows = data.split('\n');
-        var table = '<table>';
-        for (var singleRow = 0; singleRow < allRows.length; singleRow++) {
-            if (singleRow === 0) {
-                table += '<thead>';
-                table += '<tr>';
-            } else {
-                table += '<tr>';
-            }
-            var rowCells = allRows[singleRow].split(',');
-            for (var rowCell = 0; rowCell < rowCells.length; rowCell++) {
-                if (singleRow === 0) {
-                    table += '<th>';
-                    table += rowCells[rowCell];
-                    table += '</th>';
-                } else {
-                    table += '<td>';
-                    table += rowCells[rowCell];
-                    table += '</td>';
-                }
-            }
-            if (singleRow === 0) {
-                table += '</tr>';
-                table += '</thead>';
-                table += '<tbody>';
-            } else {
-                table += '</tr>';
-            }
-        }
-        table += '</tbody>';
-        table += '</table>';
-
-        response.send((table))
-    })   
+    }
 })
 
 app.get('/log.html', (request, response) => {
@@ -90,35 +120,35 @@ app.get('/log.html', (request, response) => {
 
 app.post('/log.html', (request, response) => {
     // 변수를 선언합니다.
-    var a_nickname = request.body.nickname;
-    var a_email = request.body.email;
-    var a_pass = request.body.pass;
-    var repass = request.body.repass;
+    var nickname = request.body.nickname;
+    var email = request.body.email;
+    var pass = request.body.pass;
+    var birth = request.body.birth;
     var male = request.body.male;
 
-    var a_sex = 0;
+    var sex = 0;
     if (male == 'on') {
-        a_sex = 1;
+        sex = 1;
     } else {
-        a_sex = 0;
+        sex = 0;
     }
 
     // 응답합니다.
     response.send({
         message: '데이터를 추가했습니다.',
-        data: a_nickname
+        data: nickname, email, pass, birth, sex
     });
 
-    client.query('insert into account value(?,?,?,?,?)', [a_nickname, a_email, a_pass, repass, a_sex], function (error, data) {
-        console.log('Insert done')
+    client.query('insert into account value(?,?,?,?,?)', [nickname, email, pass, birth, sex], function (error, data) {
+        if (error) {
+            console(error)
+        } else {
+            console.log('Insert done: ')
+            console.log(nickname, email, pass, birth, sex)
+        }
     })
-
-
 });
 
-
-
 app.listen(52273, () => {
-
     console.log('Server Running at http:127.0.0.1:52273')
 })
