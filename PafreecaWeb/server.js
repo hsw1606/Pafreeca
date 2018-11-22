@@ -138,7 +138,7 @@ var client = mysql.createConnection({
     host: '127.0.0.1',
     port: 3306,
     user: 'root',
-    password: 'noh12345',
+    password: '13109388',
     database: 'webdb'
 })
 
@@ -153,15 +153,9 @@ client.query('select * from account', [
 })
 
 app.get('/youtube-best-video', function (req, res) {
-    for (var i in youtubeData) {
-        console.log(youtubeData[i])
-    }
     res.send(youtubeData);
 })
 app.get('/twitch-best-video', function (req, res) {
-    for (var i in twitchData) {
-        console.log(twitchData[i])
-    }
     res.send(twitchData);
 })
 
