@@ -1,13 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-	<title> 인기 게임 영상 </title>
+	<title> 회원가입 </title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<script src="js/jquery-3.1.1.js"></script>
- 
+	<script src="js/mysqlplus.js"></script>
 
- 	<!--네비게이션 구성-->
+
+	<!--네비게이션 구성-->
     <script>
         $(document).ready(function () {
             $('.outer-menu-item').hover(function () {
@@ -18,26 +19,19 @@
         });
     </script>
 
-    <!--자세히 보기 구성-->
-	<script type="text/javascript">
+
+    
+    <script>
 		$(document).ready(function(){
-	  		$(".hyperlink-1").click(function(){
-	    		$(".review-1").html("영상소개1");
-	 	 	});
-			$(".hyperlink-2").click(function(){
-	    		$(".review-2").html("영상소개2");
-	 	 	});
-			$(".hyperlink-3").click(function(){
-	    		$(".review-3").html("영상소개3");
-	 		 });
-			$(".hyperlink-4").click(function(){
-	    		$(".review-4").html("영상소개4");
-	 	 	});
-	 	 	$(".hyperlink-5").click(function(){
-	    		$(".review-5").html("영상소개5");
-	 	 	});
-		});
-	</script>
+    		$('.finish').click(function(event){
+    			alert('로그인 되었습니다!');
+    			event.preventDefault();
+    		});
+    	});
+    </script>
+   
+
+
 
 
 
@@ -46,17 +40,12 @@
 
 <div id="wrapper"> <!-- 전체적으로 감싸는 부분 -->
 <!--헤더시작-->
-	<header class="game-header">
-		<div class="game-inner-header-div">
-			<h3> 2,234명의 추천!</h3>
-			<h1> 게임 영상 추천 Best Five </h1>
-			<h3> “모여! 게임 채널로!” </h3>
-		</div>
-		<div class="clear">
-		</div>
+	<header class="main-header">
+		<h1 class="logo_1">  더 놀라운 세상! <br> Pafreeca </h1>
 	</header>
+
 	<!--네비게이션-->
-	<nav class="sub-navigation">
+		<nav class="sub-navigation">
 		<div class="sub-navi">
 			<a href="index.html"> <h1 class="sub-logo_2">  <center> Pafreeca </center> </h1> </a>
 		</div>
@@ -84,7 +73,7 @@
                	<li class="outer-menu-item">
                     <span class="sub-menu-title"> More </span>
                     <ul class="inner-menu">
-	               		<li class="inner-menu-item"><a href="login.html" class="import"> 로그인 </a></li>
+	               		<li class="inner-menu-item"><a href="#"> 로그인 </a></li>
                			<li class="inner-menu-item"><a href="log.html" class="import"> 회원가입 </a></li>
                    		<li class="inner-menu-item"><a href="best.html" class="import"> Best Hot</a></li>
                    	</ul>
@@ -94,80 +83,26 @@
        	<div class="clear">
        	</div>
     </nav>
-
 	<!--콘텐츠부분-->
 	<section class="main-section">
-		<article>
-			<div class="BJ1-video-intro">
-				<div class="BJ1-video-image">
-					<a href="#"> <img src="images/game-1.jpg"> </a>
-				</div>
-				<div class="video-explain">
-					<h1> 1. 영상이름</h1>
-					<h2> BJ이름 </h2>
-					<p class="review-1"> 영상소개 간략히 ...
-					</p>
-					<p class="hyperlink-1"> 자세히 보기 </p>
-				</div>
-				<div class="clear">
-					<hr>
-				</div>
-
-				<div class="BJ1-video-image">
-					<a href="#"> <img src="images/game-2.jpg"> </a>
-				</div>
-				<div class="video-explain">
-					<h1> 2. 영상이름 </h1>
-					<h2> BJ이름 </h2>
-					<p class="review-2"> 영상소개 간략히 ...
-					</p>
-					<p class="hyperlink-2"> 자세히 보기 </p>
-				</div>
-				<div class="clear">
-					<hr>
-				</div>
-
-				<div class="BJ1-video-image">
-					<a href="#"> <img src="images/game-3.jpg"> </a>
-				</div>
-				<div class="video-explain">
-					<h1> 3. 영상이름 </h1>
-					<h2> BJ이름 </h2>
-					<p class="review-3"> 영상소개 간략히.. </p>
-					<p class="hyperlink-3"> 자세히 보기 </p>
-				</div>
-				<div class="clear">
-					<hr>
-				</div>
-
-				<div class="BJ1-video-image">
-					<a href="#"> <img src="images/game-4.jpg"> </a>
-				</div>
-				<div class="video-explain">
-					<h1> 4. 영상이름 </h1>
-					<h2> BJ이름 </h2>
-					<p class="review-4"> 영상소개 간략히...</p>
-					<p class="hyperlink-4"> 자세히 보기 </p>
-				</div>
-				<div class="clear">
-					<hr>
-				</div>
-
-
-				<div class="BJ1-video-image">
-					<a href="#"> <img src="images/game-5.jpg"> </a>
-				</div>
-				<div class="video-explain">
-					<h1> 5. 영상이름 </h1>
-					<h2> BJ이름 </h2>
-					<p class="review-5"> 영상소개 간략히 ...</p>
-					<p class="hyperlink-5"> 자세히 보기 </p>
-				</div>
-				<div class="clear">
-				</div>
+		<div class="log">
+			<form action="/log.html" method="post" id="frm">
+			<h1> Pafreeca 계정 접속 </h1>
+			<h2> 아이디와 비밀번호를 입력하세요 </h2>
+			<div class="nickname">
+				<label for="nickname"> 아이디 </label>
+				<input name="nickname" type="text" placeholder="아이디">
 			</div>
-		</article>
+			<div class="password">
+				<label for="password"> 비밀번호 </label>
+				<input name="pass" type="password" placeholder="비밀번호">
+			</div>
+			
+			
+			<input class="finish" type="submit" value="로그인 하기" onclick="document.getElementById('frm').submit();"> <!-- 온클릭 이벤트 -->
 
+		</form>
+		</div>
 	</section>
 
 	<footer class="main-footer">

@@ -1,23 +1,23 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-	<title> Pafreeca </title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<script src="js/jquery-3.1.1.js"></script>
+   <title> Pafreeca </title>
+   <meta charset="utf-8">
+   <link rel="stylesheet" type="text/css" href="css/main.css">
+   <script src="js/jquery-3.1.1.js"></script>
 
 
-	<!--네비게이션 구성-->
-	<script>
-	     $(document).ready(function () {
-	         $('.outer-menu-item').hover(function () {
-	            $(this).find('.inner-menu').show();
-	            }, function () {
-	                $(this).find('.inner-menu').hide();
+   <!--네비게이션 구성-->
+   <script>
+        $(document).ready(function () {
+            $('.outer-menu-item').hover(function () {
+               $(this).find('.inner-menu').show();
+               }, function () {
+                   $(this).find('.inner-menu').hide();
                  });
 
              $.ajax({
-                 url: '/best-video',
+                 url: '/youtube-best-video',
                  type: 'get',
                  dataType: 'json',
                  success: (data) => {
@@ -34,10 +34,10 @@
                          title[i] = dataJSON.title
                          channel[i] = dataJSON.channel
 
-                         document.getElementsByClassName('best-video-img')[i].setAttribute('src', thumblist[i])
-                         document.getElementsByClassName('best-video-url')[i].setAttribute('href', urllist[i])
-                         document.getElementsByClassName('video_name')[i].innerHTML = title[i]
-                         document.getElementsByClassName('video_location')[i].innerHTML = channel[i]
+                         document.getElementsByClassName('youtube-best-video-img')[i].setAttribute('src', thumblist[i])
+                         document.getElementsByClassName('youtube-best-video-url')[i].setAttribute('href', urllist[i])
+                         document.getElementsByClassName('youtube-video_name')[i].innerHTML = title[i]
+                         document.getElementsByClassName('youtube-video_location')[i].innerHTML = channel[i]
 
 
                          
@@ -48,23 +48,55 @@
                  }
              })
 
-	     });
-	</script>
+             $.ajax({
+                 url: '/twitch-best-video',
+                 type: 'get',
+                 dataType: 'json',
+                 success: (data) => {
 
-	<!-- 자동으로 넘겨지는 배너 --> 
-	<link rel="stylesheet" type="text/css" href="css/owl.carousel.css">
-	<link rel="stylesheet" type="text/css" href="css/owl.theme.css">
-	<link rel="stylesheet" type="text/css" href="css/owl.transitions.css">
-	<script src="js/owl.carousel.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script>
-	    $(document).ready(function() {
-	     	$("#owl-demo").owlCarousel({
-	         	autoPlay: 3000,
-	          	items : 1,
-	      	});
-	    });
-	</script>
+                     var thumblist = {};
+                     var urllist = {};
+                     var title = {};
+                     var channel = {};
+                     for (var i = 0; i < 8; i++) {
+
+                         dataJSON = eval("("+data[i]+")")
+                         thumblist[i] = dataJSON.thumbnail
+                         urllist[i] = dataJSON.video_url
+                         title[i] = dataJSON.title
+                         channel[i] = dataJSON.channel
+
+                         document.getElementsByClassName('twitch-best-video-img')[i].setAttribute('src', thumblist[i])
+                         document.getElementsByClassName('twitch-best-video-url')[i].setAttribute('href', urllist[i])
+                         document.getElementsByClassName('twitch-video_name')[i].innerHTML = title[i]
+                         document.getElementsByClassName('twitch-video_location')[i].innerHTML = channel[i]
+
+
+                         
+
+                     }
+                     
+
+                 }
+             })
+
+        });
+   </script>
+
+   <!-- 자동으로 넘겨지는 배너 --> 
+   <link rel="stylesheet" type="text/css" href="css/owl.carousel.css">
+   <link rel="stylesheet" type="text/css" href="css/owl.theme.css">
+   <link rel="stylesheet" type="text/css" href="css/owl.transitions.css">
+   <script src="js/owl.carousel.js"></script>
+   <script src="js/owl.carousel.min.js"></script>
+   <script>
+       $(document).ready(function() {
+           $("#owl-demo").owlCarousel({
+               autoPlay: 3000,
+                items : 1,
+            });
+       });
+   </script>
 
 
 </head>
@@ -72,8 +104,8 @@
 <body class="main-body">
 <div id="wrapper"> <!-- 전체적으로 감싸는 부분 -->
 <!--헤더시작-->
-	<header class="main-header">
-		<h1 class="logo_1">  더 놀라운 세상! <br> Pafreeca </h1>
+   <header class="main-header">
+      <h1 class="logo_1">  더 놀라운 세상! <br> Pafreeca </h1>
 
             <div class="search-bar">
                 <form>
@@ -82,12 +114,12 @@
                 </form>
             </div>
 
-	</header>
+   </header>
 
-	<!--네비게이션-->
-	<nav class="main-nav">
+   <!--네비게이션-->
+   <nav class="main-nav">
         <div class="pull-left">
-        	<a href="index.html"> <h1 class="logo_2">  <center> Pafreeca </center> </h1> </a>
+           <a href="index.html"> <h1 class="logo_2">  <center> Pafreeca </center> </h1> </a>
             <ul class="outer-menu">
                 <li class="outer-menu-item">
                     <span class="menu-title"> 카테고리 </span>
@@ -105,7 +137,7 @@
                 <li class="outer-menu-item">
                     <span class="menu-title"> More </span>
                     <ul class="inner-menu">
-                        <li class="inner-menu-item"><a href="#"> 로그인 </a></li>
+                        <li class="inner-menu-item"><a href="login.html" class="import"> 로그인 </a></li>
                         <li class="inner-menu-item"><a href="log.html" class="import"> 회원가입 </a></li>
                         <li class="inner-menu-item"><a href="best.html" class="import"> Best Hot </a></li>
                     </ul>
@@ -113,246 +145,307 @@
             </ul>
         </div>
     </nav>
-	<!--콘텐츠부분-->
-	<section class="main-section">
+   <!--콘텐츠부분-->
+   <section class="main-section">
 
-		<article class="moving">
-			<div id="owl-demo">
-				<div class="item">
-					<a href="game.html"> <img src="images/img1.png" width="400" height="250"> </a>
-				</div>
-				<div class="item">
-					<a href="#"> <img src="images/img2.png" width="400" height="250"> </a>
-				</div>
-				<div class="item">
-					<a href="#"> <img src="images/img3.png" width="400" height="250"> </a>
-				</div>
-				<div class="item">
-					<a href="#"> <img src="images/img4.png" width="400" height="250"> </a>
-				</div>
-				<div class="item">
-					<a href="#"> <img src="images/img5.png" width="400" height="250"> </a>
-				</div>
-			</div>
-		
-		</article>
+      <article class="moving">
+         <div id="owl-demo">
+            <div class="item">
+               <a href="game.html"> <img src="images/img1.png" width="400" height="250"> </a>
+            </div>
+            <div class="item">
+               <a href="#"> <img src="images/img2.png" width="400" height="250"> </a>
+            </div>
+            <div class="item">
+               <a href="#"> <img src="images/img3.png" width="400" height="250"> </a>
+            </div>
+            <div class="item">
+               <a href="#"> <img src="images/img4.png" width="400" height="250"> </a>
+            </div>
+            <div class="item">
+               <a href="#"> <img src="images/img5.png" width="400" height="250"> </a>
+            </div>
+         </div>
+      
+      </article>
 
-		<article class="second_article">
-			<a href="best.html" class="none-style-a"> <div>
-			 	<h1> 이번 주 Best Hot 영상 </h1>
-			 	<h3> 카테고리 이름</h3>
-			 	<p> BJ이름 : 홍길동tv </p>
-			 	<p class="review">
-			 	리뷰 주저리 주저리
-			 	</p>
-			 	<img src="images/review_video1.jpg" width="150" height="100">
-			 	<img src="images/review_video2.jpg" width="150" height="100">
-				<img src="images/review_video3.jpg" width="150" height="100">
-		 		<img src="images/review_video4.jpg" width="150" height="100">
-		 		<img src="images/review_video_video5.jpg" width="150" height="100">
-			 	
-			</div>
-			</a>
-		</article>
+      <article class="second_article">
+         <a href="best.html" class="none-style-a"> <div>
+             <h1> 이번 주 Best Hot 영상 </h1>
+             <h3> 카테고리 이름</h3>
+             <p> BJ이름 : 홍길동tv </p>
+             <p class="review">
+             리뷰 주저리 주저리
+             </p>
+             <img src="images/review_video1.jpg" width="150" height="100">
+             <img src="images/review_video2.jpg" width="150" height="100">
+            <img src="images/review_video3.jpg" width="150" height="100">
+             <img src="images/review_video4.jpg" width="150" height="100">
+             <img src="images/review_video_video5.jpg" width="150" height="100">
+             
+         </div>
+         </a>
+      </article>
 
-			<div class="clear">
-			</div>
+         <div class="clear">
+         </div>
 
-		<article class="outer-show">
-			<div class="show">
-			<h3> 최고 인기 영상 </h3>
+      <article class="outer-show">
+         <div class="show">
+         <h3> 유투브 인기 영상 </h3>
 
-			<div class="video_intro">
-				<a class="best-video-url"> <img class="best-video-img" width="260" height="200"> </a> 
-				<div class="video_name"> 영상이름 </div>
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
+         <div class="video_intro">
+            <a class="youtube-best-video-url"> <img class="youtube-best-video-img" width="260" height="200"> </a> 
+            <div class="youtube-video_name"> 영상이름 </div>
+            <div class="youtube-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
 
-			<div class="video_intro"> 
-				<a class="best-video-url"> <img class="best-video-img" width="260" height="200"> </a>
-				<div class="video_name"> 영상이름 </div>
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
+        <div class="video_intro">
+            <a class="youtube-best-video-url"> <img class="youtube-best-video-img" width="260" height="200"> </a> 
+            <div class="youtube-video_name"> 영상이름 </div>
+            <div class="youtube-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
 
-			<div class="video_intro">
-				<a class="best-video-url"> <img class="best-video-img" width="260" height="200"> </a> 
-				<div class="video_name"> 영상이름 </div>
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
+         <div class="video_intro">
+            <a class="youtube-best-video-url"> <img class="youtube-best-video-img" width="260" height="200"> </a> 
+            <div class="youtube-video_name"> 영상이름 </div>
+            <div class="youtube-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
 
-			<div class="video_intro no_back">
-				<a class="best-video-url"> <img class="best-video-img" width="260" height="200"> </a> 
-				<div class="video_name"> 영상이름 </div>
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
+         <div class="video_intro">
+            <a class="youtube-best-video-url"> <img class="youtube-best-video-img" width="260" height="200"> </a> 
+            <div class="youtube-video_name"> 영상이름 </div>
+            <div class="youtube-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
 
-			<div class="clear">
-			</div>
+         <div class="clear">
+         </div>
 
-			<div class="video_intro">
-				<a class="best-video-url">  <img class="best-video-img" width="260" height="200"> </a> 
-				<div class="video_name"> 영상이름 </div>
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
+         <div class="video_intro">
+            <a class="youtube-best-video-url"> <img class="youtube-best-video-img" width="260" height="200"> </a> 
+            <div class="youtube-video_name"> 영상이름 </div>
+            <div class="youtube-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
 
-			<div class="video_intro">
-				<a class="best-video-url"> <img class="best-video-img" width="260" height="200"> </a> 
-				<div class="video_name"> 영상이름 </div>
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
+         <div class="video_intro">
+            <a class="youtube-best-video-url"> <img class="youtube-best-video-img" width="260" height="200"> </a> 
+            <div class="youtube-video_name"> 영상이름 </div>
+            <div class="youtube-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
 
-			<div class="video_intro">
-				<a class="best-video-url"> <img class="best-video-img" width="260" height="200"> </a> 
-				<div class="video_name"> 영상이름 </div>
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
+         <div class="video_intro">
+            <a class="youtube-best-video-url"> <img class="youtube-best-video-img" width="260" height="200"> </a> 
+            <div class="youtube-video_name"> 영상이름 </div>
+            <div class="youtube-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
 
-			<div class="video_intro no_back">
-				<a class="best-video-url"> <img class="best-video-img" width="260" height="200"> </a> 
-				<div class="video_name"> 영상이름 </div>
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
-
-
-
-		
-		</div>
-
-		</article>
-
-		<div class="clear">
-		</div>
-
-
-		<article class="outer-show">
-
-			<div class="show">
-			<h3> 취항저격 추천영상 </h3>
-
-			<div class="video_intro">
-				<a href="#"> <img src="images/video_show_11.jpg" width="260" height="200"> </a> 
-				<div class="video_name"> 영상이름 </div>
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
-
-			<div class="video_intro">
-				<a href="#"> <img src="images/video_show_12.jpg" width="260" height="200"> </a> 
-				<div class="video_name"> 영상이름 </div>
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
-
-			<div class="video_intro">
-				<a href="#"> <img src="images/video_show_13.jpg" width="260" height="200"> </a> 
-				<div class="video_name"> 영상이름 </div>
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
-
-			<div class="video_intro no_back"> 
-				<a href="#"> <img src="images/video_show_14.jpg" width="260" height="200"> </a> 
-				<div class="video_name"> 영상이름 </div>
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
-
-			<div class="clear">
-			</div>
-
-			<div class="video_intro">
-				<a href="#"> <img src="images/video_show_15.jpg" width="260" height="200"> </a> 
-				<div class="video_name"> 영상이름 </div>
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
-
-			<div class="video_intro">
-				<a href="#"> <img src="images/video_show_16.jpg" width="260" height="200"> </a>
-				<div class="video_name"> 영상이름 </div>
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
-
-			<div class="video_intro">
-				<a href="#"> <img src="images/video_show_17.jpg" width="260" height="200"> </a> 
-				<div class="video_name"> 영상이름 </div> 
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
-
-			<div class="video_intro no_back">
-				<a href="#"> <img src="images/video_show_18.jpg" width="260" height="200"> </a> 
-				<div class="video_name"> 영상이름 </div>
-				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
-			</div>
+         <div class="video_intro">
+            <a class="youtube-best-video-url"> <img class="youtube-best-video-img" width="260" height="200"> </a> 
+            <div class="youtube-video_name"> 영상이름 </div>
+            <div class="youtube-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
 
 
 
-		
-		</div>
+      
+      </div>
+      <div class="clear">
+      </div>
 
-		</article>
+      <div class="show">
+         <h3> 트위치 인기 영상 </h3>
 
-		<article>
-			<div class="clear">
-			</div>
-		</article>
+         <div class="video_intro">
+            <a class="twitch-best-video-url"> <img class="twitch-best-video-img" width="260" height="200"> </a> 
+            <div class="twitch-video_name"> 영상이름 </div>
+            <div class="twitch-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
 
-	</section>
+         <div class="video_intro">
+            <a class="twitch-best-video-url"> <img class="twitch-best-video-img" width="260" height="200"> </a> 
+            <div class="twitch-video_name"> 영상이름 </div>
+            <div class="twitch-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
 
-	<footer class="main-footer">
-		<div class="footer_first_div">
-			<h3 class="footer_logo_1">  더 놀라운 세상! <br> Pafreeca </h3>
-		</div>
-		<div class="footer_first_div">
-			<ul class="footer_ul">
-				<li> <a href="introduce.html"> <font class="important">회사소개</font> </a> </li>
-				<li> <a href="#"> 이용약관 </a> </li>
-				<li> <a href="#"> 사업 연계 </a> </li>
-				<li> <a href="#"> 광고 협약 </a> </li>
-			</ul>
-		</div>
-		<div class="footer_first_div">
-			<ul class="footer_ul">
-				<li> <a href="#"> QnA </a> </li>
-				<li> <a href="#"> 투자 정보 </a> </li>
-				<li> <a href="#"> 공지사항 </a> </li>
-				<li> <a href="#"> 개인정보 이용 약관 </a> </li>
-			</ul>
-		</div>
-		<div class="footer_last_div">
-			<div class="inner_div">
-		 		<h3> 공유하기 </h3>
-		 	</div>
-		 	<div class="inner_div">
-		 		<a href="https://www.facebook.com"> <img src="images/facebook_logo.png"> </a>
-		 	</div>
-		 	<div class="inner_div">
-		 		<a href="https://twitter.com/"> <img src="images/twiter_logo.png"> </a>
-		 	</div>
-		 	<div class="inner_div">
-		 		<a href="https://www.instagram.com/"> <img src="images/instagram_logo.jpg"> </a>
-		 	</div>
+         <div class="video_intro">
+            <a class="twitch-best-video-url"> <img class="twitch-best-video-img" width="260" height="200"> </a> 
+            <div class="twitch-video_name"> 영상이름 </div>
+            <div class="twitch-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
 
-		 	<div class="clear">
-		 	</div>
-		</div>
+         <div class="video_intro">
+            <a class="twitch-best-video-url"> <img class="twitch-best-video-img" width="260" height="200"> </a> 
+            <div class="twitch-video_name"> 영상이름 </div>
+            <div class="twitch-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
 
-		<div class="clear">
-		</div>
-		<hr>
-		<div class="video_location">
-		 <font color="#565656"> 카테고리별 추천영상 : </font> 
-		 <a href="#"> 게임 </a>  |
-		 <a href="#"> 일상 </a> |
-		 <a href="#"> 먹방 </a> |
-		 <a href="#"> 유머 </a> |
-		 <a href="#"> 썰 </a> |
-		 <a href="#"> 리뷰 </a> |
-		 <a href="#"> 음악 </a> |
-		 <a href="#"> 기타 </a>
-		</div>
+         <div class="clear">
+         </div>
 
-		<hr>
+         <div class="video_intro">
+            <a class="twitch-best-video-url"> <img class="twitch-best-video-img" width="260" height="200"> </a> 
+            <div class="twitch-video_name"> 영상이름 </div>
+            <div class="twitch-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
 
-		<div class="ending">
-			㈜ Pafreeca 대표이사: 홍길동 | 사업자 등록번호: 123-12-123123 | 서울특별시 공릉로 1길 23, 71층 <br> © 2018 Pafreeca Co., Ltd. All rights reserved.
-		</div>
-	</footer>
+        <div class="video_intro">
+            <a class="twitch-best-video-url"> <img class="twitch-best-video-img" width="260" height="200"> </a> 
+            <div class="twitch-video_name"> 영상이름 </div>
+            <div class="twitch-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
+
+         <div class="video_intro">
+            <a class="twitch-best-video-url"> <img class="twitch-best-video-img" width="260" height="200"> </a> 
+            <div class="twitch-video_name"> 영상이름 </div>
+            <div class="twitch-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
+
+         <div class="video_intro">
+            <a class="twitch-best-video-url"> <img class="twitch-best-video-img" width="260" height="200"> </a> 
+            <div class="twitch-video_name"> 영상이름 </div>
+            <div class="twitch-video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
+
+
+
+      
+      </div>
+
+      </article>
+
+      <div class="clear">
+      </div>
+
+
+      <article class="outer-show">
+
+         <div class="show">
+         <h3> 취항저격 추천영상 </h3>
+
+         <div class="video_intro">
+            <a href="#"> <img src="images/video_show_11.jpg" width="260" height="200"> </a> 
+            <div class="video_name"> 영상이름 </div>
+            <div class="video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
+
+         <div class="video_intro">
+            <a href="#"> <img src="images/video_show_12.jpg" width="260" height="200"> </a> 
+            <div class="video_name"> 영상이름 </div>
+            <div class="video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
+
+         <div class="video_intro">
+            <a href="#"> <img src="images/video_show_13.jpg" width="260" height="200"> </a> 
+            <div class="video_name"> 영상이름 </div>
+            <div class="video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
+
+         <div class="video_intro no_back"> 
+            <a href="#"> <img src="images/video_show_14.jpg" width="260" height="200"> </a> 
+            <div class="video_name"> 영상이름 </div>
+            <div class="video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
+
+         <div class="clear">
+         </div>
+
+         <div class="video_intro">
+            <a href="#"> <img src="images/video_show_15.jpg" width="260" height="200"> </a> 
+            <div class="video_name"> 영상이름 </div>
+            <div class="video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
+
+         <div class="video_intro">
+            <a href="#"> <img src="images/video_show_16.jpg" width="260" height="200"> </a>
+            <div class="video_name"> 영상이름 </div>
+            <div class="video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
+
+         <div class="video_intro">
+            <a href="#"> <img src="images/video_show_17.jpg" width="260" height="200"> </a> 
+            <div class="video_name"> 영상이름 </div> 
+            <div class="video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
+
+         <div class="video_intro no_back">
+            <a href="#"> <img src="images/video_show_18.jpg" width="260" height="200"> </a> 
+            <div class="video_name"> 영상이름 </div>
+            <div class="video_location"> BJ이름 - 카테고리 종류 </div>
+         </div>
+
+
+
+      
+      </div>
+
+      </article>
+
+      <article>
+         <div class="clear">
+         </div>
+      </article>
+
+   </section>
+
+   <footer class="main-footer">
+      <div class="footer_first_div">
+         <h3 class="footer_logo_1">  더 놀라운 세상! <br> Pafreeca </h3>
+      </div>
+      <div class="footer_first_div">
+         <ul class="footer_ul">
+            <li> <a href="introduce.html"> <font class="important">회사소개</font> </a> </li>
+            <li> <a href="#"> 이용약관 </a> </li>
+            <li> <a href="#"> 사업 연계 </a> </li>
+            <li> <a href="#"> 광고 협약 </a> </li>
+         </ul>
+      </div>
+      <div class="footer_first_div">
+         <ul class="footer_ul">
+            <li> <a href="#"> QnA </a> </li>
+            <li> <a href="#"> 투자 정보 </a> </li>
+            <li> <a href="#"> 공지사항 </a> </li>
+            <li> <a href="#"> 개인정보 이용 약관 </a> </li>
+         </ul>
+      </div>
+      <div class="footer_last_div">
+         <div class="inner_div">
+             <h3> 공유하기 </h3>
+          </div>
+          <div class="inner_div">
+             <a href="https://www.facebook.com"> <img src="images/facebook_logo.png"> </a>
+          </div>
+          <div class="inner_div">
+             <a href="https://twitter.com/"> <img src="images/twiter_logo.png"> </a>
+          </div>
+          <div class="inner_div">
+             <a href="https://www.instagram.com/"> <img src="images/instagram_logo.jpg"> </a>
+          </div>
+
+          <div class="clear">
+          </div>
+      </div>
+
+      <div class="clear">
+      </div>
+      <hr>
+      <div class="video_location">
+       <font color="#565656"> 카테고리별 추천영상 : </font> 
+       <a href="#"> 게임 </a>  |
+       <a href="#"> 일상 </a> |
+       <a href="#"> 먹방 </a> |
+       <a href="#"> 유머 </a> |
+       <a href="#"> 썰 </a> |
+       <a href="#"> 리뷰 </a> |
+       <a href="#"> 음악 </a> |
+       <a href="#"> 기타 </a>
+      </div>
+
+      <hr>
+
+      <div class="ending">
+         ㈜ Pafreeca 대표이사: 홍길동 | 사업자 등록번호: 123-12-123123 | 서울특별시 공릉로 1길 23, 71층 <br> © 2018 Pafreeca Co., Ltd. All rights reserved.
+      </div>
+   </footer>
 </div>
 
 </body>

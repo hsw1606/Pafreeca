@@ -100,16 +100,19 @@ var options = {
 
 };
 
-var youtubeData = [];
-
-ps.PythonShell.run('crawling.py', options, function (err, results) {
-
+ps.PythonShell.run('youtube-best.py', options, function (err, results) {
     if (err) throw err;
 
-    console.log('result : ' + typeof (results));
+    youtubeData = results
+    console.log(youtubeData)
+});
 
-    youtubeData = results;
+var twitchData = [];
+ps.PythonShell.run('twitch-best.py', options, function (err, results) {
+    if (err) throw err;
 
+    twitchData = results
+    console.log(twitchData)
 });
 
 
@@ -135,7 +138,7 @@ var client = mysql.createConnection({
     host: '127.0.0.1',
     port: 3306,
     user: 'root',
-    password: '13109388',
+    password: 'noh12345',
     database: 'webdb'
 })
 
@@ -147,13 +150,21 @@ client.query('select * from account', [
     } else {
         console.log(data);
     }
-    })
+})
 
-app.get('/best-video', function (req, res) {
-    //console.log(youtubeData)
-       
+app.get('/youtube-best-video', function (req, res) {
+    for (var i in youtubeData) {
+        console.log(youtubeData[i])
+    }
     res.send(youtubeData);
 })
+app.get('/twitch-best-video', function (req, res) {
+    for (var i in twitchData) {
+        console.log(twitchData[i])
+    }
+    res.send(twitchData);
+})
+
 
 app.post('/log.html', (request, response) => {
     // 변수를 선언합니다.
