@@ -7,8 +7,6 @@
  *  */
 
 
-/* 
-
 // Youtube API로 동영상 검색하기
 var youtubeNode = require('youtube-node')
 var youtube = new youtubeNode();
@@ -27,7 +25,7 @@ youtube.addParam('videoLicense', 'creativeCommon'); // 크리에이티브 커먼
 youtube.search(word, limit, function (err, result) { // 검색 실행
     if (err) { console.log(err); return; } // 에러일 경우 에러공지하고 빠져나감
 
-    console.log(JSON.stringify(result, null, 2)); // 받아온 전체 리스트 출력
+    //console.log(JSON.stringify(result, null, 2)); // 받아온 전체 리스트 출력
 
     var items = result["items"]; // 결과 중 items 항목만 가져옴
     for (var i in items) {
@@ -41,7 +39,33 @@ youtube.search(word, limit, function (err, result) { // 검색 실행
     }
 });
 
-*/
+
+
+//Twitch API로 클립 검색하기
+var twitch = require('twitch-api-v5')
+
+twitch.clientID = 'nmwpmgck2yp0h03c7uy7ma0v45pkck'
+
+twitch.clips.top({ period: 'day', trending: false, language: 'ko' }, (err, res) => {
+    if (err) {
+        console.log(err)
+    } else {
+
+         //console.log(res["clips"])
+
+        for (var i in res["clips"]) {
+            var item = res["clips"][i];
+            var title = item["title"];
+            var url = item["url"];
+            console.log("제목 : " + title);
+            console.log("URL : " + url);
+            console.log("-----------");
+        }
+    }
+})
+
+
+
 
 
 /*
@@ -78,28 +102,11 @@ function clipsLoaded() {
 */
 
 
-/*
-
-//Twitch API로 클립 검색하기
-var twitch = require('twitch-api-v5')
-
-twitch.clientID = 'nmwpmgck2yp0h03c7uy7ma0v45pkck'
-
-twitch.clips.top({ period: 'day', trending: true, language: 'ko' }, (err, res) => {
-    if (err) {
-        console.log(err)
-    } else {
-        console.log(res)
-    }
-})
-
-*/
 
 const express = require("express")
 const app = express()
 const mysql = require('mysql')
 const bodyParser = require('body-parser');
-
 
 var items = [{
     nickname: '',
