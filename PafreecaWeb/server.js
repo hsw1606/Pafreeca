@@ -100,6 +100,7 @@ var options = {
 
 };
 
+var youtubeData = [];
 ps.PythonShell.run('youtube-best.py', options, function (err, results) {
     if (err) throw err;
 
