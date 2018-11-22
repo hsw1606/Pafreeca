@@ -6,8 +6,8 @@
  *  nmwpmgck2yp0h03c7uy7ma0v45pkck
  *  */
 
+/*
 
-/* 
 // Youtube API로 동영상 검색하기
 var youtubeNode = require('youtube-node')
 var youtube = new youtubeNode();
@@ -33,8 +33,29 @@ youtube.search(word, limit, function (err, result) { // 검색 실행
         console.log("-----------");
     }
 });
-*/
 
+
+//Twitch API로 클립 검색하기
+var twitch = require('twitch-api-v5')
+twitch.clientID = 'nmwpmgck2yp0h03c7uy7ma0v45pkck'
+twitch.clips.top({ period: 'day', trending: false, language: 'ko' }, (err, res) => {
+    if (err) {
+        console.log(err)
+    } else {
+        //console.log(res["clips"])
+        for (var i in res["clips"]) {
+            var item = res["clips"][i];
+            var title = item["title"];
+            var url = item["url"];
+            console.log("제목 : " + title);
+            console.log("URL : " + url);
+            console.log("-----------");
+
+        }
+    }
+})
+
+*/
 
 /*
 //Twitch 클라이언트에서 트위치 top clip 요청하기
@@ -63,25 +84,39 @@ function clipsLoaded() {
 }
 */
 
+var ps = require('python-shell');
 
-/*
-//Twitch API로 클립 검색하기
-var twitch = require('twitch-api-v5')
-twitch.clientID = 'nmwpmgck2yp0h03c7uy7ma0v45pkck'
-twitch.clips.top({ period: 'day', trending: true, language: 'ko' }, (err, res) => {
-    if (err) {
-        console.log(err)
-    } else {
-        console.log(res)
-    }
-})
-*/
+var options = {
+
+    mode: 'text',
+
+    pythonPath: '',
+
+    pythonOptions: ['-u'],
+
+    scriptPath: '',
+
+    args: ['value1', 'value2', 'value3']
+
+};
+
+var youtubeData = [];
+
+ps.PythonShell.run('crawling.py', options, function (err, results) {
+
+    if (err) throw err;
+
+    console.log('result : ' + typeof (results));
+
+    youtubeData = results;
+
+});
+
 
 const express = require("express")
 const app = express()
 const mysql = require('mysql')
 const bodyParser = require('body-parser');
-
 
 var items = [{
     nickname: '',
@@ -112,10 +147,12 @@ client.query('select * from account', [
     } else {
         console.log(data);
     }
-})
+    })
 
-app.get('/log.html', (request, response) => {
-    response.send('log get checked')
+app.get('/best-video', function (req, res) {
+    //console.log(youtubeData)
+       
+    res.send(youtubeData);
 })
 
 app.post('/log.html', (request, response) => {
@@ -141,7 +178,7 @@ app.post('/log.html', (request, response) => {
 
     client.query('insert into account value(?,?,?,?,?)', [nickname, email, pass, birth, sex], function (error, data) {
         if (error) {
-            console(error)
+            console.log(error)
         } else {
             console.log('Insert done: ')
             console.log(nickname, email, pass, birth, sex)

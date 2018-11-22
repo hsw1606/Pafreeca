@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<title> Pafreeca </title>
@@ -14,7 +14,40 @@
 	            $(this).find('.inner-menu').show();
 	            }, function () {
 	                $(this).find('.inner-menu').hide();
-	  	    	});
+                 });
+
+             $.ajax({
+                 url: '/best-video',
+                 type: 'get',
+                 dataType: 'json',
+                 success: (data) => {
+
+                     var thumblist = {};
+                     var urllist = {};
+                     var title = {};
+                     var channel = {};
+                     for (var i = 0; i < 8; i++) {
+
+                         dataJSON = eval("("+data[i]+")")
+                         thumblist[i] = dataJSON.thumbnail
+                         urllist[i] = dataJSON.video_url
+                         title[i] = dataJSON.title
+                         channel[i] = dataJSON.channel
+
+                         document.getElementsByClassName('best-video-img')[i].setAttribute('src', thumblist[i])
+                         document.getElementsByClassName('best-video-url')[i].setAttribute('href', urllist[i])
+                         document.getElementsByClassName('video_name')[i].innerHTML = title[i]
+                         document.getElementsByClassName('video_location')[i].innerHTML = channel[i]
+
+
+                         
+
+                     }
+                     
+
+                 }
+             })
+
 	     });
 	</script>
 
@@ -130,25 +163,25 @@
 			<h3> 최고 인기 영상 </h3>
 
 			<div class="video_intro">
-				<a href="#"> <img src="images/video_show_1.jpg" width="260" height="200"> </a> 
+				<a class="best-video-url"> <img class="best-video-img" width="260" height="200"> </a> 
 				<div class="video_name"> 영상이름 </div>
 				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
 			</div>
 
 			<div class="video_intro"> 
-				<a href="#"> <img src="images/video_show_2.jpg" width="260" height="200"> </a>
+				<a class="best-video-url"> <img class="best-video-img" width="260" height="200"> </a>
 				<div class="video_name"> 영상이름 </div>
 				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
 			</div>
 
 			<div class="video_intro">
-				<a href="#"> <img src="images/video_show_3.jpg" width="260" height="200"> </a> 
+				<a class="best-video-url"> <img class="best-video-img" width="260" height="200"> </a> 
 				<div class="video_name"> 영상이름 </div>
 				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
 			</div>
 
 			<div class="video_intro no_back">
-				<a href="#"> <img src="images/video_show_4.jpg" width="260" height="200"> </a> 
+				<a class="best-video-url"> <img class="best-video-img" width="260" height="200"> </a> 
 				<div class="video_name"> 영상이름 </div>
 				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
 			</div>
@@ -157,25 +190,25 @@
 			</div>
 
 			<div class="video_intro">
-				<a href="#">  <img src="images/video_show_5.jpg" width="260" height="200"> </a> 
+				<a class="best-video-url">  <img class="best-video-img" width="260" height="200"> </a> 
 				<div class="video_name"> 영상이름 </div>
 				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
 			</div>
 
 			<div class="video_intro">
-				<a href="#"> <img src="images/video_show_6.jpg" width="260" height="200"> </a> 
+				<a class="best-video-url"> <img class="best-video-img" width="260" height="200"> </a> 
 				<div class="video_name"> 영상이름 </div>
 				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
 			</div>
 
 			<div class="video_intro">
-				<a href="#"> <img src="images/video_show_7.jpg" width="260" height="200"> </a> 
+				<a class="best-video-url"> <img class="best-video-img" width="260" height="200"> </a> 
 				<div class="video_name"> 영상이름 </div>
 				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
 			</div>
 
 			<div class="video_intro no_back">
-				<a href="#"> <img src="images/video_show_8.jpg" width="260" height="200"> </a> 
+				<a class="best-video-url"> <img class="best-video-img" width="260" height="200"> </a> 
 				<div class="video_name"> 영상이름 </div>
 				<div class="video_location"> BJ이름 - 카테고리 종류 </div>
 			</div>
