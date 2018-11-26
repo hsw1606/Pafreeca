@@ -1,11 +1,10 @@
 #!/usr/bin/python
 # coding=cp949
 
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
-import time
 import json
+import requests
+import sys
 
 video_info = {
 
@@ -21,31 +20,13 @@ video_info = {
 
 def get_video_info(target_url):
 
-    driver = webdriver.Chrome()
-
-    driver.get(target_url)
-
-    time.sleep(2)
-
-    body = driver.find_element_by_tag_name("body")
-
-    num_of_pagedowns = 50
-
-    while num_of_pagedowns:
-        body.send_keys(Keys.PAGE_DOWN)
-        time.sleep(0.1)
-        num_of_pagedowns -= 1
-        #try:
-        #    driver.find_element_by_xpath("""//*[@id="feed-main-what_to_watch"]/button""").click()
-        #except:
-        #    None   
-
-    html = driver.page_source
-    soup = BeautifulSoup(html, 'lxml')
-    list = soup.find_all('div', {'class':'ytd-video-renderer', 'id':'dismissable'})
+    
+    html = requests.get(target_url)
+    soup = BeautifulSoup(html.text, 'lxml')
+    list = soup.find_all('div', {'class':'clips'})
     
     for item in list:
-        title = item.find('a', {'title':True}).get('title')
+        title = item.find('a', {'class':'clip-launch'}).get_text()
         IsRemoved = False
         for i in range(len(title)):
             if IsRemoved == True:
@@ -66,9 +47,9 @@ def get_video_info(target_url):
                     #print(ord(title[i]))
                     IsRemoved = True
         
-        video_url = 'https://www.youtube.com/' + item.find('a', {'href':True, 'class':'ytd-thumbnail'}).get('href')
-        thumbnail = item.find('img', {'src':True, 'id':'img'}).get('src')
-        channel = item.find('a', {'class':'yt-formatted-string'}).get_text()
+        video_url = 'https://tgd.kr' + item.find('a', {'href':True, 'class':'clip-launch'}).get('href')
+        thumbnail = item.find('img', {'src':True, 'class':'clips-thumbnail'}).get('src')
+        channel = item.find('a', {'class':'streamer'}).get_text()
         
         video_info = {
 
@@ -85,8 +66,12 @@ def get_video_info(target_url):
         print(video_info_str)
         #print(video_info)
     
-    driver.close()
-    return video_info
+    #return video_info
 
-target_url = 'https://www.youtube.com/feed/trending'
-get_video_info(target_url)
+if len(sys.argv) is 1:
+    print('No arguments')
+else:
+    target_url = 'https://tgd.kr/clips?date_range=overall&sortby=like&term=' + sys.argv[1]
+    get_video_info(target_url)
+
+
