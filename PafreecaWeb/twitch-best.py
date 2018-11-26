@@ -35,10 +35,10 @@ def get_video_info(target_url):
         body.send_keys(Keys.PAGE_DOWN)
         time.sleep(0.1)
         num_of_pagedowns -= 1
-        try:
-            driver.find_element_by_xpath("""//*[@id="feed-main-what_to_watch"]/button""").click()
-        except:
-            None   
+        #try:
+        #    driver.find_element_by_xpath("""//*[@id="feed-main-what_to_watch"]/button""").click()
+        #except:
+        #    None   
 
     html = driver.page_source
     soup = BeautifulSoup(html, 'lxml')

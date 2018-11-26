@@ -7,18 +7,24 @@
  *  */
 
 /*
-
+ 
 // Youtube API로 동영상 검색하기
+
 var youtubeNode = require('youtube-node')
+
+console.log("checkiraoutchjeckcheckcho");
+
 var youtube = new youtubeNode();
 var word = '강아지'; // 검색어 지정
 var limit = 10;  // 출력 갯수
 youtube.setKey('AIzaSyBMZEIuMtExrnqrTPbdBgz2raund-aHD84'); // API 키 입력
-//// 검색 옵션 시작
+// 검색 옵션 시작
 youtube.addParam('order', 'rating'); // 평점 순으로 정렬
 youtube.addParam('type', 'video');   // 타입 지정
 youtube.addParam('videoLicense', 'creativeCommon'); // 크리에이티브 커먼즈 아이템만 불러옴
-//// 검색 옵션 끝
+
+
+// 검색 옵션 끝
 youtube.search(word, limit, function (err, result) { // 검색 실행
     if (err) { console.log(err); return; } // 에러일 경우 에러공지하고 빠져나감
     console.log(JSON.stringify(result, null, 2)); // 받아온 전체 리스트 출력
@@ -33,7 +39,6 @@ youtube.search(word, limit, function (err, result) { // 검색 실행
         console.log("-----------");
     }
 });
-
 
 //Twitch API로 클립 검색하기
 var twitch = require('twitch-api-v5')
@@ -103,19 +108,16 @@ var options = {
 var youtubeData = [];
 ps.PythonShell.run('youtube-best.py', options, function (err, results) {
     if (err) throw err;
-
     youtubeData = results
-    console.log(youtubeData)
+    console.log('Youtube Data Loaded')
 });
 
 var twitchData = [];
 ps.PythonShell.run('twitch-best.py', options, function (err, results) {
     if (err) throw err;
-
     twitchData = results
-    console.log(twitchData)
+    console.log('Twitch Data Loaded')
 });
-
 
 const express = require("express")
 const app = express()
@@ -160,7 +162,6 @@ app.get('/twitch-best-video', function (req, res) {
     res.send(twitchData);
 })
 
-
 app.post('/log.html', (request, response) => {
     // 변수를 선언합니다.
     var nickname = request.body.nickname;
@@ -191,6 +192,63 @@ app.post('/log.html', (request, response) => {
         }
     })
 });
+
+app.post('/search', (request, response) => {
+
+    var search = request.body.search;
+
+    //console.log(search)
+
+    var youtubeNode = require('youtube-node')
+    var youtube = new youtubeNode();
+    var word = search; // 검색어 지정
+    var limit = 10;  // 출력 갯수
+    youtube.setKey('AIzaSyBMZEIuMtExrnqrTPbdBgz2raund-aHD84'); // API 키 입력
+    
+    var param = {
+        'part': 'snippet',
+        'order': 'relevance',
+        'q': search,
+        'regionCode': 'KR',
+        'relevanceLanguage': 'ko',
+        'type': 'video'
+    }
+
+    youtube.search('', limit, param, function (err, result) { // 검색 실행
+        if (err) { console.log(err); return; } // 에러일 경우 에러공지하고 빠져나감
+        //console.log(JSON.stringify(result, null, 2)); // 받아온 전체 리스트 출력
+        var items = result["items"]; // 결과 중 items 항목만 가져옴
+        for (var i in items) {
+            var it = items[i];
+            var title = it["snippet"]["title"];
+            var video_id = it["id"]["videoId"];
+            var url = "https://www.youtube.com/watch?v=" + video_id;
+            console.log("제목 : " + title);
+            console.log("URL : " + url);
+            console.log("-----------");
+        }
+    });
+
+    var searchoptions = {
+        mode: 'text',
+        pythonPath: '',
+        pythonOptions: ['-u'],
+        scriptPath: '',
+        args: [search]
+    };
+
+    ps.PythonShell.run('twitch-search.py', searchoptions, function (err, results) {
+        if (err) throw err;
+        //console.log(results)
+        for (var item in results) {
+            itemJSON = JSON.parse(results[item])
+            //console.log(itemJSON)
+            console.log("제목 : " + itemJSON.title);
+            console.log("URL : " + itemJSON.video_url);
+            console.log("-----------");
+        }
+    });
+})
 
 app.listen(52273, () => {
     console.log('Server Running at http:127.0.0.1:52273')
