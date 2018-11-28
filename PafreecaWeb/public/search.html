@@ -1,0 +1,334 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title> 인기 게임 영상 </title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="js/jquery-3.1.1.js"></script>
+
+
+    <!--네비게이션 구성-->
+    <script>
+        $(document).ready(function () {
+            $('.outer-menu-item').hover(function () {
+                $(this).find('.inner-menu').show();
+            }, function () {
+                $(this).find('.inner-menu').hide();
+            });
+        });
+    </script>
+
+    <!--자세히 보기 구성-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".hyperlink-1").click(function () {
+                $(".review-1").html("영상소개1");
+            });
+            $(".hyperlink-2").click(function () {
+                $(".review-2").html("영상소개2");
+            });
+            $(".hyperlink-3").click(function () {
+                $(".review-3").html("영상소개3");
+            });
+            $(".hyperlink-4").click(function () {
+                $(".review-4").html("영상소개4");
+            });
+            $(".hyperlink-5").click(function () {
+                $(".review-5").html("영상소개5");
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".flip_youtube").slideUp();
+            $(".flip_twitch").slideUp();
+            $(".flip1").click(function () {
+                $(".flip_youtube").slideToggle("slow");
+            });
+            $(".flip2").click(function () {
+                $(".flip_twitch").slideToggle("slow");
+            });
+        });
+    </script>
+
+    <!--검 색-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function Request() {
+                var requestParam = "";
+
+                //getParameter 펑션
+                this.getParameter = function (param) {
+                    //현재 주소를 decoding
+                    var url = decodeURI(location.href);
+                    //var url = location.href;
+                    //alert('url: ' + url)
+                    ////파라미터만 자르고, 다시 &그분자를 잘라서 배열에 넣는다.
+                    var paramArr = (url.substring(url.indexOf("?") + 1, url.length)).split("&");
+                    //alert(paramArr)
+
+                    for (var i = 0; i < paramArr.length; i++) {
+                        var temp = paramArr[i].split("="); //파라미터 변수명을 담음
+                        //alert(temp)
+                        if (temp[0].toUpperCase() == param.toUpperCase()) {
+                            // 변수명과 일치할 경우 데이터 삽입
+                            requestParam = paramArr[i].split("=")[1];
+                            break;
+                        }
+                    }
+                    //alert(requestParam)
+                    return requestParam;
+                }
+            }
+
+            var request = new Request();
+            var keyword = request.getParameter('search')
+
+            //alert('before request')
+
+            $.ajax({
+                url: '/youtubesearch',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    search: keyword
+                },
+                success: (data) => {
+
+                    // 맨처음 칸에 로드
+                    var html1 = '   <div class="BJ1-video-image">'
+                    html1 += '       <a href=\"' + eval("(" + data[0] + ")").url + '\"><img src=\"' + eval("(" + data[0] + ")").thumbnailurl + '\"></a>'
+                    html1 += '   </div >'
+                    html1 += '   <div class="video-explain">'
+                    html1 += '       <h1>' + eval("(" + data[0] + ")").title + '</h1>'
+                    html1 += '       <h2>' + eval("(" + data[0] + ")").channel + '</h2>'
+                    //html1 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
+                    html1 += '   </div>'
+                    html1 += '   <div class="clear">'
+                    html1 += '   </div>'
+
+                    $('.nonflip_youtube').append(html1).trigger('create')
+
+                    //두번째칸부터 로드
+                    for (var i = 1; i < data.length; i++) {
+                        dataJSON = eval("(" + data[i] + ")")
+
+                        var html2 = '   <div class="BJ1-video-image">'
+                        html2 += '       <a href=\"' + dataJSON.url + '\"><img src=\"' + dataJSON.thumbnailurl + '\"></a>'
+                        html2 += '   </div >'
+                        html2 += '   <div class="video-explain">'
+                        html2 += '       <h1>' + dataJSON.title + '</h1>'
+                        html2 += '       <h2>' + dataJSON.channel + '</h2>'
+                        //html2 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
+                        html2 += '   </div>'
+                        html2 += '   <div class="clear">'
+                        html2 += '   </div>'
+
+                        $('.flip_youtube').append(html2).trigger('create')
+                    }
+                }
+            })
+
+            $.ajax({
+                url: '/twitchsearch',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    search: keyword
+                },
+                success: (data) => {
+
+                    // 맨처음 칸에 로드
+                    var html1 = '   <div class="BJ1-video-image">'
+                    html1 += '       <a href=\"' + eval("(" + data[0] + ")").url + '\"><img src=\"' + eval("(" + data[0] + ")").thumbnailurl + '\"></a>'
+                    html1 += '   </div >'
+                    html1 += '   <div class="video-explain">'
+                    html1 += '       <h1>' + eval("(" + data[0] + ")").title + '</h1>'
+                    html1 += '       <h2>' + eval("(" + data[0] + ")").channel + '</h2>'
+                    //html1 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
+                    html1 += '   </div>'
+                    html1 += '   <div class="clear">'
+                    html1 += '   </div>'
+
+                    $('.nonflip_twitch').append(html1).trigger('create')
+
+                    //두번째칸부터 로드
+                    for (var i = 1; i < data.length; i++) {
+                        dataJSON = eval("(" + data[i] + ")")
+
+                        var html2 = '   <div class="BJ1-video-image">'
+                        html2 += '       <a href=\"' + dataJSON.url + '\"><img src=\"' + dataJSON.thumbnailurl + '\"></a>'
+                        html2 += '   </div >'
+                        html2 += '   <div class="video-explain">'
+                        html2 += '       <h1>' + dataJSON.title + '</h1>'
+                        html2 += '       <h2>' + dataJSON.channel + '</h2>'
+                        //html2 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
+                        html2 += '   </div>'
+                        html2 += '   <div class="clear">'
+                        html2 += '   </div>'
+
+                        $('.flip_twitch').append(html2).trigger('create')
+                    }
+                }
+            })
+        })
+    </script>
+
+</head>
+<body class="main-body">
+
+<div id="wrapper"> <!-- 전체적으로 감싸는 부분 -->
+<!--헤더시작-->
+	<header class="game-header">
+		
+	</header>
+	<!--네비게이션-->
+	<nav class="sub-navigation">
+		<div class="sub-navi">
+			<a href="index.html"> <h1 class="sub-logo_2">  <center> Pafreeca </center> </h1> </a>
+		</div>
+		<div class="sub-navi-search">
+            <form action="/searchpage" method="post" id="frm">
+                    <input type="text" name="search" class="input-search">
+                    <input type="submit" class="input-search-submit" value="검  색" onclick="document.getElementById('frm').submit();">
+            </form>
+		</div>
+        <div class="sub-navi-in">
+            <ul class="outer-menu">
+               	<li class="outer-menu-item">
+                   	<span class="sub-menu-title"> 카테고리 </span>
+                   	<ul class="inner-menu">
+                       	<li class="inner-menu-item"><a href="game.html" class="import">게임</a></li>
+                        <li class="inner-menu-item"><a href="#">일상</a></li>
+                        <li class="inner-menu-item"><a href="#">먹방</a></li>
+                        <li class="inner-menu-item"><a href="#">유머</a></li>
+                        <li class="inner-menu-item"><a href="#">썰</a></li>
+                        <li class="inner-menu-item"><a href="#">리뷰</a></li>
+                        <li class="inner-menu-item"><a href="#">음악</a></li>
+                        <li class="inner-menu-item"><a href="#">기타</a></li>
+                   	</ul>
+               	</li>
+               	<li class="outer-menu-item">
+                    <span class="sub-menu-title"> More </span>
+                    <ul class="inner-menu">
+	               		<li class="inner-menu-item"><a href="login.html" class="import"> 로그인 </a></li>
+               			<li class="inner-menu-item"><a href="log.html" class="import"> 회원가입 </a></li>
+                   		<li class="inner-menu-item"><a href="best.html" class="import"> Best Hot</a></li>
+                   	</ul>
+               	</li>
+           	</ul>
+       	</div>
+       	<div class="clear">
+       	</div>
+    </nav>
+
+	<!--콘텐츠부분-->
+	<section class="main-section">
+        <article>
+            <div class="logo_output">
+                <a href="https://www.youtube.com/"> <img src="images/Logo_youtube.png" class="logo_img2"> </a>
+                <h1 class="search_list search_youtube"> 유투브 </h1>
+            </div>
+            <div class="clear"> </div>
+            <div class="BJ1-video-intro">
+                <div class="nonflip_youtube">
+                </div>
+                <div class="flip_youtube">
+                </div>
+            </div>
+            <input type="submit" value="더 보 기" class="flip flip1">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+
+
+            <div class="logo_output">
+                <a href="https://www.twitch.tv/"> <img src="images/Logo_twitch.png" class="logo_img2"> </a>
+                <h1 class="search_list search_twitch"> 트위치 </h1>
+            </div>
+            <div class="clear"> </div>
+            <div class="BJ1-video-intro">
+                <div class="nonflip_twitch">
+                </div>
+                <div class="flip_twitch">
+                </div>
+            </div>
+            <input type="submit" value="더 보 기" class="flip flip2" onclick="">
+            <br>
+            <br>
+            <br>
+
+
+        </article>
+
+	</section>
+
+	<footer class="main-footer">
+		<div class="footer_first_div">
+			<h3 class="footer_logo_1">  더 놀라운 세상! <br> Pafreeca </h3>
+		</div>
+		<div class="footer_first_div">
+			<ul class="footer_ul">
+				<li> <a href="introduce.html"> <font class="important">회사소개</font> </a> </li>
+				<li> <a href="#"> 이용약관 </a> </li>
+				<li> <a href="#"> 사업 연계 </a> </li>
+				<li> <a href="#"> 광고 협약 </a> </li>
+			</ul>
+		</div>
+		<div class="footer_first_div">
+			<ul class="footer_ul">
+				<li> <a href="#"> QnA </a> </li>
+				<li> <a href="#"> 투자 정보 </a> </li>
+				<li> <a href="#"> 공지사항 </a> </li>
+				<li> <a href="#"> 개인정보 이용 약관 </a> </li>
+			</ul>
+		</div>
+		<div class="footer_last_div">
+			<div class="inner_div">
+		 		<h3> 공유하기 </h3>
+		 	</div>
+		 	<div class="inner_div">
+		 		<a href="https://www.facebook.com"> <img src="images/facebook_logo.png"> </a>
+		 	</div>
+		 	<div class="inner_div">
+		 		<a href="https://twitter.com/"> <img src="images/twiter_logo.png"> </a>
+		 	</div>
+		 	<div class="inner_div">
+		 		<a href="https://www.instagram.com/"> <img src="images/instagram_logo.jpg"> </a>
+		 	</div>
+
+		 	<div class="clear">
+		 	</div>
+		</div>
+
+		<div class="clear">
+		</div>
+		<hr>
+		<div class="video_location">
+		 <font color="#565656"> 카테고리별 추천영상 : </font> 
+		 <a href="#"> 게임 </a>  |
+		 <a href="#"> 일상 </a> |
+		 <a href="#"> 먹방 </a> |
+		 <a href="#"> 유머 </a> |
+		 <a href="#"> 썰 </a> |
+		 <a href="#"> 리뷰 </a> |
+		 <a href="#"> 음악 </a> |
+		 <a href="#"> 기타 </a>
+		</div>
+
+		<hr>
+
+		<div class="ending">
+			㈜ Pafreeca 대표이사: 홍길동 | 사업자 등록번호: 123-12-123123 | 서울특별시 공릉로 1길 23, 71층 <br> © 2018 Pafreeca Co., Ltd. All rights reserved.
+		</div>
+		
+	</footer>
+</div>
+
+</body>
+</html>
