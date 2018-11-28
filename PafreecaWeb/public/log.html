@@ -50,9 +50,9 @@
 			<a href="index.html"> <h1 class="sub-logo_2">  <center> Pafreeca </center> </h1> </a>
 		</div>
 		<div class="sub-navi-search">
-            <form>
-                <input type="text" class="input-search" />
-                <input type="submit" class="sub-input-search-submit" value="검  색" />
+            <form action="/searchpage" method="post" id="frm">
+                    <input type="text" name="search" class="input-search">
+                    <input type="submit" class="input-search-submit" value="검  색" onclick="document.getElementById('frm').submit();">
             </form>
 		</div>
         <div class="sub-navi-in">

@@ -193,18 +193,21 @@ app.post('/log.html', (request, response) => {
     })
 });
 
-app.post('/search', (request, response) => {
+app.post('/youtubesearch', (request, response) => {
 
     var search = request.body.search;
 
-    //console.log(search)
+    //console.log('search keyword: ' + search)
+
+
+    var youtubedata = []
 
     var youtubeNode = require('youtube-node')
     var youtube = new youtubeNode();
     var word = search; // 검색어 지정
     var limit = 10;  // 출력 갯수
     youtube.setKey('AIzaSyBMZEIuMtExrnqrTPbdBgz2raund-aHD84'); // API 키 입력
-    
+
     var param = {
         'part': 'snippet',
         'order': 'relevance',
@@ -223,11 +226,40 @@ app.post('/search', (request, response) => {
             var title = it["snippet"]["title"];
             var video_id = it["id"]["videoId"];
             var url = "https://www.youtube.com/watch?v=" + video_id;
-            console.log("제목 : " + title);
-            console.log("URL : " + url);
-            console.log("-----------");
+            var thumbnailurl = it["snippet"]["thumbnails"]["high"]["url"];
+            var channel = it["snippet"]["channelTitle"];
+
+            //console.log("제목 : " + title);
+            //console.log("URL : " + url);
+            //console.log("-----------");
+
+            var youtubedataJSON = {
+                title: title,
+                url: url,
+                thumbnailurl: thumbnailurl,
+                channel: channel
+            }
+
+            youtubedata.push(JSON.stringify(youtubedataJSON))
+            //console.log('youtubedataJSON finished')
+
         }
+
+        //console.log('data: ' + data)
+        response.send(youtubedata)
+
     });
+})
+
+app.post('/twitchsearch', (request, response) => {
+
+    var search = request.body.search;
+
+    //console.log('search keyword: ' + search)
+
+
+    var twitchdata = []
+
 
     var searchoptions = {
         mode: 'text',
@@ -235,7 +267,7 @@ app.post('/search', (request, response) => {
         pythonOptions: ['-u'],
         scriptPath: '',
         args: [search]
-    };
+    }
 
     ps.PythonShell.run('twitch-search.py', searchoptions, function (err, results) {
         if (err) throw err;
@@ -243,12 +275,54 @@ app.post('/search', (request, response) => {
         for (var item in results) {
             itemJSON = JSON.parse(results[item])
             //console.log(itemJSON)
-            console.log("제목 : " + itemJSON.title);
-            console.log("URL : " + itemJSON.video_url);
-            console.log("-----------");
+            //console.log("제목 : " + itemJSON.title);
+            //console.log("URL : " + itemJSON.video_url);
+            //console.log("-----------");
+
+            var twitchdataJSON = {
+                title: itemJSON.title,
+                url: itemJSON.video_url,
+                thumbnailurl: itemJSON.thumbnail,
+                channel: itemJSON.channel
+            }
+
+            twitchdata.push(JSON.stringify(twitchdataJSON))
+            //console.log('twitchdataJSON finished')
+
         }
+
+        //console.log('data: ' + data)
+        response.send(twitchdata)
     });
 })
+
+app.post('/searchpage', (request, response) => {
+
+    var search = request.body.search;
+
+    url = 'search.html?search=' + encodeURI(search)
+
+    response.writeHead(302, { 'Location': url })
+    response.end()
+})
+
+app.post('/login', function (req, res, next) {
+    var userId = req.body['nickname'];
+    var userPw = req.body['pass'];
+    client.query('select * from account where a_nickname=? and a_pass=?', [userId, userPw], function (err, rows) {
+        if (!err) {
+            if (rows[0] != undefined) {
+                res.send('id : ' + rows[0]['a_nickname'] + '<br>' +
+                    'pw : ' + rows[0]['a_pass']);
+            } else {
+                res.send('no data');
+            }
+
+        } else {
+            res.send('error : ' + err);
+        }
+    });
+});
 
 app.listen(52273, () => {
     console.log('Server Running at http:127.0.0.1:52273')
