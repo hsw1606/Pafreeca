@@ -48,38 +48,47 @@
                  }
              })
 
-             $.ajax({
-                 url: '/twitch-best-video',
-                 type: 'get',
-                 dataType: 'json',
-                 success: (data) => {
+            $.ajax({
+                url: '/twitch-best-video',
+                type: 'get',
+                dataType: 'json',
+                success: (data) => {
 
-                     var thumblist = {};
-                     var urllist = {};
-                     var title = {};
-                     var channel = {};
-                     for (var i = 0; i < 8; i++) {
+                    var thumblist = {};
+                    var urllist = {};
+                    var title = {};
+                    var channel = {};
+                    for (var i = 0; i < 8; i++) {
 
-                         dataJSON = eval("("+data[i]+")")
-                         thumblist[i] = dataJSON.thumbnail
-                         urllist[i] = dataJSON.video_url
-                         title[i] = dataJSON.title
-                         channel[i] = dataJSON.channel
+                        dataJSON = eval("(" + data[i] + ")")
+                        thumblist[i] = dataJSON.thumbnail
+                        urllist[i] = dataJSON.video_url
+                        title[i] = dataJSON.title
+                        channel[i] = dataJSON.channel
 
-                         document.getElementsByClassName('twitch-best-video-img')[i].setAttribute('src', thumblist[i])
-                         document.getElementsByClassName('twitch-best-video-url')[i].setAttribute('href', urllist[i])
-                         document.getElementsByClassName('twitch-video_name')[i].innerHTML = title[i]
-                         document.getElementsByClassName('twitch-video_location')[i].innerHTML = channel[i]
+                        document.getElementsByClassName('twitch-best-video-img')[i].setAttribute('src', thumblist[i])
+                        document.getElementsByClassName('twitch-best-video-url')[i].setAttribute('href', urllist[i])
+                        document.getElementsByClassName('twitch-video_name')[i].innerHTML = title[i]
+                        document.getElementsByClassName('twitch-video_location')[i].innerHTML = channel[i]
 
 
-                         
 
-                     }
-                     
 
-                 }
-             })
+                    }
 
+
+                }
+            })
+
+            $.ajax({
+                url: '/preference-video',
+                type: 'get',
+                dataType: 'json',
+                success: (data) => {
+                    alert(data)
+
+                }
+            })
         });
    </script>
 

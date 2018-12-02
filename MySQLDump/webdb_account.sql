@@ -25,11 +25,11 @@ DROP TABLE IF EXISTS `account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `account` (
-  `a_nickname` varchar(20) NOT NULL,
-  `a_email` varchar(30) DEFAULT NULL,
-  `a_pass` varchar(20) DEFAULT NULL,
-  `a_birth` char(8) DEFAULT NULL,
-  `a_sex` tinyint(1) DEFAULT NULL,
+  `a_nickname` varchar(45) NOT NULL,
+  `a_email` varchar(45) NOT NULL,
+  `a_pass` varchar(45) NOT NULL,
+  `a_birth` varchar(45) NOT NULL,
+  `a_sex` tinyint(1) NOT NULL,
   PRIMARY KEY (`a_nickname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -40,7 +40,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES ('slifspo','hhsw1606@naver.com','1234','19940801',1);
+INSERT INTO `account` VALUES ('qdad123','qweisdl213','21312hdjf','fj2',0),('sli123','sdfisdl213','21312hdjf','fj2',1),('slifspo','hhsw1606@naver.com','13109388','19940801',1);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-15  1:00:21
+-- Dump completed on 2018-12-02 16:21:20
