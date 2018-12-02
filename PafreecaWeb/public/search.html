@@ -55,6 +55,8 @@
     <!--검 색-->
     <script type="text/javascript">
         $(document).ready(function () {
+
+            // URL의 특정 파라미터 값 얻어오기
             function Request() {
                 var requestParam = "";
 
@@ -62,22 +64,17 @@
                 this.getParameter = function (param) {
                     //현재 주소를 decoding
                     var url = decodeURI(location.href);
-                    //var url = location.href;
-                    //alert('url: ' + url)
-                    ////파라미터만 자르고, 다시 &그분자를 잘라서 배열에 넣는다.
+                    ////파라미터만 자르고, 다시 &로 잘라서 배열에 넣는다.
                     var paramArr = (url.substring(url.indexOf("?") + 1, url.length)).split("&");
-                    //alert(paramArr)
 
                     for (var i = 0; i < paramArr.length; i++) {
                         var temp = paramArr[i].split("="); //파라미터 변수명을 담음
-                        //alert(temp)
                         if (temp[0].toUpperCase() == param.toUpperCase()) {
                             // 변수명과 일치할 경우 데이터 삽입
                             requestParam = paramArr[i].split("=")[1];
                             break;
                         }
                     }
-                    //alert(requestParam)
                     return requestParam;
                 }
             }
@@ -85,8 +82,7 @@
             var request = new Request();
             var keyword = request.getParameter('search')
 
-            //alert('before request')
-
+            // Youtube 검색 요청
             $.ajax({
                 url: '/youtubesearch',
                 type: 'post',
@@ -96,13 +92,19 @@
                 },
                 success: (data) => {
 
+                    var dataJSON1 = eval("(" + data[0] + ")")
+                    var url1 = dataJSON1.url
+                    var thumbnailurl1 = dataJSON1.thumbnailurl
+                    var title1 = dataJSON1.title
+                    var channel1 = dataJSON1.channel
+
                     // 맨처음 칸에 로드
                     var html1 = '   <div class="BJ1-video-image">'
-                    html1 += '       <a href=\"' + eval("(" + data[0] + ")").url + '\"><img src=\"' + eval("(" + data[0] + ")").thumbnailurl + '\"></a>'
+                    html1 += '       <a href=\"' + url1 + '\" onclick=javascript:savehistory(\'' + encodeURI(regExp(title1)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl1 + '\"></a>'
                     html1 += '   </div >'
                     html1 += '   <div class="video-explain">'
-                    html1 += '       <h1>' + eval("(" + data[0] + ")").title + '</h1>'
-                    html1 += '       <h2>' + eval("(" + data[0] + ")").channel + '</h2>'
+                    html1 += '       <h1>' + title1 + '</h1>'
+                    html1 += '       <h2>' + channel1 + '</h2>'
                     //html1 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
                     html1 += '   </div>'
                     html1 += '   <div class="clear">'
@@ -110,16 +112,20 @@
 
                     $('.nonflip_youtube').append(html1).trigger('create')
 
-                    //두번째칸부터 로드
+                    // 두번째칸부터 로드
                     for (var i = 1; i < data.length; i++) {
-                        dataJSON = eval("(" + data[i] + ")")
+                        dataJSON2 = eval("(" + data[i] + ")")
+                        var url2 = dataJSON2.url
+                        var thumbnailurl2 = dataJSON2.thumbnailurl
+                        var title2 = dataJSON2.title
+                        var channel2 = dataJSON2.channel
 
                         var html2 = '   <div class="BJ1-video-image">'
-                        html2 += '       <a href=\"' + dataJSON.url + '\"><img src=\"' + dataJSON.thumbnailurl + '\"></a>'
+                        html2 += '       <a href=\"' + url2 + '\" onclick=javascript:savehistory(\'' + encodeURI(regExp(title2)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl2 + '\"></a>'
                         html2 += '   </div >'
                         html2 += '   <div class="video-explain">'
-                        html2 += '       <h1>' + dataJSON.title + '</h1>'
-                        html2 += '       <h2>' + dataJSON.channel + '</h2>'
+                        html2 += '       <h1>' + title2 + '</h1>'
+                        html2 += '       <h2>' + channel2 + '</h2>'
                         //html2 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
                         html2 += '   </div>'
                         html2 += '   <div class="clear">'
@@ -130,6 +136,7 @@
                 }
             })
 
+            // Twitch 검색 요청
             $.ajax({
                 url: '/twitchsearch',
                 type: 'post',
@@ -139,13 +146,19 @@
                 },
                 success: (data) => {
 
+                    var dataJSON1 = eval("(" + data[0] + ")")
+                    var url1 = dataJSON1.url
+                    var thumbnailurl1 = dataJSON1.thumbnailurl
+                    var title1 = dataJSON1.title
+                    var channel1 = dataJSON1.channel
+
                     // 맨처음 칸에 로드
                     var html1 = '   <div class="BJ1-video-image">'
-                    html1 += '       <a href=\"' + eval("(" + data[0] + ")").url + '\"><img src=\"' + eval("(" + data[0] + ")").thumbnailurl + '\"></a>'
+                    html1 += '       <a href=\"' + url1 + '\" onclick=javascript:savehistory(\'' + encodeURI(regExp(title1)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl1 + '\"></a>'
                     html1 += '   </div >'
                     html1 += '   <div class="video-explain">'
-                    html1 += '       <h1>' + eval("(" + data[0] + ")").title + '</h1>'
-                    html1 += '       <h2>' + eval("(" + data[0] + ")").channel + '</h2>'
+                    html1 += '       <h1>' + title1 + '</h1>'
+                    html1 += '       <h2>' + channel1 + '</h2>'
                     //html1 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
                     html1 += '   </div>'
                     html1 += '   <div class="clear">'
@@ -155,14 +168,19 @@
 
                     //두번째칸부터 로드
                     for (var i = 1; i < data.length; i++) {
-                        dataJSON = eval("(" + data[i] + ")")
+
+                        dataJSON2 = eval("(" + data[i] + ")")
+                        var url2 = dataJSON2.url
+                        var thumbnailurl2 = dataJSON2.thumbnailurl
+                        var title2 = dataJSON2.title
+                        var channel2 = dataJSON2.channel
 
                         var html2 = '   <div class="BJ1-video-image">'
-                        html2 += '       <a href=\"' + dataJSON.url + '\"><img src=\"' + dataJSON.thumbnailurl + '\"></a>'
+                        html2 += '       <a href=\"' + url2 + '\" onclick=javascript:savehistory(\'' + encodeURI(regExp(title2)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl2 + '\"></a>'
                         html2 += '   </div >'
                         html2 += '   <div class="video-explain">'
-                        html2 += '       <h1>' + dataJSON.title + '</h1>'
-                        html2 += '       <h2>' + dataJSON.channel + '</h2>'
+                        html2 += '       <h1>' + title2 + '</h1>'
+                        html2 += '       <h2>' + channel2 + '</h2>'
                         //html2 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
                         html2 += '   </div>'
                         html2 += '   <div class="clear">'
@@ -173,6 +191,25 @@
                 }
             })
         })
+
+        // DB에 nickname, title 저장 요청
+        function savehistory(title) {
+            $.post("/savehistory", {
+                nickname: 'qdad123', // 임시
+                title: decodeURI(title)
+            })
+        }
+
+        // String에서 특수문자 제거
+        function regExp(str) {
+            var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
+            if (regExp.test(str)) {
+                return str.replace(regExp, "")
+            } else {
+                return str
+            }
+        }
+
     </script>
 
 </head>
