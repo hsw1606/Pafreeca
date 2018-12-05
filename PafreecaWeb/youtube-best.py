@@ -66,7 +66,7 @@ def get_video_info(target_url):
                     #print(ord(title[i]))
                     IsRemoved = True
         
-        video_url = 'https://www.youtube.com/' + item.find('a', {'href':True, 'class':'ytd-thumbnail'}).get('href')
+        video_url = 'https://www.youtube.com/embed/' + item.find('a', {'href':True, 'class':'ytd-thumbnail'}).get('href').replace('/watch?v=','')
         thumbnail = item.find('img', {'src':True, 'id':'img'}).get('src')
         channel = item.find('a', {'class':'yt-formatted-string'}).get_text()
         

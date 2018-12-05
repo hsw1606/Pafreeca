@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<script src="js/jquery-3.1.1.js"></script>
 	<script src="js/mysqlplus.js"></script>
+	<script src="js/LogInOut.js"></script>
 
 
 	<!--네비게이션 구성-->
@@ -15,7 +16,7 @@
                 $(this).find('.inner-menu').show();
             }, function () {
                 $(this).find('.inner-menu').hide();
-            });
+            })
         });
     </script>
 
@@ -73,9 +74,9 @@
                	<li class="outer-menu-item">
                     <span class="sub-menu-title"> More </span>
                     <ul class="inner-menu">
-	               		<li class="inner-menu-item"><a href="#"> 로그인 </a></li>
-               			<li class="inner-menu-item"><a href="log.html" class="import"> 회원가입 </a></li>
-                   		<li class="inner-menu-item"><a href="best.html" class="import"> Best Hot</a></li>
+	               		<li class="inner-menu-item"><a href="#" class="import loginout"> 로그인 </a></li>
+               			<li class="inner-menu-item sign"><a href="signup.html" class="import"> 회원가입 </a></li>
+                   		<li class="inner-menu-item"><a href='best.html' class="import"> Best Hot</a></li>
                    	</ul>
                	</li>
            	</ul>

@@ -6,6 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
 import time
 import json
+from urllib.request import urlopen
 
 video_info = {
 
@@ -69,12 +70,24 @@ def get_video_info(target_url):
         video_url = 'https://tgd.kr' + item.find('a', {'href':True, 'class':'clip-launch'}).get('href')
         thumbnail = item.find('img', {'src':True, 'class':'clips-thumbnail'}).get('src')
         channel = item.find('a', {'class':'streamer'}).get_text()
+
+
+
+        resp = urlopen(video_url)
+        source=resp.read()
+        resp.close()
+        soup2=BeautifulSoup(source, "lxml")
+        video_url = soup2.find('iframe', {'id':'clip-iframe'}).get('src')
+    
+    
+        
         
         video_info = {
 
             'title':title,
 
             'video_url':video_url,
+            
 
             'thumbnail':thumbnail,
 

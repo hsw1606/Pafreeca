@@ -18,8 +18,7 @@ li {
 
 .main-body {
     text-align: center;
-    color: #FFF;
-    background-color: #FFFFE6;
+    background-color: #585858;
 }
 
 
@@ -51,6 +50,7 @@ li {
     width: 350px;
     padding: 10px;
     border-radius: 15px;
+    color: white;
 }
 
 .search-bar {
@@ -104,7 +104,7 @@ li {
 
 
 .main-section {
-    background-color: #FFEBFF;
+    background-color: #FFFFFF;
     border-style: none;
     color: #8C8C8C;
     border-radius: 10px;
@@ -178,7 +178,7 @@ li {
     .show .video_intro {
         width: 260px;
         float: left;
-        border: 2px solid #FFEBFE;
+        border: 2px solid #FFFFFF;
         margin: 20px;
     }
 
@@ -266,10 +266,6 @@ li {
     font-weight: bold;
 }
 
-    .video_location a {
-        color: #565656;
-        padding: 10px;
-    }
 
 .ending {
     color: #565656;
@@ -292,6 +288,7 @@ li {
     padding: 10px;
     border-radius: 5px;
     margin: 10px;
+    color: white;
 }
 
 .pull-left {
@@ -891,4 +888,38 @@ li {
 .logo_img2 {
     margin: 30px 0px -100px 10px;
     float: left;
+}
+
+
+a p.video_url {
+    display: none;
+}
+
+a p.video_title {
+    color: #111111;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+a p.video_publisher {
+    color: #6E6E6E;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+p.frame_video_title {
+    color: #6E6E6E;
+    font-size: 30px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+p.frame_video_publisher {
+    color: #111111;
+    font-size: 15px;
+    margin-bottom: 30px;
+    margin-left: 10px;
+    font-weight: bold;
 }
