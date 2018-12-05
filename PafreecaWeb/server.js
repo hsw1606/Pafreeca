@@ -41,7 +41,7 @@ var client = mysql.createConnection({
     host: '127.0.0.1',
     port: 3306,
     user: 'root',
-    password: '13109388',
+    password: 'noh12345',
     database: 'webdb'
 })
 
@@ -201,6 +201,35 @@ app.post('/searchpage', (request, response) => {
 })
 
 // 로그인 요청 처리
+var session = require('express-session');
+
+app.use(session({
+    secret: '12312dajfj23rj2po4$#%@#',
+    resave: false,
+    saveUninitialized: true
+}));
+
+
+app.get('/count', function (req, res) {
+    if (req.session.count) {//값이 있을때
+        req.session.count++;
+    } else {//처음 접속했을때 즉 값이 없을 때
+        req.session.count = 1;//세션을 만듬
+    }
+    res.send('count : ' + req.session.count);
+
+});
+
+app.get('/login', function (req, res) {
+    if (req.session.displayName) {
+        res.send('1');
+    }
+    else {
+        res.send('0');
+    }
+});
+
+
 app.post('/login', function (req, res) {
 
     var userId = req.body['nickname'];
@@ -210,8 +239,10 @@ app.post('/login', function (req, res) {
     client.query('select * from account where a_nickname=? and a_pass=?', [userId, userPw], function (err, rows) {
         if (!err) {
             if (rows[0] != undefined) {
-                res.send('id : ' + rows[0]['a_nickname'] + '<br>' +
-                    'pw : ' + rows[0]['a_pass']);
+
+                req.session.displayName = userId;
+                console.log("userId[" + req.session.displayName + "] log-in-Complete");
+                res.redirect('index.html');
             } else {
                 res.send('no data');
             }
@@ -222,23 +253,37 @@ app.post('/login', function (req, res) {
     });
 });
 
+//로그아웃기능
+app.get('/logout', function (req, res) {
+    if (req.session.displayName) {
+        //client.query('insert into playhistory(ph_title, a_nickname) value(?,?)', ["안녕?", req.session.displayName]);
+        console.log("userId[" + req.session.displayName + "] log-out-Complete");
+        delete req.session.displayName;//세션 삭제
+        res.send('2');
+    }
+    else {
+        res.send('3');
+    }
+    //res.redirect('index.html');
+});
+
+
 // 동영상을 클릭했을 때의 요청 처리
 app.post('/savehistory', function (req, res) {
     // Parameter 가져오기
-    var nickname = req.body.nickname
     var title = req.body.title
 
     // DB에 유저이름과 클릭한 동영상 제목 저장
-    client.query('insert into playhistory(ph_title, a_nickname) value(?,?)', [title, nickname], function (error, data) {
+    client.query('insert into playhistory(ph_title, a_nickname) value(?,?)', [title, req.session.displayName], function (error, data) {
         if (error) {
             console.log(error)
         } else {
             console.log('Insert title done: ')
-            console.log('nickname: ' + nickname)
+            console.log('nickname: ' + req.session.displayName)
             console.log('title: ' + title)
         }
     })
-
+    res.send('suck');
 })
 
 // 취향저격 동영상 요청 처리
@@ -252,7 +297,7 @@ app.get('/preference-video', function (req, res) {
                 // 동영상 제목들을 전부 playhistory에 저장
                 playhistory = ''
                 for (var row in rows) {
-                    playhistory += rows[row]['ph_title'] + '\n'
+                    playhistory += rows[row]['ph_title'] + '. '
                 }
 
                 // 파이썬 실행 옵션
