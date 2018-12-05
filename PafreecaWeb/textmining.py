@@ -10,16 +10,18 @@ from konlpy.tag import Okt
 okt = Okt()
 
 # 문장에서 형태소 얻기
-morph = okt.pos(okja)
+morph = okt.pos(okja, norm=True, stem=True)
 #print(json.dumps(morph))
+
+import nltk
 
 # 명사와 영어만 선별해 리스트에 담기
 noun_list = []
 for word, tag in morph:
     if tag in ['Noun', 'Alpha']:
         noun_list.append(word)
-#print(json.dumps(noun_list))
+print(json.dumps(noun_list))
 
 # 선별된 품사별 빈도수 계산 & 상위 빈도 10위 까지 출력
 counts = Counter(noun_list)
-print(json.dumps(counts.most_common(10)))
+#print(json.dumps(counts.most_common(10)))
