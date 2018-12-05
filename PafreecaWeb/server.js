@@ -64,7 +64,7 @@ app.get('/twitch-best-video', function (req, res) {
 })
 
 // 회원가입 요청 처리
-app.post('/log.html', (request, response) => {
+app.post('/signup', (request, response) => {
 
     var nickname = request.body.nickname;
     var email = request.body.email;
@@ -252,7 +252,7 @@ app.get('/preference-video', function (req, res) {
                 // 동영상 제목들을 전부 playhistory에 저장
                 playhistory = ''
                 for (var row in rows) {
-                    playhistory += rows[row]['ph_title'] + '. '
+                    playhistory += rows[row]['ph_title'] + '\n'
                 }
 
                 // 파이썬 실행 옵션
