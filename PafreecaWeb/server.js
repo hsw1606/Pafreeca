@@ -41,7 +41,7 @@ var client = mysql.createConnection({
     host: '127.0.0.1',
     port: 3306,
     user: 'root',
-    password: 'noh12345',
+    password: '13109388',
     database: 'webdb'
 })
 
