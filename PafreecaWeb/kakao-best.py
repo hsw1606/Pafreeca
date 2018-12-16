@@ -70,6 +70,7 @@ def get_video_info(target_url):
         video_split, b = item.find('a', {'href':True, 'class':'link_itembox'}).get('href').split('?')
         video_id = video_split.split('/')[4]
         video_url = 'https://tv.kakao.com/embed/player/cliplink/' + video_id
+        video_url = video_url + '?autoplay=1'
         thumbnail = item.find('img', {'src':True, 'class':'thumb_img'}).get('src')
         channel = item.find('span', {'class':'assist_info'}).get_text().replace('ÃâÃ³ :', '')
         
