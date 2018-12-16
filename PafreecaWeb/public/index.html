@@ -8,6 +8,7 @@
     <script src="js/jquery-3.1.1.js"></script>
     <script src="js/LayerPopUp.js"></script>
     <script src="js/LogInOut.js"></script>
+    <script src="js/totalJScrawling.js"></script>
 
     
     <!--네비게이션 구성-->
@@ -16,13 +17,9 @@
         $(document).ready(function () {
             $('.outer-menu-item').hover(function () {
                 $(this).find('.inner-menu').show();
-                }, function () {
+            }, function () {
                 $(this).find('.inner-menu').hide();
             })
-
-
-            
-
 
 
             $.ajax({
@@ -36,75 +33,6 @@
                 }
             })
 
-
-
-
-
-
-
-            $.ajax({
-                url: '/youtube-best-video',
-                type: 'get',
-                dataType: 'json',
-                success: (data) => {
-
-                    var thumblist = {};
-                    var urllist = {};
-                    var title = {};
-                    var channel = {};
-                    for (var i = 0; i < 8; i++) {
-
-                        dataJSON = eval("(" + data[i] + ")")
-                        thumblist[i] = dataJSON.thumbnail
-                        urllist[i] = dataJSON.video_url
-                        title[i] = dataJSON.title
-                        channel[i] = dataJSON.channel
-
-                        document.getElementsByClassName('youtube-best-video-img')[i].setAttribute('src', thumblist[i])
-                        document.getElementsByClassName('youtube-best-video-url')[i].innerHTML = urllist[i]
-                        document.getElementsByClassName('youtube-video_name')[i].innerHTML = title[i]
-                        document.getElementsByClassName('youtube-video_location')[i].innerHTML = channel[i]
-
-
-
-
-                    }
-
-
-                }
-            })
-
-            $.ajax({
-                url: '/twitch-best-video',
-                type: 'get',
-                dataType: 'json',
-                success: (data) => {
-
-                    var thumblist = {};
-                    var urllist = {};
-                    var title = {};
-                    var channel = {};
-                    for (var i = 0; i < 8; i++) {
-
-                        dataJSON = eval("(" + data[i] + ")")
-                        thumblist[i] = dataJSON.thumbnail
-                        urllist[i] = dataJSON.video_url
-                        title[i] = dataJSON.title
-                        channel[i] = dataJSON.channel
-
-                        document.getElementsByClassName('twitch-best-video-img')[i].setAttribute('src', thumblist[i])
-                        document.getElementsByClassName('twitch-best-video-url')[i].innerHTML = urllist[i]
-                        document.getElementsByClassName('twitch-video_name')[i].innerHTML = title[i]
-                        document.getElementsByClassName('twitch-video_location')[i].innerHTML = channel[i]
-
-
-
-                    }
-
-
-                }
-            })
-
             $.ajax({
                 url: '/preference-video',
                 type: 'get',
@@ -114,8 +42,8 @@
 
                 }
             })
-
         });
+            
     </script>
 
     <!-- 자동으로 넘겨지는 배너 -->
@@ -185,19 +113,19 @@
             <article class="moving">
                 <div id="owl-demo">
                     <div class="item">
-                        <a href="game.html"> <img src="images/img1.png" width="400" height="250"> </a>
+                        <a href="#idyoutube"> <img src="images/img1.png" width="400" height="250"> </a>
                     </div>
                     <div class="item">
-                        <a href="#"> <img src="images/img2.png" width="400" height="250"> </a>
+                        <a href="#idtwitch"> <img src="images/img2.png" width="400" height="250"> </a>
                     </div>
                     <div class="item">
-                        <a href="#"> <img src="images/img3.png" width="400" height="250"> </a>
+                        <a href="#idkakao"> <img src="images/img3.png" width="400" height="250"> </a>
                     </div>
                     <div class="item">
-                        <a href="#"> <img src="images/img4.png" width="400" height="250"> </a>
+                        <a href="#idvlive"> <img src="images/img4.png" width="400" height="250"> </a>
                     </div>
                     <div class="item">
-                        <a href="#"> <img src="images/img5.png" width="400" height="250"> </a>
+                        <a href="#idnavertv"> <img src="images/img5.png" width="400" height="250"> </a>
                     </div>
                 </div>
 
@@ -226,9 +154,13 @@
             </div>
 
             <article class="outer-show">
-                <div class="show show_youtube">
+
+
+
+                <!--유투브 인기 영상-->
+                <div class="show show_youtube" id="idyoutube">
                     <div class="logo_output">
-                        <a href="https://www.youtube.com/"> <img src="images/Logo_youtube.png" class="logo_img"> </a>
+                        <a href="https://www.youtube.com/"> <img src="images/Logo_youtube.png" class="logo_img Logo_youtube"> </a>
                         <h3> 유투브 인기 영상 </h3>
                         <div class="clear"> </div>
 
@@ -267,140 +199,204 @@
                                 <p class="youtube-video_location video_publisher"> 올린 사람 </p>
                             </a>
                         </div>
-
-                        <div class="clear">
-                        </div>
-
-                        <div class="video_intro">
-                            <a class="moveframe" href="#layer2">
-                                <img class="youtube-best-video-img" width="260" height="200">
-                                <p class="youtube-best-video-url video_url"> URL </p>
-                                <p class="youtube-video_name video_title"> 영상이름 </p>
-                                <p class="youtube-video_location video_publisher"> 올린 사람 </p>
-                            </a>
-                        </div>
-
-                        <div class="video_intro">
-                            <a class="moveframe" href="#layer2">
-                                <img class="youtube-best-video-img" width="260" height="200">
-                                <p class="youtube-best-video-url video_url"> URL </p>
-                                <p class="youtube-video_name video_title"> 영상이름 </p>
-                                <p class="youtube-video_location video_publisher"> 올린 사람 </p>
-                            </a>
-                        </div>
-
-                        <div class="video_intro">
-                            <a class="moveframe" href="#layer2">
-                                <img class="youtube-best-video-img" width="260" height="200">
-                                <p class="youtube-best-video-url video_url"> URL </p>
-                                <p class="youtube-video_name video_title"> 영상이름 </p>
-                                <p class="youtube-video_location video_publisher"> 올린 사람 </p>
-                            </a>
-                        </div>
-
-                        <div class="video_intro">
-                            <a class="moveframe" href="#layer2">
-                                <img class="youtube-best-video-img" width="260" height="200">
-                                <p class="youtube-best-video-url video_url"> URL </p>
-                                <p class="youtube-video_name video_title"> 영상이름 </p>
-                                <p class="youtube-video_location video_publisher"> 올린 사람 </p>
-                            </a>
-                        </div>
-
-
-
-
                     </div>
-                 </div>
-                 <div class="clear">
-                 </div>
-
-                 <div class="show show_twitch">
-                     <div class="logo_output">
-                            <a href="https://www.twitch.tv/" href="#layer2"> <img src="images/Logo_twitch.png" class="logo_img"> </a>
-                            <h3> 트위치 인기 영상 </h3>
-                            <div class="clear"> </div>
-
-                            <div class="video_intro">
-                                <a class="moveframe" href="#layer2">
-                                    <img class="twitch-best-video-img" width="260" height="200">
-                                    <p class="twitch-best-video-url video_url"> URL </p>
-                                    <p class="twitch-video_name video_title"> 영상이름 </p>
-                                    <p class="twitch-video_location video_publisher"> 올린 사람 </p>
-                                </a>
-                            </div>
-
-                            <div class="video_intro">
-                                <a class="moveframe" href="#layer2">
-                                    <img class="twitch-best-video-img" width="260" height="200">
-                                    <p class="twitch-best-video-url video_url"> URL </p>
-                                    <p class="twitch-video_name video_title"> 영상이름 </p>
-                                    <p class="twitch-video_location video_publisher"> 올린 사람 </p>
-                                </a>
-                            </div>
-
-                            <div class="video_intro">
-                                <a class="moveframe" href="#layer2">
-                                    <img class="twitch-best-video-img" width="260" height="200">
-                                    <p class="twitch-best-video-url video_url"> URL </p>
-                                    <p class="twitch-video_name video_title"> 영상이름 </p>
-                                    <p class="twitch-video_location video_publisher"> 올린 사람 </p>
-                                </a>
-                            </div>
-
-                            <div class="video_intro">
-                                <a class="moveframe" href="#layer2">
-                                    <img class="twitch-best-video-img" width="260" height="200">
-                                    <p class="twitch-best-video-url video_url"> URL </p>
-                                    <p class="twitch-video_name video_title"> 영상이름 </p>
-                                    <p class="twitch-video_location video_publisher"> 올린 사람 </p>
-                                </a>
-                            </div>
-
-                            <div class="clear">
-                            </div>
-
-                            <div class="video_intro">
-                                <a class="moveframe" href="#layer2">
-                                    <img class="twitch-best-video-img" width="260" height="200">
-                                    <p class="twitch-best-video-url video_url"> URL </p>
-                                    <p class="twitch-video_name video_title"> 영상이름 </p>
-                                    <p class="twitch-video_location video_publisher"> 올린 사람 </p>
-                                </a>
-                            </div>
-
-                            <div class="video_intro">
-                                <a class="moveframe" href="#layer2">
-                                    <img class="twitch-best-video-img" width="260" height="200">
-                                    <p class="twitch-best-video-url video_url"> URL </p>
-                                    <p class="twitch-video_name video_title"> 영상이름 </p>
-                                    <p class="twitch-video_location video_publisher"> 올린 사람 </p>
-                                </a>
-                            </div>
-
-                            <div class="video_intro">
-                                <a class="moveframe" href="#layer2">
-                                    <img class="twitch-best-video-img" width="260" height="200">
-                                    <p class="twitch-best-video-url video_url"> URL </p>
-                                    <p class="twitch-video_name video_title"> 영상이름 </p>
-                                    <p class="twitch-video_location video_publisher"> 올린 사람 </p>
-                                </a>
-                            </div>
-
-                            <div class="video_intro">
-                                <a class="moveframe" href="#layer2">
-                                    <img class="twitch-best-video-img" width="260" height="200">
-                                    <p class="twitch-best-video-url video_url"> URL </p>
-                                    <p class="twitch-video_name video_title"> 영상이름 </p>
-                                    <p class="twitch-video_location video_publisher"> 올린 사람 </p>
-                                </a>
-                            </div>
+                </div>
+                <div class="clear">
+                </div>
 
 
 
+                <!-- 트위치 영상 모음-->
+                <div class="show show_twitch" id="idtwitch">
+                    <div class="logo_output">
+                        <a href="#layer2"> <img src="images/Logo_twitch.png" class="logo_img Logo_twitch"> </a>
+                        <h3> 트위치 인기 영상 </h3>
+                        <div class="clear"> </div>
 
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="twitch-best-video-img" width="260" height="200">
+                                <p class="twitch-best-video-url video_url"> URL </p>
+                                <p class="twitch-video_name video_title"> 영상이름 </p>
+                                <p class="twitch-video_location video_publisher"> 올린 사람 </p>
+                            </a>
+                        </div>
+
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="twitch-best-video-img" width="260" height="200">
+                                <p class="twitch-best-video-url video_url"> URL </p>
+                                <p class="twitch-video_name video_title"> 영상이름 </p>
+                                <p class="twitch-video_location video_publisher"> 올린 사람 </p>
+                            </a>
+                        </div>
+
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="twitch-best-video-img" width="260" height="200">
+                                <p class="twitch-best-video-url video_url"> URL </p>
+                                <p class="twitch-video_name video_title"> 영상이름 </p>
+                                <p class="twitch-video_location video_publisher"> 올린 사람 </p>
+                            </a>
+                        </div>
+
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="twitch-best-video-img" width="260" height="200">
+                                <p class="twitch-best-video-url video_url"> URL </p>
+                                <p class="twitch-video_name video_title"> 영상이름 </p>
+                                <p class="twitch-video_location video_publisher"> 올린 사람 </p>
+                            </a>
                         </div>
                     </div>
+                </div>
+                <div class="clear">
+                </div>
+
+                <!-- 카카오TV 영상 모음-->
+                <div class="show show_kakao" id="idkakao">
+                    <div class="logo_output">
+                        <a href="https://tv.kakao.com"> <img src="images/Logo_kakao.png" class="logo_img Logo_kakao"> </a>
+                        <h3> 카카오TV 인기 영상 </h3>
+                        <div class="clear"> </div>
+
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="kakao-best-video-img" width="260" height="200">
+                                <p class="kakao-best-video-url video_url"> URL </p>
+                                <p class="kakao-video_name video_title"> 영상이름 </p>
+                                <p class="kakao-video_location video_publisher"> 올린 사람 </p>
+                            </a>
+                        </div>
+
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="kakao-best-video-img" width="260" height="200">
+                                <p class="kakao-best-video-url video_url"> URL </p>
+                                <p class="kakao-video_name video_title"> 영상이름 </p>
+                                <p class="kakao-video_location video_publisher"> 올린 사람 </p>
+                            </a>
+                        </div>
+
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="kakao-best-video-img" width="260" height="200">
+                                <p class="kakao-best-video-url video_url"> URL </p>
+                                <p class="kakao-video_name video_title"> 영상이름 </p>
+                                <p class="kakao-video_location video_publisher"> 올린 사람 </p>
+                            </a>
+                        </div>
+
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="kakao-best-video-img" width="260" height="200">
+                                <p class="kakao-best-video-url video_url"> URL </p>
+                                <p class="kakao-video_name video_title"> 영상이름 </p>
+                                <p class="kakao-video_location video_publisher"> 올린 사람 </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+
+
+
+                <!-- V-라이브 영상 모음-->
+                <div class="show show_vlive" id="idvlive">
+                    <div class="logo_output">
+                        <a href="https://www.vlive.tv/home/new/"> <img src="images/Logo_vlive.png" class="logo_img Logo_vlive"> </a>
+                        <h3> V-라이브 인기 영상 </h3>
+                        <div class="clear"> </div>
+
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="vlive-best-video-img" width="260" height="200">
+                                <p class="vlive-best-video-url video_url"> URL </p>
+                                <p class="vlive-video_name video_title"> 영상이름 </p>
+                                <p class="vlive-video_location video_publisher"> 올린 사람 </p>
+                            </a>
+                        </div>
+
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="vlive-best-video-img" width="260" height="200">
+                                <p class="vlive-best-video-url video_url"> URL </p>
+                                <p class="vlive-video_name video_title"> 영상이름 </p>
+                                <p class="vlive-video_location video_publisher"> 올린 사람 </p>
+                            </a>
+                        </div>
+
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="vlive-best-video-img" width="260" height="200">
+                                <p class="vlive-best-video-url video_url"> URL </p>
+                                <p class="vlive-video_name video_title"> 영상이름 </p>
+                                <p class="vlive-video_location video_publisher"> 올린 사람 </p>
+                            </a>
+                        </div>
+
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="vlive-best-video-img" width="260" height="200">
+                                <p class="vlive-best-video-url video_url"> URL </p>
+                                <p class="vlive-video_name video_title"> 영상이름 </p>
+                                <p class="vlive-video_location video_publisher"> 올린 사람 </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+
+
+
+                <!-- 네이버 티비 영상-->
+                <div class="show show_navertv" id="idnavertv">
+                    <div class="logo_output">
+                        <a href="https://tv.naver.com/"> <img src="images/Logo_navertv.png" class="logo_img Logo_navertv"> </a>
+                        <h3> 네이버 티비 인기 영상 </h3>
+                        <div class="clear"> </div>
+
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="navertv-best-video-img" width="260" height="200">
+                                <p class="navertv-best-video-url video_url"> URL </p>
+                                <p class="navertv-video_name video_title"> 영상이름 </p>
+                                <p class="navertv-video_location video_publisher"> 올린 사람 </p>
+                            </a>
+                        </div>
+
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="navertv-best-video-img" width="260" height="200">
+                                <p class="navertv-best-video-url video_url"> URL </p>
+                                <p class="navertv-video_name video_title"> 영상이름 </p>
+                                <p class="navertv-video_location video_publisher"> 올린 사람 </p>
+                            </a>
+                        </div>
+
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="navertv-best-video-img" width="260" height="200">
+                                <p class="navertv-best-video-url video_url"> URL </p>
+                                <p class="navertv-video_name video_title"> 영상이름 </p>
+                                <p class="navertv-video_location video_publisher"> 올린 사람 </p>
+                            </a>
+                        </div>
+
+                        <div class="video_intro">
+                            <a class="moveframe" href="#layer2">
+                                <img class="navertv-best-video-img" width="260" height="200">
+                                <p class="navertv-best-video-url video_url"> URL </p>
+                                <p class="navertv-video_name video_title"> 영상이름 </p>
+                                <p class="navertv-video_location video_publisher"> 올린 사람 </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
 
             </article>
 
@@ -544,7 +540,7 @@
                 <div class="pop-container">
                     <div class="pop-conts">
                         <!--content //-->
-                        <iframe width="1024" height="600" frameborder="0" class="framepop"> </iframe>
+                        <iframe width="1024" height="600" frameborder="0" class="framepop" allowfullscreen allow="autoplay"> </iframe>
                         <p class="frame_video_title"> 영상이름 </p>
                         <p class="frame_video_publisher"> 올린사람 </p>
                         <div class="btn-r">

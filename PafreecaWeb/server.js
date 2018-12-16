@@ -36,6 +36,36 @@ ps.PythonShell.run('twitch-best.py', crawlingoptions, function (err, results) {
     console.log('Twitch Data Loaded')
 });
 
+
+
+// 카카오 인기영상 크롤링
+var kakaoData = [];
+ps.PythonShell.run('kakao-best.py', crawlingoptions, function (err, results) {
+    if (err) throw err;
+    kakaoData = results
+    console.log('Kakao Data Loaded')
+});
+
+// 브이라이브 인기영상 크롤링
+var vliveData = [];
+ps.PythonShell.run('vlive-best.py', crawlingoptions, function (err, results) {
+    if (err) throw err;
+    vliveData = results
+    console.log('Vlive Data Loaded')
+});
+
+// 네이버 인기영상 크롤링
+var navertvData = [];
+ps.PythonShell.run('navertv-best.py', crawlingoptions, function (err, results) {
+    if (err) throw err;
+    navertvData = results
+    console.log('navertv Data Loaded')
+});
+
+
+
+
+
 // MySQL에 로그인
 var client = mysql.createConnection({
     host: '127.0.0.1',
@@ -62,6 +92,20 @@ app.get('/youtube-best-video', function (req, res) {
 app.get('/twitch-best-video', function (req, res) {
     res.send(twitchData);
 })
+app.get('/kakao-best-video', function (req, res) {
+    res.send(kakaoData);
+})
+
+app.get('/vlive-best-video', function (req, res) {
+    res.send(vliveData);
+})
+
+app.get('/navertv-best-video', function (req, res) {
+    res.send(navertvData);
+})
+
+
+
 
 // 회원가입 요청 처리
 app.post('/signup', (request, response) => {
@@ -129,7 +173,7 @@ app.post('/youtubesearch', (request, response) => {
             var it = items[i];
             var title = it["snippet"]["title"];
             var video_id = it["id"]["videoId"];
-            var url = "https://www.youtube.com/watch?v=" + video_id;
+            var url = "https://www.youtube.com/embed/" + video_id;
             var thumbnailurl = it["snippet"]["thumbnails"]["high"]["url"];
             var channel = it["snippet"]["channelTitle"];
 
@@ -151,7 +195,6 @@ app.post('/youtubesearch', (request, response) => {
 
 // 트위치 검색 요청 처리
 app.post('/twitchsearch', (request, response) => {
-
     var search = request.body.search;
     var twitchdata = [] // 응답할 데이터
 
@@ -182,12 +225,41 @@ app.post('/twitchsearch', (request, response) => {
             }
             twitchdata.push(JSON.stringify(twitchdataJSON))
         }
-
         // 응답
         response.send(twitchdata)
 
     });
 })
+
+
+/*
+// 카카오 검색 요청 처리
+app.post('/kakaosearch', (request, response) => {
+    var search = request.body.search;
+    var kakaodata = [] // 응답할 데이터
+
+    response.send(kakaodata)
+})
+
+// 브이라이브 검색 요청 처리
+app.post('/vlivesearch', (request, response) => {
+    var search = request.body.search;
+    var kakaodata = [] // 응답할 데이터
+
+    response.send(vlivedata)
+})
+
+// 네이버티비 검색 요청 처리
+app.post('/navertvsearch', (request, response) => {
+    var search = request.body.search;
+    var kakaodata = [] // 응답할 데이터
+
+    response.send(navertvdata)
+})
+*/
+
+
+
 
 // 검색을 눌렀을 때 요청 처리
 app.post('/searchpage', (request, response) => {

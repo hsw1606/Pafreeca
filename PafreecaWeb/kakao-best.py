@@ -42,18 +42,13 @@ def get_video_info(target_url):
 
     html = driver.page_source
     soup = BeautifulSoup(html, 'lxml')
-    highlight1 = soup.find_all('div', {'class':'slick-active', 'data-slick-index':'0'})
-    highlight2 = soup.find_all('div', {'class':'slick-active', 'data-slick-index':'0'})
-    highlight3 = soup.find_all('div', {'class':'slick-active', 'data-slick-index':'0'})
-    highlight4 = soup.find_all('div', {'class':'slick-active', 'data-slick-index':'0'})
+    area_highlight = soup.find('div', {'class':'area_highlight'})
+    list = area_highlight.find_all('div', {'class':'slick-active'})
 
-    list=[]
-    list.append(highlight1[1])
-    list.append(highlight2[1])
-    list.append(highlight3[1])
-    list.append(highlight4[1])
     
-    for item in list:
+    for idx, item in enumerate(list):
+        if idx == 4:
+            break;
         title = item.find('strong', {'class':'tit_item'}).get_text()
         IsRemoved = False
         for i in range(len(title)):
@@ -75,8 +70,9 @@ def get_video_info(target_url):
         video_split, b = item.find('a', {'href':True, 'class':'link_itembox'}).get('href').split('?')
         video_id = video_split.split('/')[4]
         video_url = 'https://tv.kakao.com/embed/player/cliplink/' + video_id
+        video_url = video_url + '?autoplay=1'
         thumbnail = item.find('img', {'src':True, 'class':'thumb_img'}).get('src')
-        channel = item.find('span', {'class':'screen_out'}).get_text().replace('<span class="screen_out">출처 :</span>', '')
+        channel = item.find('span', {'class':'assist_info'}).get_text().replace('출처 :', '')
         
         video_info = {
 
@@ -91,6 +87,7 @@ def get_video_info(target_url):
         }
         video_info_str = json.dumps(video_info)
         print(video_info_str)
+        #print(video_info)
     
     driver.close()
     return video_info
