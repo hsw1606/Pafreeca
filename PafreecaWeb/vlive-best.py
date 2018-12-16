@@ -6,6 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
 import time
 import json
+import re
 
 video_info = {
 
@@ -60,8 +61,10 @@ def get_video_info(target_url):
                     else:
                         title = title[:i] + title[i+1:]
                     IsRemoved = True
-        
-        video_url = 'https://www.vlive.tv' + item.find('a', {'href':True, 'class':'thumb_area'}).get('href')
+
+        video_href = item.find('a', {'href':True, 'class':'thumb_area'}).get('href')
+        video_id = re.sub('/video', '', video_href)
+        video_url = 'https://www.vlive.tv/embed' + video_id + '?autoPlay=true'
         thumbnail = item.find('img', {'src':True}).get('src')
         channel = item.find('a', {'class':'thumb_area'}).get('data-ga-cname')
         
