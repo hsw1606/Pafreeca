@@ -1,7 +1,5 @@
-
 $(document).ready(function () {
 
-    //서버에 요청한 각 플랫폼별 인기영상의 JSON data 파싱
     $.ajax({
         url: '/youtube-best-video',
         type: 'get',
@@ -12,7 +10,7 @@ $(document).ready(function () {
             var urllist = {};
             var title = {};
             var channel = {};
-            for (var i = 0; i < 4; i++) {
+            for (var i = 0; i < 8; i++) {
 
                 dataJSON = eval("(" + data[i] + ")")
                 thumblist[i] = dataJSON.thumbnail
@@ -25,9 +23,16 @@ $(document).ready(function () {
                 document.getElementsByClassName('youtube-video_name')[i].innerHTML = title[i]
                 document.getElementsByClassName('youtube-video_location')[i].innerHTML = channel[i]
 
+
+
+
             }
+
+
         }
     })
+
+
 
     $.ajax({
         url: '/twitch-best-video',
@@ -39,7 +44,7 @@ $(document).ready(function () {
             var urllist = {};
             var title = {};
             var channel = {};
-            for (var i = 0; i < 4; i++) {
+            for (var i = 0; i < 8; i++) {
 
                 dataJSON = eval("(" + data[i] + ")")
                 thumblist[i] = dataJSON.thumbnail
@@ -52,11 +57,14 @@ $(document).ready(function () {
                 document.getElementsByClassName('twitch-video_name')[i].innerHTML = title[i]
                 document.getElementsByClassName('twitch-video_location')[i].innerHTML = channel[i]
 
+
+
             }
 
 
         }
     })
+
     
     $.ajax({
         url: '/kakao-best-video',
@@ -68,7 +76,7 @@ $(document).ready(function () {
             var urllist = {};
             var title = {};
             var channel = {};
-            for (var i = 0; i < 4; i++) {
+            for (var i = 0; i < 8; i++) {
 
                 dataJSON = eval("(" + data[i] + ")")
                 thumblist[i] = dataJSON.thumbnail
@@ -81,9 +89,14 @@ $(document).ready(function () {
                 document.getElementsByClassName('kakao-video_name')[i].innerHTML = title[i]
                 document.getElementsByClassName('kakao-video_location')[i].innerHTML = channel[i]
 
+
+
             }
+
+
         }
     })
+
     
     $.ajax({
         url: '/vlive-best-video',
@@ -95,7 +108,7 @@ $(document).ready(function () {
             var urllist = {};
             var title = {};
             var channel = {};
-            for (var i = 0; i < 4; i++) {
+            for (var i = 0; i < 8; i++) {
 
                 dataJSON = eval("(" + data[i] + ")")
                 thumblist[i] = dataJSON.thumbnail
@@ -108,7 +121,11 @@ $(document).ready(function () {
                 document.getElementsByClassName('vlive-video_name')[i].innerHTML = title[i]
                 document.getElementsByClassName('vlive-video_location')[i].innerHTML = channel[i]
 
+
+
             }
+
+
         }
     })
     
@@ -122,7 +139,7 @@ $(document).ready(function () {
             var urllist = {};
             var title = {};
             var channel = {};
-            for (var i = 0; i < 4; i++) {
+            for (var i = 0; i < 8; i++) {
 
                 dataJSON = eval("(" + data[i] + ")")
                 thumblist[i] = dataJSON.thumbnail
@@ -135,12 +152,14 @@ $(document).ready(function () {
                 document.getElementsByClassName('navertv-video_name')[i].innerHTML = title[i]
                 document.getElementsByClassName('navertv-video_location')[i].innerHTML = channel[i]
 
+
+
             }
+            
         }
     })
+
+
+
+
 })
-
-
-
-
-

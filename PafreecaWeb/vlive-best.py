@@ -64,7 +64,8 @@ def get_video_info(target_url):
 
         video_href = item.find('a', {'href':True, 'class':'thumb_area'}).get('href')
         video_id = re.sub('/video', '', video_href)
-        video_url = 'https://www.vlive.tv/embed' + video_id + '?autoPlay=true'
+        video_url = 'https://www.vlive.tv/embed' + video_id
+        #+ '?autoPlay=true'
         thumbnail = item.find('img', {'src':True}).get('src')
         channel = item.find('a', {'class':'thumb_area'}).get('data-ga-cname')
         

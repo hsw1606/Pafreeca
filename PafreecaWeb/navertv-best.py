@@ -78,16 +78,6 @@ def get_video_info(target_url):
         resp.close()
         soup = BeautifulSoup(source, "lxml")
         video_url = soup.find('meta', {'property':'og:video:secure_url'}).get('content')
-        #video_url = soup.find('link', {'type':'text/xml+oembed'}).get('href')
-
-        #resp = urlopen(video_url)
-        #source = resp.read()
-        #resp.close()
-        #soup = BeautifulSoup(source, "lxml")
-
-        #pattern = re.compile('https?:\/\/service[^\']+')
-        #video_url = pattern.findall(str(soup))[0]
-        #video_url = re.sub('amp;', '', video_url)
 
         video_info = {
 

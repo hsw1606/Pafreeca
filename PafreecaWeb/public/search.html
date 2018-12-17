@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title> 인기 게임 영상 </title>
+    <title> 검색 결과 </title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/LayerPopUp.css">
@@ -47,7 +47,7 @@
             $(".flip_twitch").slideUp();
             $(".flip_kakao").slideUp();
             $(".flip_vlive").slideUp();
-            $(".flip_naver2").slideUp();
+            $(".flip_navertv").slideUp();
 
 
 
@@ -132,7 +132,7 @@
                     html1 += '   </div>'
                     html1 += '   <div class="clear">'
                     html1 += '   </div>'
-                    
+
                     $('.nonflip_youtube').append(html1).trigger('create')
 
                     // 두번째칸부터 로드
@@ -149,6 +149,7 @@
                         html2 += '          <p class=\"video_title search_video_title\">' + title2 + '</p>'
                         html2 += '          <p class=\"video_publisher search_video_publisher\">' + channel2 + '</p>'
                         html2 += '      </a > '
+                        html2 += '   </div >'
                         html2 += '   <div class="video-explain">'
                         html2 += '       <h1>' + title2 + '</h1>'
                         html2 += '       <h2>' + channel2 + '</h2>'
@@ -328,364 +329,357 @@
 
                 }
             })
-        })
 
-        /*
-        // 카카오티비 검색 요청
-        $.ajax({
-            url: '/kakaosearch',
-            type: 'post',
-            dataType: 'json',
-            data: {
-                search: keyword
-            },
-            success: (data) => {
 
-                var dataJSON1 = eval("(" + data[0] + ")")
-                var url1 = dataJSON1.url
-                var thumbnailurl1 = dataJSON1.thumbnailurl
-                var title1 = dataJSON1.title
-                var channel1 = dataJSON1.channel
+            
+            // 카카오티비 검색 요청
+            $.ajax({
+                url: '/kakaosearch',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    search: keyword
+                },
+                success: (data) => {
 
-                // 맨처음 칸에 로드
-                var html1 = '   <div class="BJ1-video-image">'
-                html1 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title1)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl1 + '\">'
-                html1 += '           <p class=video_url>' + url1 + '</p>'
-                html1 += '           <p class=\"video_title search_video_title\">' + title1 + '</p>'
-                html1 += '           <p class=\"video_publisher search_video_publisher\">' + channel1 + '</p>'
-                html1 += '       </a > '
-                html1 += '   </div >'
-                html1 += '   <div class="video-explain">'
-                html1 += '       <h1>' + title1 + '</h1>'
-                html1 += '       <h2>' + channel1 + '</h2>'
-                //html1 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
-                html1 += '   </div>'
-                html1 += '   <div class="clear">'
-                html1 += '   </div>'
+                    var dataJSON1 = eval("(" + data[0] + ")")
+                    var url1 = dataJSON1.url
+                    var thumbnailurl1 = dataJSON1.thumbnailurl
+                    var title1 = dataJSON1.title
+                    var channel1 = dataJSON1.channel
 
-                $('.nonflip_kakao').append(html1).trigger('create')
+                    // 맨처음 칸에 로드
+                    var html1 = '   <div class="BJ1-video-image">'
+                    html1 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title1)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl1 + '\">'
+                    html1 += '           <p class=video_url>' + url1 + '</p>'
+                    html1 += '           <p class=\"video_title search_video_title\">' + title1 + '</p>'
+                    html1 += '           <p class=\"video_publisher search_video_publisher\">' + channel1 + '</p>'
+                    html1 += '       </a > '
+                    html1 += '   </div >'
+                    html1 += '   <div class="video-explain">'
+                    html1 += '       <h1>' + title1 + '</h1>'
+                    html1 += '       <h2>' + channel1 + '</h2>'
+                    //html1 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
+                    html1 += '   </div>'
+                    html1 += '   <div class="clear">'
+                    html1 += '   </div>'
 
-                // 두번째칸부터 로드
-                for (var i = 1; i < data.length; i++) {
-                    dataJSON2 = eval("(" + data[i] + ")")
-                    var url2 = dataJSON2.url
-                    var thumbnailurl2 = dataJSON2.thumbnailurl
-                    var title2 = dataJSON2.title
-                    var channel2 = dataJSON2.channel
+                    $('.nonflip_kakao').append(html1).trigger('create')
 
-                    var html2 = '   <div class="BJ1-video-image">'
-                    html2 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title2)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl2 + '\">'
-                    html2 += '          <p class=video_url>' + url2 + '</p>'
-                    html2 += '          <p class=\"video_title search_video_title\">' + title2 + '</p>'
-                    html2 += '          <p class=\"video_publisher search_video_publisher\">' + channel2 + '</p>'
-                    html2 += '      </a > '
-                    html2 += '   <div class="video-explain">'
-                    html2 += '       <h1>' + title2 + '</h1>'
-                    html2 += '       <h2>' + channel2 + '</h2>'
-                    //html2 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
-                    html2 += '   </div>'
-                    html2 += '   <div class="clear">'
-                    html2 += '   </div>'
+                    // 두번째칸부터 로드
+                    for (var i = 1; i < data.length; i++) {
+                        dataJSON2 = eval("(" + data[i] + ")")
+                        var url2 = dataJSON2.url
+                        var thumbnailurl2 = dataJSON2.thumbnailurl
+                        var title2 = dataJSON2.title
+                        var channel2 = dataJSON2.channel
 
-                    $('.flip_kakao').append(html2).trigger('create')
-                }
+                        var html2 = '   <div class="BJ1-video-image">'
+                        html2 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title2)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl2 + '\">'
+                        html2 += '          <p class=video_url>' + url2 + '</p>'
+                        html2 += '          <p class=\"video_title search_video_title\">' + title2 + '</p>'
+                        html2 += '          <p class=\"video_publisher search_video_publisher\">' + channel2 + '</p>'
+                        html2 += '      </a > '
+                        html2 += '   </div >'
+                        html2 += '   <div class="video-explain">'
+                        html2 += '       <h1>' + title2 + '</h1>'
+                        html2 += '       <h2>' + channel2 + '</h2>'
+                        //html2 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
+                        html2 += '   </div>'
+                        html2 += '   <div class="clear">'
+                        html2 += '   </div>'
 
-                $('.moveframe').click(function () {
-                    var $href = $(this).attr('href');
-                    layer_popup($href);
-                    $('.framepop').attr('src', $(this).children('.video_url').text());
-                    $('.frame_video_title').text($(this).children('.video_title').text());
-                    $('.frame_video_publisher').text($(this).children('.video_publisher').text());
-                });
-                function layer_popup(el) {
-                    var $el = $(el);        //레이어의 id를 $el 변수에 저장
-                    var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
-
-                    isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
-
-                    var $elWidth = ~~($el.outerWidth()),
-                        $elHeight = ~~($el.outerHeight()),
-                        docWidth = $(document).width(),
-                        docHeight = $(document).height();
-
-                    // 화면의 중앙에 레이어를 띄운다.
-                    if ($elHeight < docHeight || $elWidth < docWidth) {
-
-                        $el.css({
-                            marginTop: -$elHeight / 2,
-                            marginLeft: -$elWidth / 2
-                        })
-                    } else {
-                        $el.css({ top: 0, left: 0 });
+                        $('.flip_kakao').append(html2).trigger('create')
                     }
 
-                    $el.find('a.btn-layerClose').click(function () {
-                        isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); //닫기 버튼을 클릭하면 레이어가 닫힌다.
-                        $('.framepop').attr('src', '');
-                        return false;
+                    $('.moveframe').click(function () {
+                        var $href = $(this).attr('href');
+                        layer_popup($href);
+                        $('.framepop').attr('src', $(this).children('.video_url').text());
+                        $('.frame_video_title').text($(this).children('.video_title').text());
+                        $('.frame_video_publisher').text($(this).children('.video_publisher').text());
                     });
+                    function layer_popup(el) {
+                        var $el = $(el);        //레이어의 id를 $el 변수에 저장
+                        var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
 
-                    $('.layer .dimBg').click(function () {
-                        $('.dim-layer').fadeOut();
-                        return false;
-                    });
+                        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
 
-                    $(document).click(function (e) { //문서 body를 클릭했을때
-                        if (e.target.className == "dimBg") { //내가 클릭한 요소(target)를 기준으로 상위요소에 .dimBg이 없으면 (갯수가 0이라면)
-                            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
-                            $('.framepop').attr('src', ''); // URL을 다시 로드
-                            return false;
+                        var $elWidth = ~~($el.outerWidth()),
+                            $elHeight = ~~($el.outerHeight()),
+                            docWidth = $(document).width(),
+                            docHeight = $(document).height();
+
+                        // 화면의 중앙에 레이어를 띄운다.
+                        if ($elHeight < docHeight || $elWidth < docWidth) {
+
+                            $el.css({
+                                marginTop: -$elHeight / 2,
+                                marginLeft: -$elWidth / 2
+                            })
+                        } else {
+                            $el.css({ top: 0, left: 0 });
                         }
-                    })
 
-                }
+                        $el.find('a.btn-layerClose').click(function () {
+                            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); //닫기 버튼을 클릭하면 레이어가 닫힌다.
+                            $('.framepop').attr('src', '');
+                            return false;
+                        });
 
-            }
+                        $('.layer .dimBg').click(function () {
+                            $('.dim-layer').fadeOut();
+                            return false;
+                        });
 
-        })
-
-
-
-
-
-
-
-
-        // 브이라이브 검색 요청
-        $.ajax({
-            url: '/vlivesearch',
-            type: 'post',
-            dataType: 'json',
-            data: {
-                search: keyword
-            },
-            success: (data) => {
-
-                var dataJSON1 = eval("(" + data[0] + ")")
-                var url1 = dataJSON1.url
-                var thumbnailurl1 = dataJSON1.thumbnailurl
-                var title1 = dataJSON1.title
-                var channel1 = dataJSON1.channel
-
-                // 맨처음 칸에 로드
-                var html1 = '   <div class="BJ1-video-image">'
-                html1 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title1)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl1 + '\">'
-                html1 += '           <p class=video_url>' + url1 + '</p>'
-                html1 += '           <p class=\"video_title search_video_title\">' + title1 + '</p>'
-                html1 += '           <p class=\"video_publisher search_video_publisher\">' + channel1 + '</p>'
-                html1 += '       </a > '
-                html1 += '   </div >'
-                html1 += '   <div class="video-explain">'
-                html1 += '       <h1>' + title1 + '</h1>'
-                html1 += '       <h2>' + channel1 + '</h2>'
-                //html1 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
-                html1 += '   </div>'
-                html1 += '   <div class="clear">'
-                html1 += '   </div>'
-
-                $('.nonflip_vlive').append(html1).trigger('create')
-
-                // 두번째칸부터 로드
-                for (var i = 1; i < data.length; i++) {
-                    dataJSON2 = eval("(" + data[i] + ")")
-                    var url2 = dataJSON2.url
-                    var thumbnailurl2 = dataJSON2.thumbnailurl
-                    var title2 = dataJSON2.title
-                    var channel2 = dataJSON2.channel
-
-                    var html2 = '   <div class="BJ1-video-image">'
-                    html2 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title2)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl2 + '\">'
-                    html2 += '          <p class=video_url>' + url2 + '</p>'
-                    html2 += '          <p class=\"video_title search_video_title\">' + title2 + '</p>'
-                    html2 += '          <p class=\"video_publisher search_video_publisher\">' + channel2 + '</p>'
-                    html2 += '      </a > '
-                    html2 += '   <div class="video-explain">'
-                    html2 += '       <h1>' + title2 + '</h1>'
-                    html2 += '       <h2>' + channel2 + '</h2>'
-                    //html2 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
-                    html2 += '   </div>'
-                    html2 += '   <div class="clear">'
-                    html2 += '   </div>'
-
-                    $('.flip_vlive').append(html2).trigger('create')
-                }
-
-                $('.moveframe').click(function () {
-                    var $href = $(this).attr('href');
-                    layer_popup($href);
-                    $('.framepop').attr('src', $(this).children('.video_url').text());
-                    $('.frame_video_title').text($(this).children('.video_title').text());
-                    $('.frame_video_publisher').text($(this).children('.video_publisher').text());
-                });
-                function layer_popup(el) {
-                    var $el = $(el);        //레이어의 id를 $el 변수에 저장
-                    var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
-
-                    isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
-
-                    var $elWidth = ~~($el.outerWidth()),
-                        $elHeight = ~~($el.outerHeight()),
-                        docWidth = $(document).width(),
-                        docHeight = $(document).height();
-
-                    // 화면의 중앙에 레이어를 띄운다.
-                    if ($elHeight < docHeight || $elWidth < docWidth) {
-
-                        $el.css({
-                            marginTop: -$elHeight / 2,
-                            marginLeft: -$elWidth / 2
+                        $(document).click(function (e) { //문서 body를 클릭했을때
+                            if (e.target.className == "dimBg") { //내가 클릭한 요소(target)를 기준으로 상위요소에 .dimBg이 없으면 (갯수가 0이라면)
+                                isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+                                $('.framepop').attr('src', ''); // URL을 다시 로드
+                                return false;
+                            }
                         })
-                    } else {
-                        $el.css({ top: 0, left: 0 });
+
                     }
 
-                    $el.find('a.btn-layerClose').click(function () {
-                        isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); //닫기 버튼을 클릭하면 레이어가 닫힌다.
-                        $('.framepop').attr('src', '');
-                        return false;
-                    });
-
-                    $('.layer .dimBg').click(function () {
-                        $('.dim-layer').fadeOut();
-                        return false;
-                    });
-
-                    $(document).click(function (e) { //문서 body를 클릭했을때
-                        if (e.target.className == "dimBg") { //내가 클릭한 요소(target)를 기준으로 상위요소에 .dimBg이 없으면 (갯수가 0이라면)
-                            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
-                            $('.framepop').attr('src', ''); // URL을 다시 로드
-                            return false;
-                        }
-                    })
-
                 }
 
-            }
-
-        })
-
+            })
+            
 
 
+            
+            // 브이라이브 검색 요청
+            $.ajax({
+                url: '/vlivesearch',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    search: keyword
+                },
+                success: (data) => {
 
+                    var dataJSON1 = eval("(" + data[0] + ")")
+                    var url1 = dataJSON1.url
+                    var thumbnailurl1 = dataJSON1.thumbnailurl
+                    var title1 = dataJSON1.title
+                    var channel1 = dataJSON1.channel
 
+                    // 맨처음 칸에 로드
+                    var html1 = '   <div class="BJ1-video-image">'
+                    html1 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title1)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl1 + '\">'
+                    html1 += '           <p class=video_url>' + url1 + '</p>'
+                    html1 += '           <p class=\"video_title search_video_title\">' + title1 + '</p>'
+                    html1 += '           <p class=\"video_publisher search_video_publisher\">' + channel1 + '</p>'
+                    html1 += '       </a > '
+                    html1 += '   </div >'
+                    html1 += '   <div class="video-explain">'
+                    html1 += '       <h1>' + title1 + '</h1>'
+                    html1 += '       <h2>' + channel1 + '</h2>'
+                    //html1 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
+                    html1 += '   </div>'
+                    html1 += '   <div class="clear">'
+                    html1 += '   </div>'
 
-        // 네이버티비 검색 요청
-        $.ajax({
-            url: '/navertvsearch',
-            type: 'post',
-            dataType: 'json',
-            data: {
-                search: keyword
-            },
-            success: (data) => {
+                    $('.nonflip_vlive').append(html1).trigger('create')
 
-                var dataJSON1 = eval("(" + data[0] + ")")
-                var url1 = dataJSON1.url
-                var thumbnailurl1 = dataJSON1.thumbnailurl
-                var title1 = dataJSON1.title
-                var channel1 = dataJSON1.channel
+                    // 두번째칸부터 로드
+                    for (var i = 1; i < data.length; i++) {
+                        dataJSON2 = eval("(" + data[i] + ")")
+                        var url2 = dataJSON2.url
+                        var thumbnailurl2 = dataJSON2.thumbnailurl
+                        var title2 = dataJSON2.title
+                        var channel2 = dataJSON2.channel
 
-                // 맨처음 칸에 로드
-                var html1 = '   <div class="BJ1-video-image">'
-                html1 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title1)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl1 + '\">'
-                html1 += '           <p class=video_url>' + url1 + '</p>'
-                html1 += '           <p class=\"video_title search_video_title\">' + title1 + '</p>'
-                html1 += '           <p class=\"video_publisher search_video_publisher\">' + channel1 + '</p>'
-                html1 += '       </a > '
-                html1 += '   </div >'
-                html1 += '   <div class="video-explain">'
-                html1 += '       <h1>' + title1 + '</h1>'
-                html1 += '       <h2>' + channel1 + '</h2>'
-                //html1 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
-                html1 += '   </div>'
-                html1 += '   <div class="clear">'
-                html1 += '   </div>'
+                        var html2 = '   <div class="BJ1-video-image">'
+                        html2 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title2)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl2 + '\">'
+                        html2 += '          <p class=video_url>' + url2 + '</p>'
+                        html2 += '          <p class=\"video_title search_video_title\">' + title2 + '</p>'
+                        html2 += '          <p class=\"video_publisher search_video_publisher\">' + channel2 + '</p>'
+                        html2 += '      </a > '
+                        html2 += '   </div >'
+                        html2 += '   <div class="video-explain">'
+                        html2 += '       <h1>' + title2 + '</h1>'
+                        html2 += '       <h2>' + channel2 + '</h2>'
+                        //html2 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
+                        html2 += '   </div>'
+                        html2 += '   <div class="clear">'
+                        html2 += '   </div>'
 
-                $('.nonflip_navertv').append(html1).trigger('create')
-
-                // 두번째칸부터 로드
-                for (var i = 1; i < data.length; i++) {
-                    dataJSON2 = eval("(" + data[i] + ")")
-                    var url2 = dataJSON2.url
-                    var thumbnailurl2 = dataJSON2.thumbnailurl
-                    var title2 = dataJSON2.title
-                    var channel2 = dataJSON2.channel
-
-                    var html2 = '   <div class="BJ1-video-image">'
-                    html2 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title2)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl2 + '\">'
-                    html2 += '          <p class=video_url>' + url2 + '</p>'
-                    html2 += '          <p class=\"video_title search_video_title\">' + title2 + '</p>'
-                    html2 += '          <p class=\"video_publisher search_video_publisher\">' + channel2 + '</p>'
-                    html2 += '      </a > '
-                    html2 += '   <div class="video-explain">'
-                    html2 += '       <h1>' + title2 + '</h1>'
-                    html2 += '       <h2>' + channel2 + '</h2>'
-                    //html2 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
-                    html2 += '   </div>'
-                    html2 += '   <div class="clear">'
-                    html2 += '   </div>'
-
-                    $('.flip_navertv').append(html2).trigger('create')
-                }
-
-                $('.moveframe').click(function () {
-                    var $href = $(this).attr('href');
-                    layer_popup($href);
-                    $('.framepop').attr('src', $(this).children('.video_url').text());
-                    $('.frame_video_title').text($(this).children('.video_title').text());
-                    $('.frame_video_publisher').text($(this).children('.video_publisher').text());
-                });
-                function layer_popup(el) {
-                    var $el = $(el);        //레이어의 id를 $el 변수에 저장
-                    var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
-
-                    isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
-
-                    var $elWidth = ~~($el.outerWidth()),
-                        $elHeight = ~~($el.outerHeight()),
-                        docWidth = $(document).width(),
-                        docHeight = $(document).height();
-
-                    // 화면의 중앙에 레이어를 띄운다.
-                    if ($elHeight < docHeight || $elWidth < docWidth) {
-
-                        $el.css({
-                            marginTop: -$elHeight / 2,
-                            marginLeft: -$elWidth / 2
-                        })
-                    } else {
-                        $el.css({ top: 0, left: 0 });
+                        $('.flip_vlive').append(html2).trigger('create')
                     }
 
-                    $el.find('a.btn-layerClose').click(function () {
-                        isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); //닫기 버튼을 클릭하면 레이어가 닫힌다.
-                        $('.framepop').attr('src', '');
-                        return false;
+                    $('.moveframe').click(function () {
+                        var $href = $(this).attr('href');
+                        layer_popup($href);
+                        $('.framepop').attr('src', $(this).children('.video_url').text());
+                        $('.frame_video_title').text($(this).children('.video_title').text());
+                        $('.frame_video_publisher').text($(this).children('.video_publisher').text());
                     });
+                    function layer_popup(el) {
+                        var $el = $(el);        //레이어의 id를 $el 변수에 저장
+                        var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
 
-                    $('.layer .dimBg').click(function () {
-                        $('.dim-layer').fadeOut();
-                        return false;
-                    });
+                        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
 
-                    $(document).click(function (e) { //문서 body를 클릭했을때
-                        if (e.target.className == "dimBg") { //내가 클릭한 요소(target)를 기준으로 상위요소에 .dimBg이 없으면 (갯수가 0이라면)
-                            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
-                            $('.framepop').attr('src', ''); // URL을 다시 로드
-                            return false;
+                        var $elWidth = ~~($el.outerWidth()),
+                            $elHeight = ~~($el.outerHeight()),
+                            docWidth = $(document).width(),
+                            docHeight = $(document).height();
+
+                        // 화면의 중앙에 레이어를 띄운다.
+                        if ($elHeight < docHeight || $elWidth < docWidth) {
+
+                            $el.css({
+                                marginTop: -$elHeight / 2,
+                                marginLeft: -$elWidth / 2
+                            })
+                        } else {
+                            $el.css({ top: 0, left: 0 });
                         }
-                    })
+
+                        $el.find('a.btn-layerClose').click(function () {
+                            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); //닫기 버튼을 클릭하면 레이어가 닫힌다.
+                            $('.framepop').attr('src', '');
+                            return false;
+                        });
+
+                        $('.layer .dimBg').click(function () {
+                            $('.dim-layer').fadeOut();
+                            return false;
+                        });
+
+                        $(document).click(function (e) { //문서 body를 클릭했을때
+                            if (e.target.className == "dimBg") { //내가 클릭한 요소(target)를 기준으로 상위요소에 .dimBg이 없으면 (갯수가 0이라면)
+                                isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+                                $('.framepop').attr('src', ''); // URL을 다시 로드
+                                return false;
+                            }
+                        })
+
+                    }
 
                 }
 
-            }
+            })
+            
+            // 네이버티비 검색 요청
+            $.ajax({
+                url: '/navertvsearch',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    search: keyword
+                },
+                success: (data) => {
+
+                    var dataJSON1 = eval("(" + data[0] + ")")
+                    var url1 = dataJSON1.url
+                    var thumbnailurl1 = dataJSON1.thumbnailurl
+                    var title1 = dataJSON1.title
+                    var channel1 = dataJSON1.channel
+
+                    // 맨처음 칸에 로드
+                    var html1 = '   <div class="BJ1-video-image">'
+                    html1 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title1)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl1 + '\">'
+                    html1 += '           <p class=video_url>' + url1 + '</p>'
+                    html1 += '           <p class=\"video_title search_video_title\">' + title1 + '</p>'
+                    html1 += '           <p class=\"video_publisher search_video_publisher\">' + channel1 + '</p>'
+                    html1 += '       </a > '
+                    html1 += '   </div >'
+                    html1 += '   <div class="video-explain">'
+                    html1 += '       <h1>' + title1 + '</h1>'
+                    html1 += '       <h2>' + channel1 + '</h2>'
+                    //html1 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
+                    html1 += '   </div>'
+                    html1 += '   <div class="clear">'
+                    html1 += '   </div>'
+
+                    $('.nonflip_navertv').append(html1).trigger('create')
+
+                    // 두번째칸부터 로드
+                    for (var i = 1; i < data.length; i++) {
+                        dataJSON2 = eval("(" + data[i] + ")")
+                        var url2 = dataJSON2.url
+                        var thumbnailurl2 = dataJSON2.thumbnailurl
+                        var title2 = dataJSON2.title
+                        var channel2 = dataJSON2.channel
+
+                        var html2 = '   <div class="BJ1-video-image">'
+                        html2 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title2)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl2 + '\">'
+                        html2 += '          <p class=video_url>' + url2 + '</p>'
+                        html2 += '          <p class=\"video_title search_video_title\">' + title2 + '</p>'
+                        html2 += '          <p class=\"video_publisher search_video_publisher\">' + channel2 + '</p>'
+                        html2 += '      </a > '
+                        html2 += '   </div >'
+                        html2 += '   <div class="video-explain">'
+                        html2 += '       <h1>' + title2 + '</h1>'
+                        html2 += '       <h2>' + channel2 + '</h2>'
+                        //html2 += '       <p class="review-2"> 영상소개 간략히 ...</p>'
+                        html2 += '   </div>'
+                        html2 += '   <div class="clear">'
+                        html2 += '   </div>'
+
+                        $('.flip_navertv').append(html2).trigger('create')
+                    }
+
+                    $('.moveframe').click(function () {
+                        var $href = $(this).attr('href');
+                        layer_popup($href);
+                        $('.framepop').attr('src', $(this).children('.video_url').text());
+                        $('.frame_video_title').text($(this).children('.video_title').text());
+                        $('.frame_video_publisher').text($(this).children('.video_publisher').text());
+                    });
+                    function layer_popup(el) {
+                        var $el = $(el);        //레이어의 id를 $el 변수에 저장
+                        var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
+
+                        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+
+                        var $elWidth = ~~($el.outerWidth()),
+                            $elHeight = ~~($el.outerHeight()),
+                            docWidth = $(document).width(),
+                            docHeight = $(document).height();
+
+                        // 화면의 중앙에 레이어를 띄운다.
+                        if ($elHeight < docHeight || $elWidth < docWidth) {
+
+                            $el.css({
+                                marginTop: -$elHeight / 2,
+                                marginLeft: -$elWidth / 2
+                            })
+                        } else {
+                            $el.css({ top: 0, left: 0 });
+                        }
+
+                        $el.find('a.btn-layerClose').click(function () {
+                            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); //닫기 버튼을 클릭하면 레이어가 닫힌다.
+                            $('.framepop').attr('src', '');
+                            return false;
+                        });
+
+                        $('.layer .dimBg').click(function () {
+                            $('.dim-layer').fadeOut();
+                            return false;
+                        });
+
+                        $(document).click(function (e) { //문서 body를 클릭했을때
+                            if (e.target.className == "dimBg") { //내가 클릭한 요소(target)를 기준으로 상위요소에 .dimBg이 없으면 (갯수가 0이라면)
+                                isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+                                $('.framepop').attr('src', ''); // URL을 다시 로드
+                                return false;
+                            }
+                        })
+
+                    }
+
+                }
+
+            })
+            
 
         })
-        */
-
-
-
-
+            
         // DB에 nickname, title 저장 요청
         function savehistory(title) {
             $.post("/savehistory", {

@@ -54,14 +54,14 @@ ps.PythonShell.run('vlive-best.py', crawlingoptions, function (err, results) {
     console.log('Vlive Data Loaded')
 });
 
+
 // 네이버 인기영상 크롤링
 var navertvData = [];
 ps.PythonShell.run('navertv-best.py', crawlingoptions, function (err, results) {
     if (err) throw err;
     navertvData = results
-    console.log('navertv Data Loaded')
+    console.log('Navertv Data Loaded')
 });
-
 
 
 
@@ -99,11 +99,9 @@ app.get('/kakao-best-video', function (req, res) {
 app.get('/vlive-best-video', function (req, res) {
     res.send(vliveData);
 })
-
 app.get('/navertv-best-video', function (req, res) {
     res.send(navertvData);
 })
-
 
 
 
@@ -232,31 +230,124 @@ app.post('/twitchsearch', (request, response) => {
 })
 
 
-/*
+
 // 카카오 검색 요청 처리
 app.post('/kakaosearch', (request, response) => {
     var search = request.body.search;
     var kakaodata = [] // 응답할 데이터
 
-    response.send(kakaodata)
+    // 파이썬 실행옵션 설정
+    var searchoptions = {
+        mode: 'text',
+        pythonPath: '',
+        pythonOptions: ['-u'],
+        scriptPath: '',
+        args: [search]
+    }
+
+    // 카카오 검색결과 크롤링
+    ps.PythonShell.run('kakao-search.py', searchoptions, function (err, results) {
+        // 에러 처리
+        if (err) throw err;
+
+        // JSON 결과 파싱
+        for (var item in results) {
+            itemJSON = JSON.parse(results[item])
+
+            // JSON Object 생성 후 kakaodata객체에 추가
+            var kakaodataJSON = {
+                title: itemJSON.title,
+                url: itemJSON.video_url,
+                thumbnailurl: itemJSON.thumbnail,
+                channel: itemJSON.channel
+            }
+            kakaodata.push(JSON.stringify(kakaodataJSON))
+        }
+        // 응답
+        response.send(kakaodata)
+
+    });
 })
 
 // 브이라이브 검색 요청 처리
 app.post('/vlivesearch', (request, response) => {
     var search = request.body.search;
-    var kakaodata = [] // 응답할 데이터
+    var vlivedata = [] // 응답할 데이터
 
-    response.send(vlivedata)
+    // 파이썬 실행옵션 설정
+    var searchoptions = {
+        mode: 'text',
+        pythonPath: '',
+        pythonOptions: ['-u'],
+        scriptPath: '',
+        args: [search]
+    }
+
+    // 브이라이브 검색결과 크롤링
+    ps.PythonShell.run('vlive-search.py', searchoptions, function (err, results) {
+        // 에러 처리
+        if (err) throw err;
+
+        // JSON 결과 파싱
+        for (var item in results) {
+            itemJSON = JSON.parse(results[item])
+
+            // JSON Object 생성 후 vlivedata객체에 추가
+            var vlivedataJSON = {
+                title: itemJSON.title,
+                url: itemJSON.video_url,
+                thumbnailurl: itemJSON.thumbnail,
+                channel: itemJSON.channel
+            }
+            vlivedata.push(JSON.stringify(vlivedataJSON))
+        }
+        // 응답
+        response.send(vlivedata)
+
+    });
 })
+
+
 
 // 네이버티비 검색 요청 처리
 app.post('/navertvsearch', (request, response) => {
     var search = request.body.search;
-    var kakaodata = [] // 응답할 데이터
+    var navertvdata = [] // 응답할 데이터
+    
 
-    response.send(navertvdata)
+    // 파이썬 실행옵션 설정
+    var searchoptions = {
+        mode: 'text',
+        pythonPath: '',
+        pythonOptions: ['-u'],
+        scriptPath: '',
+        args: [search]
+    }
+
+    // 네이버티비 검색결과 크롤링
+    ps.PythonShell.run('navertv-search.py', searchoptions, function (err, results) {
+        // 에러 처리
+        if (err) throw err;
+
+        // JSON 결과 파싱
+        for (var item in results) {
+            itemJSON = JSON.parse(results[item])
+
+            // JSON Object 생성 후 navertvdata객체에 추가
+            var navertvdataJSON = {
+                title: itemJSON.title,
+                url: itemJSON.video_url,
+                thumbnailurl: itemJSON.thumbnail,
+                channel: itemJSON.channel
+            }
+            navertvdata.push(JSON.stringify(navertvdataJSON))
+        }
+        // 응답
+        response.send(navertvdata)
+
+    });
 })
-*/
+
 
 
 

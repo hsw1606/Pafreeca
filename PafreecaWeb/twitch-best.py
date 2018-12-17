@@ -79,7 +79,7 @@ def get_video_info(target_url):
         resp.close()
         soup2=BeautifulSoup(source, "lxml")
         video_url = soup2.find('iframe', {'id':'clip-iframe'}).get('src')
-        video_url = re.sub('autoplay=false', 'autoplay=true', video_url)
+        #video_url = re.sub('autoplay=false', 'autoplay=true', video_url)
     
     
         
