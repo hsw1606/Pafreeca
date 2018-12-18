@@ -44,9 +44,10 @@ def get_video_info(target_url):
 
     rankcontainer = soup.find('div', {'class':'rank_container'})
     list = rankcontainer.find_all('li')
-    
+
+    cnt = 4
     for idx, item in enumerate(list):
-        if idx == 4:
+        if idx == cnt:
             break;
         tooltips = item.find_all('tooltip')
         title = tooltips[0].get('title')
@@ -76,21 +77,25 @@ def get_video_info(target_url):
         source = resp.read()
         resp.close()
         soup = BeautifulSoup(source, "lxml")
-        video_url = soup.find('meta', {'property':'og:video:secure_url'}).get('content')
+        video_url = soup.find('meta', {'property':'og:video:secure_url'})
+        if video_url is None:
+            cnt = cnt + 1
+        else:
+            video_url = video_url.get('content')
 
-        video_info = {
+            video_info = {
 
-            'title':title,
+                'title':title,
 
-            'video_url':video_url,
+                'video_url':video_url,
 
-            'thumbnail':thumbnail,
+                'thumbnail':thumbnail,
 
-            'channel':channel
+                'channel':channel
 
-        }
-        video_info_str = json.dumps(video_info)
-        print(video_info_str)
+            }
+            video_info_str = json.dumps(video_info)
+            print(video_info_str)
     
     driver.close()
     return video_info
