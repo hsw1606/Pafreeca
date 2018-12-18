@@ -407,7 +407,7 @@ app.post('/login', function (req, res) {
                 console.log("userId[" + req.session.displayName + "] log-in-Complete");
                 res.redirect('index.html');
             } else {
-                res.send('no data');
+                res.redirect('login.html');
             }
 
         } else {
