@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import warnings
 warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
 

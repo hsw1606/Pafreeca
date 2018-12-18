@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# coding=cp949
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys

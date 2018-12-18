@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# coding=cp949
 
 from bs4 import BeautifulSoup
 import json

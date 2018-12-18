@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# coding=cp949
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -72,7 +71,7 @@ def get_video_info(target_url):
         video_url = 'https://tv.kakao.com/embed/player/cliplink/' + video_id
         #video_url = video_url + '?autoplay=1'
         thumbnail = item.find('img', {'src':True, 'class':'thumb_img'}).get('src')
-        channel = item.find('span', {'class':'assist_info'}).get_text().replace('√‚√≥ :', '')
+        channel = item.find('span', {'class':'assist_info'}).get_text().replace('Ï∂úÏ≤ò :', '')
         
         video_info = {
 

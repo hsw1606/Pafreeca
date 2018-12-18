@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# coding=cp949
 
 from bs4 import BeautifulSoup
 import json
@@ -49,7 +48,7 @@ def get_video_info(target_url):
         video_id = video_split.split("/")[4]
         video_url = 'https://tv.kakao.com/embed/player/cliplink/' + video_id
         thumbnail = item.find('img', {'src':True, 'class':'thumb_img'}).get('src')
-        channel = item.find('span', {'class':'assist_info'}).get_text().replace('√‚√≥ :', '')
+        channel = item.find('span', {'class':'assist_info'}).get_text().replace('Ï∂úÏ≤ò :', '')
 
         
         video_info = {
