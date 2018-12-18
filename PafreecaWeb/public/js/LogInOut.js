@@ -19,9 +19,10 @@
         type: 'get',
         dataType: 'text',
         success: (data) => {
-            if (data=='1') {
+            if (data == '1') {
                 $('.loginout').text('로그아웃');
                 $('.sign').text('');
+                $('.preference-show').css('display', 'block');
             }
         }
     })
