@@ -63,6 +63,7 @@ $(document).ready(function () {
 
     // DB에 nickname, title 저장 요청
     function savehistory(title) {
+        title = title.toLowerCase()
         $.post("/savehistory", {
             title: decodeURI(title)
         })
