@@ -26,47 +26,55 @@ def get_video_info(target_url):
 
     
     for item in list:
-        title = item.find('strong', {'class':'tit_item'}).get_text()
-        IsRemoved = False
-        for i in range(len(title)):
-            if IsRemoved == True:
-                i = i - 1
-                IsRemoved = False
+        title = item.find('strong', {'class':'tit_item'})
+        if title is None:
+            pass
+        else:
+            title = title.get_text()
             
-            if i < len(title):
-                ordchar = ord(title[i])
-                if ordchar > 0xFFFF:
-                    if i == 0:
-                        title = title[1:]
-                    elif i == len(title)-1:
-                        title = title[:i]
-                    else:
-                        title = title[:i] + title[i+1:]
-                    IsRemoved = True
+            IsRemoved = False
+            for i in range(len(title)):
+                if IsRemoved == True:
+                    i = i - 1
+                    IsRemoved = False
+                
+                if i < len(title):
+                    ordchar = ord(title[i])
+                    if ordchar > 0xFFFF:
+                        if i == 0:
+                            title = title[1:]
+                        elif i == len(title)-1:
+                            title = title[:i]
+                        else:
+                            title = title[:i] + title[i+1:]
+                        IsRemoved = True
 
-        video_split = item.find('a', {'href':True, 'class':'link_itembox'}).get('href')
-        video_id = video_split.split("/")[4]
-        video_url = 'https://tv.kakao.com/embed/player/cliplink/' + video_id
-        thumbnail = item.find('img', {'src':True, 'class':'thumb_img'}).get('src')
-        channel = item.find('span', {'class':'assist_info'}).get_text().replace('출처 :', '')
+            video_split = item.find('a', {'href':True, 'class':'link_itembox'})
+            thumbnail = item.find('img', {'src':True, 'class':'thumb_img'})
+            channel = item.find('span', {'class':'assist_info'})
 
-        
-        video_info = {
+            if video_split is None or thumbnail is None or channel is None:
+                pass
+            else:
+                video_split = video_split.get('href')
+                video_id = video_split.split("/")[4]
+                video_url = 'https://tv.kakao.com/embed/player/cliplink/' + video_id
+                thumbnail = thumbnail.get('src')
+                channel = channel.get_text().replace('출처 :', '')
+            
+                video_info = {
 
-            'title':title,
+                    'title':title,
 
-            'video_url':video_url,
+                    'video_url':video_url,
 
-            'thumbnail':thumbnail,
+                    'thumbnail':thumbnail,
 
-            'channel':channel
+                    'channel':channel
 
-        }
-        video_info_str = json.dumps(video_info)
-        print(video_info_str)
-        #print(video_info)
-
-    #return video_info
+                }
+                video_info_str = json.dumps(video_info)
+                print(video_info_str)
 
 if len(sys.argv) is 1:
     print('No arguments')

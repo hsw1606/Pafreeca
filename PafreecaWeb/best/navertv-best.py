@@ -70,32 +70,37 @@ def get_video_info(target_url):
                         title = title[:i] + title[i+1:]
                     IsRemoved = True
         
-        video_url = item.find('a', {'href':True}).get('href')
-        thumbnail = item.find('img', {'src':True}).get('src')
-
-        resp = urlopen(video_url)
-        source = resp.read()
-        resp.close()
-        soup = BeautifulSoup(source, "lxml")
-        video_url = soup.find('meta', {'property':'og:video:secure_url'})
-        if video_url is None:
-            cnt = cnt + 1
+        video_url = item.find('a', {'href':True})
+        thumbnail = item.find('img', {'src':True})
+        if video_url is None or thumbnail is None:
+            pass
         else:
-            video_url = video_url.get('content')
+            video_url = video_url.get('href')
+            thumbnail = thumbnail.get('src')
 
-            video_info = {
+            resp = urlopen(video_url)
+            source = resp.read()
+            resp.close()
+            soup = BeautifulSoup(source, "lxml")
+            video_url = soup.find('meta', {'property':'og:video:secure_url'})
+            if video_url is None:
+                cnt = cnt + 1
+            else:
+                video_url = video_url.get('content')
 
-                'title':title,
+                video_info = {
 
-                'video_url':video_url,
+                    'title':title,
 
-                'thumbnail':thumbnail,
+                    'video_url':video_url,
 
-                'channel':channel
+                    'thumbnail':thumbnail,
 
-            }
-            video_info_str = json.dumps(video_info)
-            print(video_info_str)
+                    'channel':channel
+
+                }
+                video_info_str = json.dumps(video_info)
+                print(video_info_str)
     
     driver.close()
     return video_info

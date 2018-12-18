@@ -43,44 +43,56 @@ def get_video_info(target_url):
    
     
     for item in list:
-        title = item.find('a', {'class':'thumb_area'}).get('data-ga-name')
-        IsRemoved = False
-        for i in range(len(title)):
-            if IsRemoved == True:
-                i = i - 1
-                IsRemoved = False
-            
-            if i < len(title):
-                ordchar = ord(title[i])
-                if ordchar > 0xFFFF:
-                    if i == 0:
-                        title = title[1:]
-                    elif i == len(title)-1:
-                        title = title[:i]
-                    else:
-                        title = title[:i] + title[i+1:]
-                    IsRemoved = True
-
-        video_href = item.find('a', {'href':True, 'class':'thumb_area'}).get('href')
-        video_id = re.sub('/video', '', video_href)
-        video_url = 'https://www.vlive.tv/embed' + video_id
-        #+ '?autoPlay=true'
-        thumbnail = item.find('img', {'src':True}).get('src')
-        channel = item.find('a', {'class':'thumb_area'}).get('data-ga-cname')
+        title = item.find('a', {'class':'thumb_area'})
         
-        video_info = {
+        if title is None:
+            pass
+        else:
+            title = title.get('data-ga-name')
+        
+            IsRemoved = False
+            for i in range(len(title)):
+                if IsRemoved == True:
+                    i = i - 1
+                    IsRemoved = False
+                
+                if i < len(title):
+                    ordchar = ord(title[i])
+                    if ordchar > 0xFFFF:
+                        if i == 0:
+                            title = title[1:]
+                        elif i == len(title)-1:
+                            title = title[:i]
+                        else:
+                            title = title[:i] + title[i+1:]
+                        IsRemoved = True
 
-            'title':title,
+            video_href = item.find('a', {'href':True, 'class':'thumb_area'})
+            thumbnail = item.find('img', {'src':True})
+            channel = item.find('a', {'class':'thumb_area'})
 
-            'video_url':video_url,
+            if video_href is None or thumbnail is None or channel is None:
+                pass
+            else:
+                video_href = video_href.get('href')
+                video_id = re.sub('/video', '', video_href)
+                video_url = 'https://www.vlive.tv/embed' + video_id + '?autoPlay=false'
+                thumbnail = thumbnail.get('src')
+                channel = channel.get('data-ga-cname')
 
-            'thumbnail':thumbnail,
+                video_info = {
 
-            'channel':channel
+                    'title':title,
 
-        }
-        video_info_str = json.dumps(video_info)
-        print(video_info_str)
+                    'video_url':video_url,
+
+                    'thumbnail':thumbnail,
+
+                    'channel':channel
+
+                }
+                video_info_str = json.dumps(video_info)
+                print(video_info_str)
     
     driver.close()
     return video_info

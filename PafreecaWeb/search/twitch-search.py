@@ -26,51 +26,63 @@ def get_video_info(target_url):
     list = soup.find_all('div', {'class':'clips'})
     
     for item in list:
-        title = item.find('a', {'class':'clip-launch'}).get_text()
-        IsRemoved = False
-        for i in range(len(title)):
-            if IsRemoved == True:
-                i = i - 1
-                IsRemoved = False
+        title = item.find('a', {'class':'clip-launch'})
+        if title is None:
+            pass
+        else:
+            title = title.get_text()
             
-            if i < len(title):
-                ordchar = ord(title[i])
-                if ordchar > 0xFFFF:
-                    if i == 0:
-                        title = title[1:]
-                    elif i == len(title)-1:
-                        title = title[:i]
-                    else:
-                        title = title[:i] + title[i+1:]
-                    #print(ordchar)
-                    #print(i)
-                    #print(ord(title[i]))
-                    IsRemoved = True
-        
-        video_url = 'https://tgd.kr' + item.find('a', {'href':True, 'class':'clip-launch'}).get('href')
-        thumbnail = item.find('img', {'src':True, 'class':'clips-thumbnail'}).get('src')
-        channel = item.find('a', {'class':'streamer'}).get_text()
+            IsRemoved = False
+            for i in range(len(title)):
+                if IsRemoved == True:
+                    i = i - 1
+                    IsRemoved = False
+                
+                if i < len(title):
+                    ordchar = ord(title[i])
+                    if ordchar > 0xFFFF:
+                        if i == 0:
+                            title = title[1:]
+                        elif i == len(title)-1:
+                            title = title[:i]
+                        else:
+                            title = title[:i] + title[i+1:]
+                        IsRemoved = True
+            
+            video_url = 'https://tgd.kr' + item.find('a', {'href':True, 'class':'clip-launch'})
+            thumbnail = item.find('img', {'src':True, 'class':'clips-thumbnail'})
+            channel = item.find('a', {'class':'streamer'})
 
-        resp = urlopen(video_url)
-        source=resp.read()
-        resp.close()
-        soup2=BeautifulSoup(source, "lxml")
-        video_url = soup2.find('iframe', {'id':'clip-iframe'}).get('src')
-        
-        video_info = {
+            if video_url is None or thumbnail is None or channel is None:
+                pass
+            else:
+                video_url = video_url.get('href')
+                thumbnail = thumbnail.get('src')
+                channel = channel.get_text()
 
-            'title':title,
+                resp = urlopen(video_url)
+                source=resp.read()
+                resp.close()
+                soup2=BeautifulSoup(source, "lxml")
+                video_url = soup2.find('iframe', {'id':'clip-iframe'})
+                if video_url is None:
+                    pass
+                else:
+                    video_url = video_url.get('src')
+                
+                    video_info = {
 
-            'video_url':video_url,
+                        'title':title,
 
-            'thumbnail':thumbnail,
+                        'video_url':video_url,
 
-            'channel':channel
+                        'thumbnail':thumbnail,
 
-        }
-        video_info_str = json.dumps(video_info)
-        print(video_info_str)
-        #print(video_info)
+                        'channel':channel
+
+                    }
+                    video_info_str = json.dumps(video_info)
+                    print(video_info_str)
     
 if len(sys.argv) is 1:
     print('No arguments')
