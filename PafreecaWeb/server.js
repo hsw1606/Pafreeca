@@ -121,10 +121,7 @@ app.post('/signup', (request, response) => {
         sex = 0;
     }
 
-    response.send({
-        message: '데이터를 추가했습니다.',
-        data: nickname, email, pass, birth, sex
-    });
+    response.redirect('login.html');
 
     client.query('insert into account value(?,?,?,?,?)', [nickname, email, pass, birth, sex], function (error, data) {
         if (error) {
