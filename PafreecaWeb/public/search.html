@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/LayerPopUp.css">
     <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/LayerPopUp.js"></script>
     <script src="js/LogInOut.js"></script>
 
 
@@ -119,7 +120,7 @@
 
                     // 맨처음 칸에 로드
                     var html1 = '   <div class="BJ1-video-image">'
-                    html1 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title1)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl1 + '\">'
+                    html1 += '       <a href=#layer2 class=moveframe><img src=\"' + thumbnailurl1 + '\">'
                     html1 += '           <p class=video_url>' + url1 + '</p>'
                     html1 += '           <p class=\"video_title search_video_title\">' + title1 + '</p>'
                     html1 += '           <p class=\"video_publisher search_video_publisher\">' + channel1 + '</p>'
@@ -144,7 +145,7 @@
                         var channel2 = dataJSON2.channel
 
                         var html2 = '   <div class="BJ1-video-image">'
-                        html2 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title2)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl2 + '\">'
+                        html2 += '       <a href=#layer2 class=moveframe><img src=\"' + thumbnailurl2 + '\">'
                         html2 += '          <p class=video_url>' + url2 + '</p>'
                         html2 += '          <p class=\"video_title search_video_title\">' + title2 + '</p>'
                         html2 += '          <p class=\"video_publisher search_video_publisher\">' + channel2 + '</p>'
@@ -233,7 +234,7 @@
 
                     // 맨처음 칸에 로드
                     var html1 = '   <div class="BJ1-video-image">'
-                    html1 += '       <a href=#layer2 class=\"moveframe\" onclick=javascript:savehistory(\'' + encodeURI(regExp(title1)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl1 + '\">'
+                    html1 += '       <a href=#layer2 class=\"moveframe\"><img src=\"' + thumbnailurl1 + '\">'
                     html1 += '          <p class=video_url>' + url1 + '</p>'
                     html1 += '          <p class=\"video_title search_video_title\">' + title1 + '</p>'
                     html1 += '          <p class=\"video_publisher search_video_publisher\">' + channel1 + '</p>'
@@ -259,7 +260,7 @@
                         var channel2 = dataJSON2.channel
 
                         var html2 = '   <div class="BJ1-video-image">'
-                        html2 += '       <a href=#layer2 class=\"moveframe\" onclick=javascript:savehistory(\'' + encodeURI(regExp(title2)) + '\'); onkeypress=\"this.onclick;\"> <img src=\"' + thumbnailurl2 + '\">'
+                        html2 += '       <a href=#layer2 class=\"moveframe\"> <img src=\"' + thumbnailurl2 + '\">'
                         html2 += '          <p class=video_url>' + url2 + '</p>'
                         html2 += '          <p class=\"video_title search_video_title\">' + title2 + '</p>'
                         html2 += '          <p class=\"video_publisher search_video_publisher\">' + channel2 + '</p>'
@@ -331,7 +332,7 @@
             })
 
 
-            
+
             // 카카오티비 검색 요청
             $.ajax({
                 url: '/kakaosearch',
@@ -350,7 +351,7 @@
 
                     // 맨처음 칸에 로드
                     var html1 = '   <div class="BJ1-video-image">'
-                    html1 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title1)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl1 + '\">'
+                    html1 += '       <a href=#layer2 class=moveframe><img src=\"' + thumbnailurl1 + '\">'
                     html1 += '           <p class=video_url>' + url1 + '</p>'
                     html1 += '           <p class=\"video_title search_video_title\">' + title1 + '</p>'
                     html1 += '           <p class=\"video_publisher search_video_publisher\">' + channel1 + '</p>'
@@ -375,7 +376,7 @@
                         var channel2 = dataJSON2.channel
 
                         var html2 = '   <div class="BJ1-video-image">'
-                        html2 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title2)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl2 + '\">'
+                        html2 += '       <a href=#layer2 class=moveframe><img src=\"' + thumbnailurl2 + '\">'
                         html2 += '          <p class=video_url>' + url2 + '</p>'
                         html2 += '          <p class=\"video_title search_video_title\">' + title2 + '</p>'
                         html2 += '          <p class=\"video_publisher search_video_publisher\">' + channel2 + '</p>'
@@ -445,10 +446,10 @@
                 }
 
             })
-            
 
 
-            
+
+
             // 브이라이브 검색 요청
             $.ajax({
                 url: '/vlivesearch',
@@ -467,7 +468,7 @@
 
                     // 맨처음 칸에 로드
                     var html1 = '   <div class="BJ1-video-image">'
-                    html1 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title1)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl1 + '\">'
+                    html1 += '       <a href=#layer2 class=moveframe><img src=\"' + thumbnailurl1 + '\">'
                     html1 += '           <p class=video_url>' + url1 + '</p>'
                     html1 += '           <p class=\"video_title search_video_title\">' + title1 + '</p>'
                     html1 += '           <p class=\"video_publisher search_video_publisher\">' + channel1 + '</p>'
@@ -492,7 +493,7 @@
                         var channel2 = dataJSON2.channel
 
                         var html2 = '   <div class="BJ1-video-image">'
-                        html2 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title2)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl2 + '\">'
+                        html2 += '       <a href=#layer2 class=moveframe><img src=\"' + thumbnailurl2 + '\">'
                         html2 += '          <p class=video_url>' + url2 + '</p>'
                         html2 += '          <p class=\"video_title search_video_title\">' + title2 + '</p>'
                         html2 += '          <p class=\"video_publisher search_video_publisher\">' + channel2 + '</p>'
@@ -562,7 +563,7 @@
                 }
 
             })
-            
+
             // 네이버티비 검색 요청
             $.ajax({
                 url: '/navertvsearch',
@@ -581,7 +582,7 @@
 
                     // 맨처음 칸에 로드
                     var html1 = '   <div class="BJ1-video-image">'
-                    html1 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title1)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl1 + '\">'
+                    html1 += '       <a href=#layer2 class=moveframe><img src=\"' + thumbnailurl1 + '\">'
                     html1 += '           <p class=video_url>' + url1 + '</p>'
                     html1 += '           <p class=\"video_title search_video_title\">' + title1 + '</p>'
                     html1 += '           <p class=\"video_publisher search_video_publisher\">' + channel1 + '</p>'
@@ -606,7 +607,7 @@
                         var channel2 = dataJSON2.channel
 
                         var html2 = '   <div class="BJ1-video-image">'
-                        html2 += '       <a href=#layer2 class=moveframe onclick=javascript:savehistory(\'' + encodeURI(regExp(title2)) + '\'); onkeypress=\"this.onclick;\"><img src=\"' + thumbnailurl2 + '\">'
+                        html2 += '       <a href=#layer2 class=moveframe><img src=\"' + thumbnailurl2 + '\">'
                         html2 += '          <p class=video_url>' + url2 + '</p>'
                         html2 += '          <p class=\"video_title search_video_title\">' + title2 + '</p>'
                         html2 += '          <p class=\"video_publisher search_video_publisher\">' + channel2 + '</p>'
@@ -670,33 +671,10 @@
                                 return false;
                             }
                         })
-
                     }
-
                 }
-
             })
-            
-
         })
-            
-        // DB에 nickname, title 저장 요청
-        function savehistory(title) {
-            $.post("/savehistory", {
-                nickname: 'qdad123', // 임시
-                title: decodeURI(title)
-            })
-        }
-
-        // String에서 특수문자 제거
-        function regExp(str) {
-            var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
-            if (regExp.test(str)) {
-                return str.replace(regExp, "")
-            } else {
-                return str
-            }
-        }
 
     </script>
 

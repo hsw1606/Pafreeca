@@ -1,6 +1,7 @@
 $(document).ready(function () {
     
-    $('.moveframe').click(function () {
+    //$('.moveframe').click(function () {
+    $(document).on('click', '.moveframe', function () {
         var $href = $(this).attr('href');
         var $video_url = $(this).children('.video_url').text()
         var $video_title = $(this).children('.video_title').text()
@@ -13,6 +14,9 @@ $(document).ready(function () {
         $('.frame_video_publisher').text($video_publisher);
     });
 
+    $(document).on('keypress', '.moveframe', function () {
+        this.onclick;
+    })
 
     function layer_popup(el) {
         var $el = $(el);        //레이어의 id를 $el 변수에 저장
@@ -57,18 +61,23 @@ $(document).ready(function () {
 
     }
 
-
     // DB에 nickname, title 저장 요청
     function savehistory(title) {
         $.post("/savehistory", {
-            //nickname: 'qdad123', // 임시
             title: decodeURI(title)
         })
     }
 
-    
-    
-
+    //encodeURI(regExp(title2))
+    // String에서 특수문자 제거
+    function regExp(str) {
+        var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
+        if (regExp.test(str)) {
+            return str.replace(regExp, "")
+        } else {
+            return str
+        }
+    }
 });
 
 
