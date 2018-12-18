@@ -466,7 +466,7 @@ app.get('/preference-video', function (req, res) {
                         playhistory += rows[row]['ph_title'] + '. '
                     }
 
-                    // 파이썬 실행 옵션
+                    // 텍스트마이닝 실행 옵션
                     var textminingoptions = {
                         mode: 'text',
                         pythonPath: '',
@@ -476,12 +476,33 @@ app.get('/preference-video', function (req, res) {
                     }
 
                     // TextMining으로 상위 빈도 10위의 키워드 가져오기
-                    ps.PythonShell.run('./wordanalysis/textmining.py', textminingoptions, function (err, results) {
+                    ps.PythonShell.run('./wordanalysis/textmining.py', textminingoptions, function (err, results_tm) {
+
                         if (err) throw err;
-                        //console.log(results)
-                        parsedresults = JSON.parse(results)
-                        console.log(parsedresults)
-                        res.send(parsedresults)
+
+                        parsedresults_tm = JSON.parse(results_tm)
+                        console.log(parsedresults_tm)
+                        topkeyword = parsedresults_tm[0][0]
+                        //console.log(topkeyword)
+
+
+                        // Word2Vec 실행 옵션
+                        var w2voptions = {
+                            mode: 'text',
+                            pythonPath: '',
+                            pythonOptions: ['-u'],
+                            scriptPath: '',
+                            args: [topkeyword]
+                        }
+
+                        ps.PythonShell.run('./wordanalysis/wikiexec.py', w2voptions, function (err, results_w2v) {
+                            if (err) throw err;
+
+                            var parsedresults_w2v = JSON.parse(results_w2v)
+                            var keywordData = [topkeyword, parsedresults_w2v[0][0]]
+
+                            res.send(keywordData)
+                        })
                     });
                 } else {
                     res.send('no data');
@@ -490,6 +511,8 @@ app.get('/preference-video', function (req, res) {
                 res.send('error : ' + err);
             }
         });
+    } else {
+        res.send('Client is not logged-in')
     }
 })
 

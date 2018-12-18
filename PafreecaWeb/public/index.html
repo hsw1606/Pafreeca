@@ -33,13 +33,99 @@
                 }
             })
 
+            var cntvideo = 0
+            function ApplySearchData(data) {
+
+                if (cntvideo < 8) {
+                    dataJSON = eval("(" + data[0] + ")")
+                    var thumbnailurl = dataJSON.thumbnailurl
+                    var url = dataJSON.url
+                    var title = dataJSON.title
+                    var channel = dataJSON.channel
+
+                    document.getElementsByClassName('favorite-video-img')[cntvideo].setAttribute('src', thumbnailurl)
+                    document.getElementsByClassName('favorite-best-video-url')[cntvideo].innerHTML = url
+                    document.getElementsByClassName('favorite-video_name')[cntvideo].innerHTML = title
+                    document.getElementsByClassName('favorite-video_location')[cntvideo].innerHTML = channel
+
+                    cntvideo++
+                }
+            }
+
             $.ajax({
                 url: '/preference-video',
                 type: 'get',
                 dataType: 'json',
                 success: (data) => {
-                    //alert(data)
+                    alert(data)
+                    var keyword = data[0]+ ' ' + data[1]
 
+                    // Youtube 검색 요청
+                    $.ajax({
+                        url: '/youtubesearch',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            search: keyword
+                        },
+                        success: (data) => {
+                            ApplySearchData(data)
+                        }
+                    })
+
+                    // Twitch 검색 요청
+                    $.ajax({
+                        url: '/twitchsearch',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            search: keyword
+                        },
+                        success: (data) => {
+                            ApplySearchData(data)
+                        }
+                    })
+
+                    // 카카오티비 검색 요청
+                    $.ajax({
+                        url: '/kakaosearch',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            search: keyword
+                        },
+                        success: (data) => {
+                            ApplySearchData(data)
+                        }
+
+                    })
+
+                    // 브이라이브 검색 요청
+                    $.ajax({
+                        url: '/vlivesearch',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            search: keyword
+                        },
+                        success: (data) => {
+                            ApplySearchData(data)
+                        }
+
+                    })
+
+                    // 네이버티비 검색 요청
+                    $.ajax({
+                        url: '/navertvsearch',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            search: keyword
+                        },
+                        success: (data) => {
+                            ApplySearchData(data)
+                        }
+                    })
                 }
             })
         });
