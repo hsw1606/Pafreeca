@@ -8,7 +8,7 @@ $(document).ready(function () {
         var $video_publisher = $(this).children('.video_publisher').text()
 
         layer_popup($href);
-        savehistory($video_title);
+        savehistory(regExp($video_title));
         $('.framepop').attr('src', $video_url);
         $('.frame_video_title').text($video_title);
         $('.frame_video_publisher').text($video_publisher);
@@ -71,7 +71,7 @@ $(document).ready(function () {
     //encodeURI(regExp(title2))
     // String에서 특수문자 제거
     function regExp(str) {
-        var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
+        var regExp = /[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9\s)]/gi;
         if (regExp.test(str)) {
             return str.replace(regExp, "")
         } else {

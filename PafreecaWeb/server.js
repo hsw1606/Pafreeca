@@ -453,7 +453,7 @@ app.post('/savehistory', function (req, res) {
 app.get('/preference-video', function (req, res) {
 
     // 유저 'qdad123'이 재생한 동영상 제목들을 DB에서 가져오기
-    client.query('select ph_title from playhistory where a_nickname=?', ['qdad123'], function (err, rows) {
+    client.query('select ph_title from playhistory where a_nickname=?', [req.session.displayName], function (err, rows) {
         if (!err) {
             if (rows[0] != undefined) {
 
