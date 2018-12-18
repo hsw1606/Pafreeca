@@ -206,7 +206,7 @@ app.post('/twitchsearch', (request, response) => {
     }
 
     // 트게더 검색결과 크롤링
-    ps.PythonShell.run('twitch-search.py', searchoptions, function (err, results) {
+    ps.PythonShell.run('./search/twitch-search.py', searchoptions, function (err, results) {
         // 에러 처리
         if (err) throw err;
 
@@ -246,7 +246,7 @@ app.post('/kakaosearch', (request, response) => {
     }
 
     // 카카오 검색결과 크롤링
-    ps.PythonShell.run('kakao-search.py', searchoptions, function (err, results) {
+    ps.PythonShell.run('./search/kakao-search.py', searchoptions, function (err, results) {
         // 에러 처리
         if (err) throw err;
 
@@ -284,7 +284,7 @@ app.post('/vlivesearch', (request, response) => {
     }
 
     // 브이라이브 검색결과 크롤링
-    ps.PythonShell.run('vlive-search.py', searchoptions, function (err, results) {
+    ps.PythonShell.run('./search/vlive-search.py', searchoptions, function (err, results) {
         // 에러 처리
         if (err) throw err;
 
@@ -325,7 +325,7 @@ app.post('/navertvsearch', (request, response) => {
     }
 
     // 네이버티비 검색결과 크롤링
-    ps.PythonShell.run('navertv-search.py', searchoptions, function (err, results) {
+    ps.PythonShell.run('./search/navertv-search.py', searchoptions, function (err, results) {
         // 에러 처리
         if (err) throw err;
 
@@ -473,7 +473,7 @@ app.get('/preference-video', function (req, res) {
                 }
 
                 // TextMining으로 상위 빈도 10위의 키워드 가져오기
-                ps.PythonShell.run('textmining.py', textminingoptions, function (err, results) {
+                ps.PythonShell.run('./wordanalysis/textmining.py', textminingoptions, function (err, results) {
                     if (err) throw err;
                     //console.log(results)
                     parsedresults = JSON.parse(results)
