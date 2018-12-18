@@ -10,7 +10,7 @@
     <script src="js/LogInOut.js"></script>
     <script src="js/totalJScrawling.js"></script>
 
-    
+
     <!--네비게이션 구성-->
     <script>
 
@@ -25,12 +25,7 @@
             $.ajax({
                 url: '/login',
                 type: 'get',
-                dataType: 'text',
-                success: (data) => {
-                    if (data == '1') {
-                        alert("환영합니다!");
-                    }
-                }
+                dataType: 'text'
             })
 
             var cntvideo = 0
@@ -58,7 +53,7 @@
                 dataType: 'json',
                 success: (data) => {
                     alert(data)
-                    var keyword = data[0]+ ' ' + data[1]
+                    var keyword = data[0] + ' ' + data[1]
 
                     // Youtube 검색 요청
                     $.ajax({
