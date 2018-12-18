@@ -1,6 +1,5 @@
 $(document).ready(function () {
     
-    //$('.moveframe').click(function () {
     $(document).on('click', '.moveframe', function () {
         var $href = $(this).attr('href');
         var $video_url = $(this).children('.video_url').text()
@@ -69,7 +68,6 @@ $(document).ready(function () {
         })
     }
 
-    //encodeURI(regExp(title2))
     // String에서 특수문자 제거
     function regExp(str) {
         var regExp = /[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9\s)]/gi;
