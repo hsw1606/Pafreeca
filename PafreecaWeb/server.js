@@ -433,60 +433,64 @@ app.get('/logout', function (req, res) {
 
 // 동영상을 클릭했을 때의 요청 처리
 app.post('/savehistory', function (req, res) {
-    // Parameter 가져오기
-    var title = req.body.title
+    if (req.session.displayName) {
 
-    // DB에 유저이름과 클릭한 동영상 제목 저장
-    client.query('insert into playhistory(ph_title, a_nickname) value(?,?)', [title, req.session.displayName], function (error, data) {
-        if (error) {
-            console.log(error)
-        } else {
-            console.log('Insert title done: ')
-            console.log('nickname: ' + req.session.displayName)
-            console.log('title: ' + title)
-        }
-    })
-    res.send('suck');
+        // Parameter 가져오기
+        var title = req.body.title
+
+        // DB에 유저이름과 클릭한 동영상 제목 저장
+        client.query('insert into playhistory(ph_title, a_nickname) value(?,?)', [title, req.session.displayName], function (error, data) {
+            if (error) {
+                console.log(error)
+            } else {
+                console.log('Insert title done: ')
+                console.log('nickname: ' + req.session.displayName)
+                console.log('title: ' + title)
+            }
+        })
+        res.send('suck');
+    }
 })
 
 // 취향저격 동영상 요청 처리
 app.get('/preference-video', function (req, res) {
+    if (req.session.displayName) {
+        // 유저 'qdad123'이 재생한 동영상 제목들을 DB에서 가져오기
+        client.query('select ph_title from playhistory where a_nickname=?', [req.session.displayName], function (err, rows) {
+            if (!err) {
+                if (rows[0] != undefined) {
 
-    // 유저 'qdad123'이 재생한 동영상 제목들을 DB에서 가져오기
-    client.query('select ph_title from playhistory where a_nickname=?', [req.session.displayName], function (err, rows) {
-        if (!err) {
-            if (rows[0] != undefined) {
+                    // 동영상 제목들을 전부 playhistory에 저장
+                    playhistory = ''
+                    for (var row in rows) {
+                        playhistory += rows[row]['ph_title'] + '. '
+                    }
 
-                // 동영상 제목들을 전부 playhistory에 저장
-                playhistory = ''
-                for (var row in rows) {
-                    playhistory += rows[row]['ph_title'] + '. '
+                    // 파이썬 실행 옵션
+                    var textminingoptions = {
+                        mode: 'text',
+                        pythonPath: '',
+                        pythonOptions: ['-u'],
+                        scriptPath: '',
+                        args: [playhistory]
+                    }
+
+                    // TextMining으로 상위 빈도 10위의 키워드 가져오기
+                    ps.PythonShell.run('./wordanalysis/textmining.py', textminingoptions, function (err, results) {
+                        if (err) throw err;
+                        //console.log(results)
+                        parsedresults = JSON.parse(results)
+                        console.log(parsedresults)
+                        res.send(parsedresults)
+                    });
+                } else {
+                    res.send('no data');
                 }
-
-                // 파이썬 실행 옵션
-                var textminingoptions = {
-                    mode: 'text',
-                    pythonPath: '',
-                    pythonOptions: ['-u'],
-                    scriptPath: '',
-                    args: [playhistory]
-                }
-
-                // TextMining으로 상위 빈도 10위의 키워드 가져오기
-                ps.PythonShell.run('./wordanalysis/textmining.py', textminingoptions, function (err, results) {
-                    if (err) throw err;
-                    //console.log(results)
-                    parsedresults = JSON.parse(results)
-                    console.log(parsedresults)
-                    res.send(parsedresults)
-                });
             } else {
-                res.send('no data');
+                res.send('error : ' + err);
             }
-        } else {
-            res.send('error : ' + err);
-        }
-    });
+        });
+    }
 })
 
 // 서버 실행
