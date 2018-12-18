@@ -23,7 +23,7 @@ video_info = {
 
 def get_video_info(target_url):
 
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome('./best/chromedriver.exe')
 
     driver.get(target_url)
 
