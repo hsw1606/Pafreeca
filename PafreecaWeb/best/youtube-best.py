@@ -44,46 +44,58 @@ def get_video_info(target_url):
     list = soup.find_all('div', {'class':'ytd-video-renderer', 'id':'dismissable'})
     
     for item in list:
-        title = item.find('a', {'title':True}).get('title')
-        IsRemoved = False
-        for i in range(len(title)):
-            if IsRemoved == True:
-                i = i - 1
-                IsRemoved = False
+        title = item.find('a', {'title':True})
+        if title is None:
+            pass
+        else:
+            title = title.get('title')
             
-            if i < len(title):
-                ordchar = ord(title[i])
-                if ordchar > 0xFFFF:
-                    if i == 0:
-                        title = title[1:]
-                    elif i == len(title)-1:
-                        title = title[:i]
-                    else:
-                        title = title[:i] + title[i+1:]
-                    #print(ordchar)
-                    #print(i)
-                    #print(ord(title[i]))
-                    IsRemoved = True
-        
-        video_url = 'https://www.youtube.com/embed/' + item.find('a', {'href':True, 'class':'ytd-thumbnail'}).get('href').replace('/watch?v=','')
-        #video_url = video_url + '?autoplay=1'
-        thumbnail = item.find('img', {'src':True, 'id':'img'}).get('src')
-        channel = item.find('a', {'class':'yt-formatted-string'}).get_text()
-        
-        video_info = {
+            IsRemoved = False
+            for i in range(len(title)):
+                if IsRemoved == True:
+                    i = i - 1
+                    IsRemoved = False
+                
+                if i < len(title):
+                    ordchar = ord(title[i])
+                    if ordchar > 0xFFFF:
+                        if i == 0:
+                            title = title[1:]
+                        elif i == len(title)-1:
+                            title = title[:i]
+                        else:
+                            title = title[:i] + title[i+1:]
+                        #print(ordchar)
+                        #print(i)
+                        #print(ord(title[i]))
+                        IsRemoved = True
+            
+            video_url = item.find('a', {'href':True, 'class':'ytd-thumbnail'})
+            thumbnail = item.find('img', {'src':True, 'id':'img'})
+            channel = item.find('a', {'class':'yt-formatted-string'})
 
-            'title':title,
+            if video_url is None or thumbnail is None or channel is None:
+                pass
+            else:
+                video_url = video_url.get('href').replace('/watch?v=','')
+                video_url = 'https://www.youtube.com/embed/' + video_url
+                video_url = video_url + '?autoplay=0'
+                thumbnail = thumbnail.get('src')
+                channel = channel.get_text()
+            
+                video_info = {
 
-            'video_url':video_url,
+                    'title':title,
 
-            'thumbnail':thumbnail,
+                    'video_url':video_url,
 
-            'channel':channel
+                    'thumbnail':thumbnail,
 
-        }
-        video_info_str = json.dumps(video_info)
-        print(video_info_str)
-        #print(video_info)
+                    'channel':channel
+
+                }
+                video_info_str = json.dumps(video_info)
+                print(video_info_str)
     
     driver.close()
     return video_info

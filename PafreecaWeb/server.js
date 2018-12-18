@@ -503,8 +503,6 @@ app.get('/preference-video', function (req, res) {
                                     keywordData.push(keyword)
                                 }
 
-                                console.log('done')
-
                                 if (++wikicnt == parsedresults_tm.length) {
                                     //console.log(keywordData)
                                     res.send(keywordData)

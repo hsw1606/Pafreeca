@@ -25,53 +25,65 @@ def get_video_info(target_url):
     list = soup.find_all('div', {'class':'thl_a'})
     
     for item in list:
-        title = item.find('dt').get_text()
-        
-        IsRemoved = False
-        for i in range(len(title)):
-            if IsRemoved == True:
-                i = i - 1
-                IsRemoved = False
-            
-            if i < len(title):
-                ordchar = ord(title[i])
-                if ordchar > 0xFFFF:
-                    if i == 0:
-                        title = title[1:]
-                    elif i == len(title)-1:
-                        title = title[:i]
-                    else:
-                        title = title[:i] + title[i+1:]
-                    IsRemoved = True
-        
-        video_url = 'https://tv.naver.com' + item.find('a', {'href':True}).get('href')
-        thumbnail = item.find('img', {'src':True}).get('src')
-        channel = item.find('span', {'class':'ch_txt'}).get_text()
-
-        resp = urlopen(video_url)
-        source = resp.read()
-        resp.close()
-        soup = BeautifulSoup(source, "lxml")
-        video_url = soup.find('meta', {'property':'og:video:secure_url'})
-        
-        if video_url is None:
+        title = item.find('dt')
+        if title is None:
             pass
         else:
-            video_url = video_url.get('content')
+            title = title.get_text()
+        
+            IsRemoved = False
+            for i in range(len(title)):
+                if IsRemoved == True:
+                    i = i - 1
+                    IsRemoved = False
+                
+                if i < len(title):
+                    ordchar = ord(title[i])
+                    if ordchar > 0xFFFF:
+                        if i == 0:
+                            title = title[1:]
+                        elif i == len(title)-1:
+                            title = title[:i]
+                        else:
+                            title = title[:i] + title[i+1:]
+                        IsRemoved = True
+            
+            video_url = item.find('a', {'href':True})
+            thumbnail = item.find('img', {'src':True})
+            channel = item.find('span', {'class':'ch_txt'})
 
-            video_info = {
+            if video_url is None or thumbnail is None or channel is None:
+                pass
+            else:
+                video_url = video_url.get('href')
+                video_url = 'https://tv.naver.com' + video_url
+                thumbnail = thumbnail.get('src')
+                channel = channel.get_text()
 
-                'title':title,
+                resp = urlopen(video_url)
+                source = resp.read()
+                resp.close()
+                soup = BeautifulSoup(source, "lxml")
+                video_url = soup.find('meta', {'property':'og:video:secure_url'})
+                
+                if video_url is None:
+                    pass
+                else:
+                    video_url = video_url.get('content')
 
-                'video_url':video_url,
+                    video_info = {
 
-                'thumbnail':thumbnail,
+                        'title':title,
 
-                'channel':channel
+                        'video_url':video_url,
 
-            }
-            video_info_str = json.dumps(video_info)
-            print(video_info_str)
+                        'thumbnail':thumbnail,
+
+                        'channel':channel
+
+                    }
+                    video_info_str = json.dumps(video_info)
+                    print(video_info_str)
      
 if len(sys.argv) is 1:
     print('No arguments')
