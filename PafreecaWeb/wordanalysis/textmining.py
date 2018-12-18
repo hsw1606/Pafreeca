@@ -22,6 +22,6 @@ for word, tag in morph:
         noun_list.append(word)
 #print(json.dumps(noun_list))
 
-# 선별된 품사별 빈도수 계산 & 상위 빈도 5위 까지 출력
+# 선별된 품사별 빈도수 계산 & 상위 빈도 3위 까지 출력
 counts = Counter(noun_list)
-print(json.dumps(counts.most_common(5)))
+print(json.dumps(counts.most_common(3)))
