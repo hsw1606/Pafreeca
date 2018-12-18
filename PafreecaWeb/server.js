@@ -475,7 +475,7 @@ app.get('/preference-video', function (req, res) {
                         args: [playhistory]
                     }
 
-                    // TextMining으로 상위 빈도 5위의 키워드 가져오기
+                    // TextMining으로 빈도수가 높은 상위 키워드 가져오기
                     ps.PythonShell.run('./wordanalysis/textmining.py', textminingoptions, function (err, results_tm) {
 
                         if (err) throw err;
