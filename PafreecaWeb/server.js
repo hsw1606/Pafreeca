@@ -475,34 +475,42 @@ app.get('/preference-video', function (req, res) {
                         args: [playhistory]
                     }
 
-                    // TextMining으로 상위 빈도 10위의 키워드 가져오기
+                    // TextMining으로 상위 빈도 5위의 키워드 가져오기
                     ps.PythonShell.run('./wordanalysis/textmining.py', textminingoptions, function (err, results_tm) {
 
                         if (err) throw err;
 
                         parsedresults_tm = JSON.parse(results_tm)
-                        console.log(parsedresults_tm)
-                        topkeyword = parsedresults_tm[0][0]
-                        //console.log(topkeyword)
 
+                        var keywordData = []
+                        var wikicnt = 0;
+                        for (var i in parsedresults_tm) {
+                            topkeyword = parsedresults_tm[i][0]
 
-                        // Word2Vec 실행 옵션
-                        var w2voptions = {
-                            mode: 'text',
-                            pythonPath: '',
-                            pythonOptions: ['-u'],
-                            scriptPath: '',
-                            args: [topkeyword]
+                            // Word2Vec 실행 옵션
+                            var w2voptions = {
+                                mode: 'text',
+                                pythonPath: '',
+                                pythonOptions: ['-u'],
+                                scriptPath: '',
+                                args: [topkeyword]
+                            }
+
+                            ps.PythonShell.run('./wordanalysis/wikiexec.py', w2voptions, function (err, results_w2v) {
+                                if (!err) {
+                                    var parsedresults_w2v = JSON.parse(results_w2v)
+                                    var keyword = parsedresults_w2v[1] + ' ' + parsedresults_w2v[0][0]
+                                    keywordData.push(keyword)
+                                }
+
+                                console.log('done')
+
+                                if (++wikicnt == parsedresults_tm.length) {
+                                    //console.log(keywordData)
+                                    res.send(keywordData)
+                                }
+                            })
                         }
-
-                        ps.PythonShell.run('./wordanalysis/wikiexec.py', w2voptions, function (err, results_w2v) {
-                            if (err) throw err;
-
-                            var parsedresults_w2v = JSON.parse(results_w2v)
-                            var keywordData = [topkeyword, parsedresults_w2v[0][0]]
-
-                            res.send(keywordData)
-                        })
                     });
                 } else {
                     res.send('no data');
