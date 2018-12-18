@@ -2,10 +2,15 @@ $(document).ready(function () {
     
     $('.moveframe').click(function () {
         var $href = $(this).attr('href');
+        var $video_url = $(this).children('.video_url').text()
+        var $video_title = $(this).children('.video_title').text()
+        var $video_publisher = $(this).children('.video_publisher').text()
+
         layer_popup($href);
-        $('.framepop').attr('src', $(this).children('.video_url').text());
-        $('.frame_video_title').text($(this).children('.video_title').text());
-        $('.frame_video_publisher').text($(this).children('.video_publisher').text());
+        savehistory($video_title);
+        $('.framepop').attr('src', $video_url);
+        $('.frame_video_title').text($video_title);
+        $('.frame_video_publisher').text($video_publisher);
     });
 
 
@@ -50,6 +55,15 @@ $(document).ready(function () {
             }
         })
 
+    }
+
+
+    // DB에 nickname, title 저장 요청
+    function savehistory(title) {
+        $.post("/savehistory", {
+            //nickname: 'qdad123', // 임시
+            title: decodeURI(title)
+        })
     }
 
     
