@@ -22,7 +22,7 @@ var crawlingoptions = {
 
 // 유튜브 인기영상 크롤링
 var youtubeData = [];
-ps.PythonShell.run('youtube-best.py', crawlingoptions, function (err, results) {
+ps.PythonShell.run('./best/youtube-best.py', crawlingoptions, function (err, results) {
     if (err) throw err;
     youtubeData = results
     console.log('Youtube Data Loaded')
@@ -30,7 +30,7 @@ ps.PythonShell.run('youtube-best.py', crawlingoptions, function (err, results) {
 
 // 트위치 인기영상 크롤링
 var twitchData = [];
-ps.PythonShell.run('twitch-best.py', crawlingoptions, function (err, results) {
+ps.PythonShell.run('./best/twitch-best.py', crawlingoptions, function (err, results) {
     if (err) throw err;
     twitchData = results
     console.log('Twitch Data Loaded')
@@ -40,7 +40,7 @@ ps.PythonShell.run('twitch-best.py', crawlingoptions, function (err, results) {
 
 // 카카오 인기영상 크롤링
 var kakaoData = [];
-ps.PythonShell.run('kakao-best.py', crawlingoptions, function (err, results) {
+ps.PythonShell.run('./best/kakao-best.py', crawlingoptions, function (err, results) {
     if (err) throw err;
     kakaoData = results
     console.log('Kakao Data Loaded')
@@ -48,7 +48,7 @@ ps.PythonShell.run('kakao-best.py', crawlingoptions, function (err, results) {
 
 // 브이라이브 인기영상 크롤링
 var vliveData = [];
-ps.PythonShell.run('vlive-best.py', crawlingoptions, function (err, results) {
+ps.PythonShell.run('./best/vlive-best.py', crawlingoptions, function (err, results) {
     if (err) throw err;
     vliveData = results
     console.log('Vlive Data Loaded')
@@ -57,7 +57,7 @@ ps.PythonShell.run('vlive-best.py', crawlingoptions, function (err, results) {
 
 // 네이버 인기영상 크롤링
 var navertvData = [];
-ps.PythonShell.run('navertv-best.py', crawlingoptions, function (err, results) {
+ps.PythonShell.run('./best/navertv-best.py', crawlingoptions, function (err, results) {
     if (err) throw err;
     navertvData = results
     console.log('Navertv Data Loaded')
