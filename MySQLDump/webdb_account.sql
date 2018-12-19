@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `webdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
-USE `webdb`;
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
 -- Host: localhost    Database: webdb
@@ -40,7 +38,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES ('qdad123','qweisdl213','21312hdjf','fj2',0),('sli123','sdfisdl213','21312hdjf','fj2',1),('slifspo','hhsw1606@naver.com','13109388','19940801',1);
+INSERT INTO `account` VALUES ('testid','testemail','testpw','19999999',0);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-02 16:21:20
+-- Dump completed on 2018-12-19  5:38:51

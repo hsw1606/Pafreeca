@@ -49,7 +49,7 @@ def get_video_info(target_url):
                             title = title[:i] + title[i+1:]
                         IsRemoved = True
             
-            video_url = 'https://tgd.kr' + item.find('a', {'href':True, 'class':'clip-launch'})
+            video_url = item.find('a', {'href':True, 'class':'clip-launch'})
             thumbnail = item.find('img', {'src':True, 'class':'clips-thumbnail'})
             channel = item.find('a', {'class':'streamer'})
 
@@ -57,6 +57,7 @@ def get_video_info(target_url):
                 pass
             else:
                 video_url = video_url.get('href')
+                video_url = 'https://tgd.kr' + video_url
                 thumbnail = thumbnail.get('src')
                 channel = channel.get_text()
 
