@@ -1,0 +1,24 @@
+{
+  "name": "pafreeca",
+  "version": "1.0.0",
+  "description": "Search video and get recommendation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hsw1606/Pafreeca.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "word2vec"
+  ],
+  "author": "Seokwon Han",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hsw1606/Pafreeca/issues"
+  },
+  "homepage": "https://github.com/hsw1606/Pafreeca#readme"
+}
