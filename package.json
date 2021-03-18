@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Search video and get recommendation",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hsw1606/Pafreeca.git"
@@ -28,5 +25,8 @@
     "express-session": "^1.17.1",
     "mysql": "^2.18.1",
     "python-shell": "^2.0.3"
+  },
+  "scripts": {
+    "start": "node src"
   }
 }
