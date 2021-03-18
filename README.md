@@ -16,7 +16,7 @@
 
 ```
 .
-└── PafreecaWeb/
+└── src/
     ├── best/
     |   ├── kakao-best.py
     |   ├── navertv-best.py
