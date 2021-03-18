@@ -1,4 +1,7 @@
-﻿var express = require("express")
+﻿// .env 파일에서 환경변수 불러오기
+require('dotenv').config();
+
+var express = require("express")
 var app = express()
 var bodyParser = require('body-parser');
 
@@ -10,10 +13,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // MySQL에 로그인
 var client = mysql.createConnection({
-    host: '127.0.0.1',
+    host: process.env.MYSQL_HOST,
     port: 3306,
     user: 'root',
-    password: '13109388',
+    password: process.env.MYSQL_PASSWORD,
     database: 'webdb'
 })
 
@@ -140,7 +143,7 @@ app.post('/youtubesearch', (request, response) => {
     var youtube = new youtubeNode();
     var word = search; // 검색어 지정
     var limit = 10; // 출력 갯수
-    youtube.setKey('AIzaSyBMZEIuMtExrnqrTPbdBgz2raund-aHD84'); // API 키 입력
+    youtube.setKey(process.env.YOUTUBE_API_KEY); // API 키 입력
 
     // 검색 parameter 설정
     var param = {
