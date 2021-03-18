@@ -1,6 +1,4 @@
-﻿
-
-var express = require("express")
+﻿var express = require("express")
 var app = express()
 var bodyParser = require('body-parser');
 
@@ -10,13 +8,32 @@ var ps = require('python-shell');
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// MySQL에 로그인
+var client = mysql.createConnection({
+    host: '127.0.0.1',
+    port: 3306,
+    user: 'root',
+    password: '13109388',
+    database: 'webdb'
+})
+
+// MySQL에 접속
+client.connect(function (err) {
+    if (err) {
+        console.error('error connecting: ' + err.stack)
+        return;
+    }
+
+    console.log('DB connected as id ' + client.threadId)
+});
+
 
 // 파이썬 실행옵션 설정
 var crawlingoptions = {
     mode: 'text',
     pythonPath: '',
     pythonOptions: ['-u'],
-    scriptPath: '',
+    scriptPath: __dirname,
     args: []
 };
 
@@ -65,25 +82,6 @@ ps.PythonShell.run('./best/navertv-best.py', crawlingoptions, function (err, res
 
 
 
-
-// MySQL에 로그인
-var client = mysql.createConnection({
-    host: '127.0.0.1',
-    port: 3306,
-    user: 'root',
-    password: '13109388',
-    database: 'webdb'
-})
-
-// MySQL에 접속
-client.connect(function (err) {
-    if (err) {
-        console.error('error connecting: ' + err.stack)
-        return;
-    }
-
-    console.log('DB connected as id ' + client.threadId)
-});
 
 // 클라이언트가 메인페이지 접속 시 요청 처리
 app.get('/youtube-best-video', function (req, res) {
@@ -157,13 +155,13 @@ app.post('/youtubesearch', (request, response) => {
     // Youtube API 검색
     youtube.search('', limit, param, function (err, result) {
         // 에러 처리
-        if (err) { console.log(err); return; } 
+        if (err) { console.log(err); return; }
 
         // 받아온 전체 리스트 출력
         //console.log(JSON.stringify(result, null, 2)); 
 
         // JSON 결과 파싱
-        var items = result["items"]; 
+        var items = result["items"];
         for (var i in items) {
             var it = items[i];
             var title = it["snippet"]["title"];
@@ -310,7 +308,7 @@ app.post('/vlivesearch', (request, response) => {
 app.post('/navertvsearch', (request, response) => {
     var search = request.body.search;
     var navertvdata = [] // 응답할 데이터
-    
+
 
     // 파이썬 실행옵션 설정
     var searchoptions = {
